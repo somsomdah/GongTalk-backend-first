@@ -1,32 +1,31 @@
 package com.dasom.gongtalk.domain.member;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class MemberBoard {
+public class Alarm {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     private Member member;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER)
     private Board board;
+    @ManyToOne(fetch= FetchType.EAGER)
+    private Keyword keyword;
 
-    private boolean isAlarmable;
-    private Date timeCreated;
+    private String type; // board 또는 keyword
+
 
 
 

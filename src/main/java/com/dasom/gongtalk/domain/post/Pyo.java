@@ -13,7 +13,7 @@ public class Pyo {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotNull
     private String source;

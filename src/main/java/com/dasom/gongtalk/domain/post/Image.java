@@ -13,7 +13,7 @@ public class Image {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotNull
     private String source;

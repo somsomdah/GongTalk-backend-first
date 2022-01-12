@@ -14,20 +14,13 @@ public class Member {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotNull
     private String device_num;
 
     @OneToOne
     private Setting setting;
-
-//    @OneToMany
-//    private List<Scrap> scraps;
-//    @OneToMany
-//    private List<MemberBoard> memberBoards;
-//    @OneToMany
-//    private List<MemberKeyword> memberKeywords;
 
 }
 

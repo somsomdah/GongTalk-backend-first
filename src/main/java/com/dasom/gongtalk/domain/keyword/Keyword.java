@@ -15,7 +15,7 @@ public class Keyword {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @NotNull
     private String content;
@@ -23,7 +23,4 @@ public class Keyword {
     @NotNull
     @Column(columnDefinition="boolean default false")
     private boolean is_default;
-
-//    @OneToMany
-//    private List<PostKeyword> postKeywords;
 }

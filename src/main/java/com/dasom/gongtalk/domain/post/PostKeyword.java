@@ -14,7 +14,7 @@ public class PostKeyword {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull

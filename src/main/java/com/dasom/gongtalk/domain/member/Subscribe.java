@@ -1,26 +1,30 @@
-package com.dasom.gongtalk.domain.post;
+package com.dasom.gongtalk.domain.member;
 
+import com.dasom.gongtalk.domain.board.Board;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
-public class File {
+public class Subscribe {
 
     @Id
     @GeneratedValue
     private Integer id;
 
     @NotNull
-    private String source;
-
     @ManyToOne(fetch = FetchType.EAGER)
+    private Member member;
+
     @NotNull
-    private Post post;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Board board;
+
+
 
 }

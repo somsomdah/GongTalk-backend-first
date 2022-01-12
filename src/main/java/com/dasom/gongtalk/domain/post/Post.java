@@ -18,13 +18,13 @@ public class Post {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch=FetchType.LAZY)
     private Board board;
 
     @NotNull
-    private int post_num;
+    private Integer post_num;
 
     @NotNull
     private String source;
@@ -44,21 +44,10 @@ public class Post {
     @NotNull
     @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
+
     @NotNull
     @Column(columnDefinition = "boolean default false")
     private boolean isModified;
 
-//    @OneToMany
-//    private List<Image> images;
-//    @OneToMany
-//    private List<File> files;
-//    @OneToMany
-//    private List<Pyo> pyos;
-//
-//    @OneToMany
-//    private List<Scrap> scraps;
-
-//    @OneToMany
-//    private List<PostKeyword> postKeywords;
 
 }
