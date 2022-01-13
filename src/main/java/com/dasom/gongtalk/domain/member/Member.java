@@ -17,7 +17,7 @@ public class Member {
     private Integer id;
 
     @NotNull
-    private String device_num;
+    private String deviceNum;
 
     @OneToOne
     private Setting setting;
