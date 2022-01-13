@@ -1,12 +1,14 @@
 package com.dasom.gongtalk.domain.member;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.domain.post.Post;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Data
@@ -17,16 +19,10 @@ public class Alarm {
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne
     private Member member;
-    @ManyToOne(fetch= FetchType.EAGER)
-    private Board board;
-    @ManyToOne(fetch= FetchType.EAGER)
-    private Keyword keyword;
+    @ManyToOne
+    private Post post;
 
-    private String type; // board 또는 keyword
-
-
-
-
+    private boolean isRead;
 }
