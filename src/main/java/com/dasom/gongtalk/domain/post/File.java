@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class File {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class Pyo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull

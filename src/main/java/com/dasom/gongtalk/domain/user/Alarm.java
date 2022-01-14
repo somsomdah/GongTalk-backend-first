@@ -1,14 +1,10 @@
-package com.dasom.gongtalk.domain.member;
+package com.dasom.gongtalk.domain.user;
 
 import com.dasom.gongtalk.domain.post.Post;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -16,11 +12,11 @@ import javax.persistence.ManyToOne;
 public class Alarm {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    private Member member;
+    private User user;
     @ManyToOne
     private Post post;
 

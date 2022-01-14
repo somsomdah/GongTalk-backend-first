@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.domain.member;
+package com.dasom.gongtalk.domain.user;
 
 import com.dasom.gongtalk.domain.board.Board;
 import lombok.Data;
@@ -13,12 +13,12 @@ import javax.validation.constraints.NotNull;
 public class Bookmark {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    private Member member;
+    private User user;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)

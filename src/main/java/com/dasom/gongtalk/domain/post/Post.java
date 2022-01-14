@@ -1,15 +1,12 @@
 package com.dasom.gongtalk.domain.post;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.member.Scrap;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -17,7 +14,7 @@ import java.util.List;
 public class Post {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch=FetchType.LAZY)

@@ -1,6 +1,5 @@
-package com.dasom.gongtalk.domain.member;
+package com.dasom.gongtalk.domain.user;
 
-import com.dasom.gongtalk.domain.post.Post;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,12 +12,8 @@ import javax.validation.constraints.NotNull;
 public class Setting {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @NotNull
-    private Member member;
 
     @NotNull
     @Column(columnDefinition = "boolean default false")
