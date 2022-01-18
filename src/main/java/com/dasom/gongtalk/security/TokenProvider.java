@@ -22,12 +22,11 @@ public class TokenProvider {
 
     private final AppProperties appProperties;
     private final CustomUserDetailsService userDetailsService;
-    private int tokenDurationMin = 30;
 
 
     public String createToken(User user){
         Date now = new Date();
-        Date expirationTime =new Date(now.getTime()+ Duration.ofMinutes(tokenDurationMin).toMillis());
+        Date expirationTime =new Date(now.getTime()+ Duration.ofMinutes(appProperties.getAuth().getTokenDurationMin()).toMillis());
 
         return Jwts.builder()
                 .setSubject(user.getId().toString())
