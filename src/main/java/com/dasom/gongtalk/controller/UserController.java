@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
 
         UserLoginResponse response = userService.login(request.getDeviceNum());
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 

@@ -16,7 +16,7 @@ public class AppProperties {
     @NoArgsConstructor
     public static class Auth{
         private String tokenSecret;
-        private long tokenDuration;
+        private int tokenDurationMin;
     }
 
 
