@@ -2,10 +2,7 @@ package com.dasom.gongtalk.domain.user;
 
 import com.dasom.gongtalk.util.RandomStringGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -19,29 +16,32 @@ import java.util.Random;
 @Entity
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties({"deviceNum", "username", "password"})
+@JsonIgnoreProperties({"username", "password"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     @Column(unique = true)
     private String username;
 
-    @NotNull
-    @Column(unique = true)
     private String password;
 
 
     @Setter
-    @NotNull
     private String deviceNum;
 
     @Setter
     @OneToOne
     private Setting setting;
+
+    public User(String deviceNum)
+    {
+        setDeviceNum(deviceNum);
+        setUsername();
+        setPassword();
+    }
 
     public void setUsername()
     {
