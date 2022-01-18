@@ -7,19 +7,19 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 
-public class UsernameAuthenticationToken extends AbstractAuthenticationToken {
+public class DeviceNumAuthenticationToken extends AbstractAuthenticationToken {
     private static final long serialVersionUID = 560L;
     private final Object principal;
     private Object credentials;
 
-    public UsernameAuthenticationToken(Object principal, Object credentials) {
+    public DeviceNumAuthenticationToken(Object principal, Object credentials) {
         super((Collection)null);
         this.principal = principal;
         this.credentials = credentials;
         this.setAuthenticated(false);
     }
 
-    public UsernameAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+    public DeviceNumAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
