@@ -17,20 +17,9 @@ public class Principal implements UserDetails {
     private String password;
     private String deviceNum;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
     }
 
     @Override
@@ -53,8 +42,10 @@ public class Principal implements UserDetails {
         return true;
     }
 
-    public Principal buildCredentials(User user){
+    public static Principal create(User user){
         return new Principal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
+
+
 
 }
