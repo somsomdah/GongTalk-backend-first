@@ -19,11 +19,13 @@ public class RandomStringGenerator {
             buffer.append((char) randomLimitedInt);
         }
 
-        int upperBound = 10^numLength - 1;
-        int lowerBound = 10^(numLength-1) -1;
-        int randomNum = random.nextInt() * (upperBound - lowerBound) + lowerBound;
-        
-        buffer.append(Integer.toString(randomNum));
+        if (numLength > 0){
+            int upperBound = (int) Math.pow(10, numLength);
+            int lowerBound = (int) Math.pow(10, numLength - 1);
+            int randomNum = random.nextInt(upperBound - lowerBound) + lowerBound;
+
+            buffer.append(randomNum);
+        }
 
         return buffer.toString();
     }
