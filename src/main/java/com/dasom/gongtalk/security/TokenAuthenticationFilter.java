@@ -43,8 +43,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Credentials credentials = (Credentials) userService.loadUserByUsername(user.get().getUsername()); ;
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(credentials, null, null);
+            Principal principal = (Principal) userService.loadUserByUsername(user.get().getUsername()); ;
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(principal, null, null);
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request,response);
 

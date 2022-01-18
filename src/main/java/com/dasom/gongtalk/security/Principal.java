@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Data
 @AllArgsConstructor
-public class Credentials implements UserDetails {
+public class Principal implements UserDetails {
 
     private Integer id;
     private String username;
@@ -53,8 +53,8 @@ public class Credentials implements UserDetails {
         return true;
     }
 
-    public Credentials buildCredentials(User user){
-        return new Credentials(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
+    public Principal buildCredentials(User user){
+        return new Principal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
 
 }

@@ -1,14 +1,11 @@
 package com.dasom.gongtalk.service;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.user.Bookmark;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
-import com.dasom.gongtalk.dto.UserCreateRequest;
-import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.BookmarkRepository;
 import com.dasom.gongtalk.repository.UserRepository;
-import com.dasom.gongtalk.security.Credentials;
+import com.dasom.gongtalk.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +20,7 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
-    private final Credentials credentials;
+    private final Principal principal;
 
     public User saveUser(String deviceNum){
         User createdUser = new User();
@@ -44,7 +41,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return credentials.buildCredentials(userRepository.findByUsername(username));
+        return principal.buildCredentials(userRepository.findByUsername(username));
     }
 
 
