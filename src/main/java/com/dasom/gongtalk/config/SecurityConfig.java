@@ -3,7 +3,6 @@ package com.dasom.gongtalk.config;
 
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.CustomUserDetailsService;
-import com.dasom.gongtalk.security.TokenAuthenticationFilter;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

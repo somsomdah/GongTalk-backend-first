@@ -2,10 +2,7 @@ package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.repository.UserRepository;
-import com.dasom.gongtalk.service.UserService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

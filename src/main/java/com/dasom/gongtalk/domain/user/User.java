@@ -2,16 +2,14 @@ package com.dasom.gongtalk.domain.user;
 
 import com.dasom.gongtalk.util.RandomStringGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Random;
 
 @Entity
 @Getter

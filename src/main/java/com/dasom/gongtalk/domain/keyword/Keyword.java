@@ -1,12 +1,10 @@
 package com.dasom.gongtalk.domain.keyword;
 
-import com.dasom.gongtalk.domain.post.PostKeyword;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Data

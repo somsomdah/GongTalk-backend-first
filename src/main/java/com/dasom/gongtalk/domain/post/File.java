@@ -1,6 +1,5 @@
 package com.dasom.gongtalk.domain.post;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

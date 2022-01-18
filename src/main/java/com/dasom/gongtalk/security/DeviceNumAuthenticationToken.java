@@ -1,11 +1,11 @@
 
 package com.dasom.gongtalk.security;
 
-import java.util.Collection;
-
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
+
+import java.util.Collection;
 
 public class DeviceNumAuthenticationToken extends AbstractAuthenticationToken {
     private static final long serialVersionUID = 560L;

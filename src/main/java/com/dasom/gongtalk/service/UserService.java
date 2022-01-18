@@ -7,10 +7,8 @@ import com.dasom.gongtalk.dto.UserLoginResponse;
 import com.dasom.gongtalk.repository.BookmarkRepository;
 import com.dasom.gongtalk.repository.SettingRepository;
 import com.dasom.gongtalk.repository.UserRepository;
-import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.hql.internal.ast.util.TokenPrinters;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

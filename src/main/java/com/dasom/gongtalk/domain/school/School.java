@@ -1,10 +1,8 @@
 package com.dasom.gongtalk.domain.school;
 
-import com.dasom.gongtalk.domain.board.Board;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
