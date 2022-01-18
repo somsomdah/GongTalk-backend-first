@@ -3,8 +3,10 @@ package com.dasom.gongtalk.security;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.service.UserService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,9 +23,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private TokenProvider tokenProvider;
-    private UserRepository userRepository;
-    private UserService userService;
+    private final TokenProvider tokenProvider;
+    private final UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -43,8 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Principal principal = (Principal) userService.loadUserByUsername(user.get().getUsername()); ;
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(principal, null, null);
+            Authentication auth = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request,response);
 
