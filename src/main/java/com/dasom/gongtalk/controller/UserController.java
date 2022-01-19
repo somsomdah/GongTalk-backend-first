@@ -1,11 +1,10 @@
 package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
-import com.dasom.gongtalk.dto.UserCreateRequest;
-import com.dasom.gongtalk.dto.UserInfoResponse;
-import com.dasom.gongtalk.dto.UserLoginByDeviceRequest;
-import com.dasom.gongtalk.dto.UserLoginResponse;
+import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.UserService;
@@ -24,6 +23,8 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final SubscribeRepository subscribeRepository;
+
     private final UserService userService;
 
     @GetMapping public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -56,12 +57,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
     }
 
-
     @GetMapping("boards")
     public ResponseEntity<List<Board>> getBookmarkedBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
         User user = userRepository.findById(devicePrincipal.getId()).get();
         List<Board> boards = userService.getBookmarkedBoards(user);
         return ResponseEntity.ok().body(boards);
+    }
+
+    @GetMapping(value = "subscribe", params = {"type"})
+    public ResponseEntity<List<SubscribeInfoResponse>> getSubscribes(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                               @RequestParam String type){
+        User user = userRepository.findById(devicePrincipal.getId()).get();
+        List<Subscribe> subscribes = subscribeRepository.findAllByTypeAndUser(type, user);
+        List<SubscribeInfoResponse> response = SubscribeInfoResponse.fromEntities(subscribes);
+
+        return ResponseEntity.ok().body(response);
+
     }
 
 }
