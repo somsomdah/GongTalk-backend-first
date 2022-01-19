@@ -20,7 +20,7 @@ public class Board {
     private String name;
     private String url;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
 

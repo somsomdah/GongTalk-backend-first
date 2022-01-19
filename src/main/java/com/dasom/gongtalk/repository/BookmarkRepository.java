@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface BookmarkRepository extends CrudRepository<Bookmark, Integer> {
 
-    @Query("select b.board from Bookmark b where b.user=?1")
+    @Query("select b.board from Bookmark b where b.user=:user")
     List<Board> findBoardsByUser(User user);
 }
 

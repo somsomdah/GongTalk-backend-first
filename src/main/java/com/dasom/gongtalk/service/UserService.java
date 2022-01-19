@@ -34,7 +34,6 @@ public class UserService {
         return new UserLoginResponse(token);
     }
 
-
     public List<Board> getBookmarkedBoards(User user) {
         return bookmarkRepository.findBoardsByUser(user);
 

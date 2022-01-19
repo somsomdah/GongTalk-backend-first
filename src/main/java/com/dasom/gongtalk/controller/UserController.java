@@ -46,9 +46,14 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
-
         UserLoginResponse response = userService.login(request.getDeviceNum());
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("me")
+    public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+        User user = userRepository.findById(devicePrincipal.getId()).get();
+        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
     }
 
 
