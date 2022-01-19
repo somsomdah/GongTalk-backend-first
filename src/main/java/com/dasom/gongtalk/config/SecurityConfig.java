@@ -3,6 +3,7 @@ package com.dasom.gongtalk.config;
 
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.CustomUserDetailsService;
+import com.dasom.gongtalk.security.TokenAuthenticationFilter;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -39,5 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/user").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                 .antMatchers("/swagger-ui").permitAll();
+
+        http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider, userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 }
