@@ -1,5 +1,6 @@
 package com.dasom.gongtalk.domain.user;
 
+import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.util.RandomStringGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -10,11 +11,12 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties({"username", "password"})
+@JsonIgnoreProperties({"username", "password", })
 public class User {
 
     @Id
@@ -23,7 +25,6 @@ public class User {
 
     @Column(unique = true)
     private String username;
-
     private String password;
 
 
@@ -33,6 +34,10 @@ public class User {
     @Setter
     @OneToOne
     private Setting setting;
+
+    @Setter
+    @ManyToMany
+    private List<Board> boards;
 
     public User(String deviceNum)
     {
