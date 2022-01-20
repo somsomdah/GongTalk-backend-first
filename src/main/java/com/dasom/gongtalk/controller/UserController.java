@@ -58,21 +58,10 @@ public class UserController {
     }
 
     @GetMapping("boards")
-    public ResponseEntity<List<Board>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+    public ResponseEntity<List<BoardInfoResponse>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
         User user = userRepository.findById(devicePrincipal.getId()).get();
-        List<Board> boards = userService.getBoards(user);
-        return ResponseEntity.ok().body(boards);
-    }
-
-    @GetMapping(value = "subscribe", params = {"type"})
-    public ResponseEntity<List<SubscribeInfoResponse>> getSubscribes(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                               @RequestParam String type){
-        User user = userRepository.findById(devicePrincipal.getId()).get();
-        List<Subscribe> subscribes = subscribeRepository.findAllByTypeAndUser(type, user);
-        List<SubscribeInfoResponse> response = SubscribeInfoResponse.fromEntities(subscribes);
-
+        List<BoardInfoResponse> response = userService.getBoards(user);
         return ResponseEntity.ok().body(response);
-
     }
 
 }
