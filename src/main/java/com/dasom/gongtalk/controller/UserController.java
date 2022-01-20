@@ -58,9 +58,9 @@ public class UserController {
     }
 
     @GetMapping("boards")
-    public ResponseEntity<List<Board>> getBookmarkedBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+    public ResponseEntity<List<Board>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
         User user = userRepository.findById(devicePrincipal.getId()).get();
-        List<Board> boards = userService.getBookmarkedBoards(user);
+        List<Board> boards = userService.getBoards(user);
         return ResponseEntity.ok().body(boards);
     }
 

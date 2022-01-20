@@ -4,7 +4,7 @@ import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.UserLoginResponse;
-import com.dasom.gongtalk.repository.BookmarkRepository;
+import com.dasom.gongtalk.repository.UserBoardRepository;
 import com.dasom.gongtalk.repository.SettingRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.TokenProvider;
@@ -19,7 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final SettingRepository settingRepository;
-    private final BookmarkRepository bookmarkRepository;
+    private final UserBoardRepository userBoardRepository;
     private final TokenProvider tokenProvider;
 
     public User save(String deviceNum){
@@ -34,8 +34,8 @@ public class UserService {
         return new UserLoginResponse(token);
     }
 
-    public List<Board> getBookmarkedBoards(User user) {
-        return bookmarkRepository.findBoardsByUser(user);
+    public List<Board> getBoards(User user) {
+        return userBoardRepository.findBoardsByUser(user);
 
     }
 

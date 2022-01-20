@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-public class Bookmark {
+public class UserBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
