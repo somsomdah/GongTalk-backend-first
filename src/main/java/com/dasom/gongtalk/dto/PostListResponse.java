@@ -28,7 +28,7 @@ public class PostListResponse {
     public static List<PostListResponse> fromPosts(List<Post> posts){
 
         List<PostListResponse> response = new ArrayList<>();
-        for(Post post: (Collection<Post>) posts){
+        for(Post post: posts){
             if (response.stream().anyMatch(r ->r.getId().equals(post.getId()))) {
                 continue;
             }

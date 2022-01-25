@@ -19,7 +19,7 @@ public class SubscribeInfoResponse {
     private Board board;
     private Keyword keyword;
 
-    public static SubscribeInfoResponse fromEntity(Subscribe subscribe){
+    public static SubscribeInfoResponse fromSubscribe(Subscribe subscribe){
         return new SubscribeInfoResponse(
                 subscribe.getType(),
                 subscribe.getUser(),
@@ -27,10 +27,10 @@ public class SubscribeInfoResponse {
                 subscribe.getKeyword());
     }
 
-    public static List<SubscribeInfoResponse> fromEntities(List<Subscribe> subscribes){
+    public static List<SubscribeInfoResponse> fromSubscribes(List<Subscribe> subscribes){
         List<SubscribeInfoResponse> response = new ArrayList<>();
         for (Subscribe subscribe : subscribes){
-            response.add(SubscribeInfoResponse.fromEntity(subscribe));
+            response.add(SubscribeInfoResponse.fromSubscribe(subscribe));
         }
 
         return response;

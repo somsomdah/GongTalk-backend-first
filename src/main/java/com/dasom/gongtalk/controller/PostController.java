@@ -26,7 +26,7 @@ public class PostController {
     @GetMapping("{id}")
     public ResponseEntity<PostResponse> getOnePost(@PathVariable Integer id){
         Post post = postService.getFromId(id);
-        PostResponse response = PostResponse.fromEntity(post);
+        PostResponse response = PostResponse.fromPost(post);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

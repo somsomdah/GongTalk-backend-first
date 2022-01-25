@@ -23,7 +23,7 @@ public class PostResponse {
     private boolean isDeleted;
     private boolean isModified;
 
-    public static PostResponse fromEntity(Post post){
+    public static PostResponse fromPost(Post post){
         return new PostResponse(post.getId(), post.getBoard(),
                 post.getPostNum(), post.getSource(), post.getTitle(),
                 post.getWriter(), post.getCategory(), post.getContent(), post.getDate(),

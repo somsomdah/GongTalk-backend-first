@@ -25,13 +25,13 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
         List<User> users = (List<User>) userRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntities(users));
+        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUsers(users));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UserInfoResponse> getOneUser(@PathVariable Integer id){
         User user = userService.getFromId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
+        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
 
     }
 
@@ -50,7 +50,7 @@ public class UserController {
     @GetMapping("me")
     public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
         User user = userService.getFromPrincipal(devicePrincipal);
-        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
+        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
     }
 
     @GetMapping("boards")
