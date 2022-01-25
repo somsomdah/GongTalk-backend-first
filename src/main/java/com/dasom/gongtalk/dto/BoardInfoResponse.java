@@ -22,7 +22,7 @@ public class BoardInfoResponse {
     private List<String> keywords;
     private boolean notifyAll;
 
-    public static List<BoardInfoResponse> fromUser(User user, SubscribeRepository subscribeRepository){
+    public static List<BoardInfoResponse> fromUserEntity(User user, SubscribeRepository subscribeRepository){
         List<Board> boards = user.getBoards();
         List<BoardInfoResponse> response = new ArrayList<>();
         
