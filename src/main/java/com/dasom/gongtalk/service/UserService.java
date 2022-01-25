@@ -4,6 +4,7 @@ import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.BoardInfoResponse;
+import com.dasom.gongtalk.dto.PostFromUserResponse;
 import com.dasom.gongtalk.dto.PostResponse;
 import com.dasom.gongtalk.dto.UserLoginResponse;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
@@ -58,8 +59,8 @@ public class UserService {
         return BoardInfoResponse.fromUserEntity(user, subscribeRepository);
     }
 
-    public List<PostResponse> getPosts(User user){
-        return PostResponse.fromUserEntity(user, postRepository);
+    public List<PostFromUserResponse> getPosts(User user){
+        return PostFromUserResponse.fromUserEntity(user, postRepository);
     }
 
 

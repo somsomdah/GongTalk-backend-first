@@ -1,12 +1,16 @@
 package com.dasom.gongtalk.domain.post;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.service.BoardService;
+import com.dasom.gongtalk.service.PostService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,17 +29,22 @@ public class Post {
 
     @NotNull
     private String source;
+
     @NotNull
     private String title;
+
     @NotNull
     @Column(columnDefinition = "varchar(50) default '관리자'")
     private String writer;
+
     @NotNull
     @Column(columnDefinition = "varchar(50) default '일반'")
     private String category;
+
     @NotNull
-    @Column(length = 1000000000)
+    @Column(columnDefinition = "LONGTEXT")
     private String content;
+
     @NotNull
     private LocalDate date;
 
@@ -46,6 +55,9 @@ public class Post {
     @NotNull
     @Column(columnDefinition = "boolean default false")
     private boolean isModified;
+
+    @ManyToMany
+    private List<Keyword> keywords;
 
 
 }

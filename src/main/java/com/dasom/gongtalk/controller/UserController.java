@@ -64,9 +64,9 @@ public class UserController {
     }
 
     @GetMapping("posts")
-    public ResponseEntity<List<PostResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
+    public ResponseEntity<List<PostFromUserResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
         User user = userService.getFromPrincipal(devicePrincipal);
-        List<PostResponse> response = userService.getPosts(user);
+        List<PostFromUserResponse> response = userService.getPosts(user);
         return ResponseEntity.ok().body(response);
     }
 

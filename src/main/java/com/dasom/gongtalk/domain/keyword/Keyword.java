@@ -20,5 +20,5 @@ public class Keyword {
 
     @NotNull
     @Column(columnDefinition="boolean default false")
-    private boolean is_default;
+    private boolean isDefault;
 }
