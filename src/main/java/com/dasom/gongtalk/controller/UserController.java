@@ -22,19 +22,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository userRepository;
-    private final SubscribeRepository subscribeRepository;
-
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    @GetMapping public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
+    @GetMapping
+    public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
         List<User> users = (List<User>) userRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntities(users));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UserInfoResponse> getOneUser(@PathVariable Integer id){
-        User user = userRepository.findById(id).get();
+        User user = userService.getFromId(id);
         return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
 
     }
@@ -53,14 +52,21 @@ public class UserController {
 
     @GetMapping("me")
     public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
-        User user = userRepository.findById(devicePrincipal.getId()).get();
+        User user = userService.getFromPrincipal(devicePrincipal);
         return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromEntity(user));
     }
 
     @GetMapping("boards")
     public ResponseEntity<List<BoardInfoResponse>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
-        User user = userRepository.findById(devicePrincipal.getId()).get();
+        User user = userService.getFromPrincipal(devicePrincipal);
         List<BoardInfoResponse> response = userService.getBoards(user);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("posts")
+    public ResponseEntity<List<PostResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<PostResponse> response = userService.getPosts(user);
         return ResponseEntity.ok().body(response);
     }
 
