@@ -1,8 +1,11 @@
 package com.dasom.gongtalk.controller;
 
+import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.dto.PostListResponse;
 import com.dasom.gongtalk.dto.PostRequest;
 import com.dasom.gongtalk.dto.PostResponse;
+import com.dasom.gongtalk.repository.KeywordRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +31,10 @@ public class PostController {
     }
 
     @GetMapping(params = {"search-keyword"})
-    public ResponseEntity<List<Post>> getAllPostsFromKeywords(@RequestParam(value = "search-keyword") List<String> searchKeywords){
+    public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@RequestParam(value = "search-keyword") List<String> searchKeywords){
         List<Post> posts = postRepository.findAllByKeywordsContentIn(searchKeywords);
-        return ResponseEntity.status(HttpStatus.OK).body(posts);
+        List<PostListResponse> response = PostListResponse.fromPosts(posts);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping
