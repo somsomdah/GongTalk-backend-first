@@ -21,7 +21,7 @@ public class Post {
     private Board board;
 
     @NotNull
-    private Integer post_num;
+    private Integer postNum;
 
     @NotNull
     private String source;
@@ -34,6 +34,7 @@ public class Post {
     @Column(columnDefinition = "varchar(50) default '일반'")
     private String category;
     @NotNull
+    @Column(length = 1000000000)
     private String content;
     @NotNull
     private LocalDate date;
