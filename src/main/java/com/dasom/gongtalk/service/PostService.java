@@ -14,6 +14,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
 
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.KomoranResult;
+import kr.co.shineware.nlp.komoran.model.Token;
+
 import java.util.*;
 
 @Service
@@ -40,12 +45,32 @@ public class PostService {
 
         String content = post.getContent();
         String extractedText = Jsoup.parse(content).text();
+        String title = post.getTitle();
+
+        Komoran komoran = new Komoran(DEFAULT_MODEL.LIGHT);
+        KomoranResult resultFromContent = komoran.analyze(extractedText);
+        KomoranResult resultFromTitle = komoran.analyze(title);
 
         List<Keyword> keywords = new ArrayList<>();
-        StringTokenizer tokenizer = new StringTokenizer(extractedText," ");
-        while (tokenizer.hasMoreTokens()){
-            Keyword keyword = keywordService.getOrCreateFromContent(tokenizer.nextToken());;
-            keywords.add(keyword);
+        List<Token> tokenListFromContent = resultFromContent.getTokenList();
+        List<Token> tokenListFromTitle = resultFromTitle.getTokenList();
+
+        for (Token token : tokenListFromContent){
+            String keywordContent = token.getMorph();
+            Keyword keyword = keywordService.getOrCreateFromContent(keywordContent);
+
+            if (!keywords.contains(keyword)){
+                keywords.add(keyword);
+            }
+        }
+
+        for (Token token : tokenListFromTitle){
+            String keywordContent = token.getMorph();
+            Keyword keyword = keywordService.getOrCreateFromContent(keywordContent);
+
+            if (!keywords.contains(keyword)){
+                keywords.add(keyword);
+            }
         }
 
         post.setKeywords(keywords);
