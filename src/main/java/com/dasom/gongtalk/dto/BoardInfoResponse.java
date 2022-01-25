@@ -1,9 +1,7 @@
 package com.dasom.gongtalk.dto;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.school.School;
-import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.AllArgsConstructor;

@@ -1,14 +1,8 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.repository.BoardRepository;
-import com.dasom.gongtalk.repository.PostRepository;
-import com.dasom.gongtalk.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

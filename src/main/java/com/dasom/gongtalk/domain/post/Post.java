@@ -2,8 +2,6 @@ package com.dasom.gongtalk.domain.post;
 
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.service.BoardService;
-import com.dasom.gongtalk.service.PostService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,11 +1,9 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.BoardInfoResponse;
 import com.dasom.gongtalk.dto.PostFromUserResponse;
-import com.dasom.gongtalk.dto.PostResponse;
 import com.dasom.gongtalk.dto.UserLoginResponse;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.PostRepository;

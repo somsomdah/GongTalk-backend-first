@@ -1,10 +1,7 @@
 package com.dasom.gongtalk.controller;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.*;
-import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.UserService;

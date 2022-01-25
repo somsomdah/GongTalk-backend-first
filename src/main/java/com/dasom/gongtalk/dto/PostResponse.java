@@ -1,19 +1,11 @@
 package com.dasom.gongtalk.dto;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.User;
-import com.dasom.gongtalk.repository.PostRepository;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @AllArgsConstructor

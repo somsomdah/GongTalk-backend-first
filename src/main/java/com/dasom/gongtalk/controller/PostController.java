@@ -1,10 +1,8 @@
 package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.dto.PostFromUserResponse;
 import com.dasom.gongtalk.dto.PostRequest;
 import com.dasom.gongtalk.dto.PostResponse;
-import com.dasom.gongtalk.repository.KeywordRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,11 @@
 package com.dasom.gongtalk.repository;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
-import java.util.Collection;
 import java.util.List;
 
 @Repository

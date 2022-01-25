@@ -4,22 +4,19 @@ package com.dasom.gongtalk.service;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.dto.PostRequest;
-import com.dasom.gongtalk.dto.PostResponse;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
-import com.dasom.gongtalk.repository.BoardRepository;
-import com.dasom.gongtalk.repository.KeywordRepository;
 import com.dasom.gongtalk.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.springframework.stereotype.Service;
-
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;
 import kr.co.shineware.nlp.komoran.model.Token;
+import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
