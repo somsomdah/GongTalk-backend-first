@@ -3,17 +3,12 @@ package com.dasom.gongtalk.controller;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.*;
-import com.dasom.gongtalk.exception.ResourceNotFoundException;
-import com.dasom.gongtalk.repository.BoardRepository;
-import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.BoardService;
 import com.dasom.gongtalk.service.UserService;
-import io.github.classgraph.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +16,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
