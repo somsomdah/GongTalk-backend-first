@@ -10,8 +10,12 @@ import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +54,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void deleteUserBoard(User user, Board board){
+        user.getBoards().removeAll(Collections.singleton(board));
+        userRepository.save(user);
+    }
+
     public String getAuthToken(String deviceNum){
         User user = userRepository.findByDeviceNum(deviceNum);
         return tokenProvider.createToken(user);
@@ -59,8 +68,10 @@ public class UserService {
         return subscribeRepository.findAllBoardsByUser(user);
     }
 
-    public List<Post> getPosts(User user){
-        return postRepository.findAllByUser(user);
+    public List<Post> getPosts(User user, int max){
+        List<Board> boards = user.getBoards();
+        Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
+        return postRepository.findByBoardIn(boards, limitMax);
     }
 
     public List<Keyword> getCommonKeywords(User user){

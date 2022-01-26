@@ -3,13 +3,17 @@ package com.dasom.gongtalk.controller;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.BoardRepository;
+import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.BoardService;
 import com.dasom.gongtalk.service.UserService;
+import io.github.classgraph.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -69,7 +74,7 @@ public class UserController {
     }
 
     @PostMapping("boards/{boardId}")
-    public ResponseEntity<UserBoardResponse> addBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<UserBoardResponse> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                        @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
@@ -79,10 +84,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("posts")
-    public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
+    @DeleteMapping("boards/{boardId}")
+    public ResponseEntity<UserBoardResponse> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                         @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
-        List<Post> posts = userService.getPosts(user);
+        Board board = boardService.getFromId(boardId);
+        userService.deleteUserBoard(user,board);
+        UserBoardResponse response = UserBoardResponse.fromUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping(value = "posts", params = {"max"})
+    public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                           @RequestParam int max) {
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<Post> posts = userService.getPosts(user, max);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.ok().body(response);
     }

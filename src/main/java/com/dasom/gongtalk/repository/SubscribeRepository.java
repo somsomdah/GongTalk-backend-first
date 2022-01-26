@@ -16,12 +16,14 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
     List<Subscribe> findAllByTypeAndUser(String type, User user);
     List<Subscribe> findAllByUser(User user);
     List<Subscribe> findAllByUserAndBoard(User user, Board board);
+    List<Subscribe> findAllByUserAndBoardAndType(User user, Board board, String type);
+
 
     @Query("select s.keyword.content from Subscribe s where s.user=:user and s.board=:board and s.type='K'")
     List<String> findAllKeywordContentByUserAndBoard(User user, Board board);
     Boolean existsByUserAndBoardAndType(User user, Board board, String type);
 
-    @Query("select s.board from Subscribe s where s.user = :user and s.type='B'")
+    @Query("select u.boards from User u where u=:user")
     List<Board> findAllBoardsByUser(User user);
 
 }
