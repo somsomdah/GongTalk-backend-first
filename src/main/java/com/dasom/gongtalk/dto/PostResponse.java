@@ -3,11 +3,14 @@ package com.dasom.gongtalk.dto;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.post.Post;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-@Setter
+@Data
 @AllArgsConstructor
 public class PostResponse {
 

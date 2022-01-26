@@ -3,6 +3,7 @@ package com.dasom.gongtalk.repository;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     @Query("select p from Post p join p.keywords k where k.content in :keywordsContent order by p.date desc ")
     List<Post> findAllByKeywordsContentIn(List<String> keywordsContent);
+
+    @Query("select p from Post p where p.board in (select u.boards from User u where u=:user)")
+    List<Post> findAllByUser(User user);
 }

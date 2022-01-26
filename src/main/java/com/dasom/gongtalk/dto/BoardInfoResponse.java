@@ -17,25 +17,17 @@ public class BoardInfoResponse {
     private Integer id;
     private String name;
     private School school;
-    private List<String> keywords;
-    private boolean notifyAll;
 
-    public static List<BoardInfoResponse> fromUserEntity(User user, SubscribeRepository subscribeRepository){
-        List<Board> boards = user.getBoards();
+    public static List<BoardInfoResponse> fromBoards(List<Board> boards){
         List<BoardInfoResponse> response = new ArrayList<>();
-        
-        
+
         for (Board board : boards){
 
-            List<String> keywords = subscribeRepository.findAllKeywordContentByUserAndBoard(user, board);
-            boolean notifyAll = subscribeRepository.existsByUserAndBoardAndType(user, board, "B");
 
             response.add(new BoardInfoResponse(
                     board.getId(), 
                     board.getName(), 
-                    board.getSchool(),
-                    keywords,
-                    notifyAll
+                    board.getSchool()
             ));
         }
         

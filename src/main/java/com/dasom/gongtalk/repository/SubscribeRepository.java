@@ -21,4 +21,7 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
     List<String> findAllKeywordContentByUserAndBoard(User user, Board board);
     Boolean existsByUserAndBoardAndType(User user, Board board, String type);
 
+    @Query("select s.board from Subscribe s where s.user = :user and s.type='B'")
+    List<Board> findAllBoardsByUser(User user);
+
 }

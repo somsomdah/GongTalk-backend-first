@@ -1,9 +1,14 @@
 package com.dasom.gongtalk.controller;
 
+import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
+import com.dasom.gongtalk.service.BoardService;
 import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +26,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final BoardService boardService;
 
     @GetMapping
     public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -43,7 +49,8 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
-        UserLoginResponse response = userService.login(request.getDeviceNum());
+        String token = userService.getAuthToken(request.getDeviceNum());
+        UserLoginResponse response = UserLoginResponse.fromAuthTokenString(token);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -56,15 +63,36 @@ public class UserController {
     @GetMapping("boards")
     public ResponseEntity<List<BoardInfoResponse>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
         User user = userService.getFromPrincipal(devicePrincipal);
-        List<BoardInfoResponse> response = userService.getBoards(user);
+        List<Board> boards = userService.getBoards(user);
+        List<BoardInfoResponse> response = BoardInfoResponse.fromBoards(boards);
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("posts")
-    public ResponseEntity<List<PostFromUserResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
+    @PostMapping("boards/{boardId}")
+    public ResponseEntity<UserBoardResponse> addBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                       @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
-        List<PostFromUserResponse> response = userService.getPosts(user);
+        Board board = boardService.getFromId(boardId);
+        userService.addUserBoard(user,board);
+
+        UserBoardResponse response = UserBoardResponse.fromUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("posts")
+    public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<Post> posts = userService.getPosts(user);
+        List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("keywords/common")
+    public ResponseEntity<List<KeywordResponse>> getCommonKeywords(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<Keyword> keywords = userService.getCommonKeywords(user);
+        List<KeywordResponse> response = KeywordResponse.fromKeywords(keywords);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }

@@ -1,15 +1,12 @@
 package com.dasom.gongtalk.service;
 
+import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
-import com.dasom.gongtalk.dto.BoardInfoResponse;
-import com.dasom.gongtalk.dto.PostFromUserResponse;
-import com.dasom.gongtalk.dto.UserLoginResponse;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
-import com.dasom.gongtalk.repository.PostRepository;
-import com.dasom.gongtalk.repository.SettingRepository;
-import com.dasom.gongtalk.repository.SubscribeRepository;
-import com.dasom.gongtalk.repository.UserRepository;
+import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +23,7 @@ public class UserService {
     private final SettingRepository settingRepository;
     private final SubscribeRepository subscribeRepository;
     private final PostRepository postRepository;
+    private final KeywordRepository keywordRepository;
     private final TokenProvider tokenProvider;
 
     public User getFromPrincipal(DevicePrincipal devicePrincipal){
@@ -35,7 +33,7 @@ public class UserService {
     public User getFromId(Integer id){
 
         Optional<User> user = userRepository.findById(id);
-        if (user == null){
+        if (user.isEmpty()){
             throw new ResourceNotFoundException("User", "id", id);
         }
         return user.get();
@@ -47,18 +45,26 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public UserLoginResponse login(String deviceNum){
+    public void addUserBoard(User user, Board board){
+        user.getBoards().add(board);
+        userRepository.save(user);
+    }
+
+    public String getAuthToken(String deviceNum){
         User user = userRepository.findByDeviceNum(deviceNum);
-        String token = tokenProvider.createToken(user);
-        return new UserLoginResponse(token);
+        return tokenProvider.createToken(user);
     }
 
-    public List<BoardInfoResponse> getBoards(User user) {
-        return BoardInfoResponse.fromUserEntity(user, subscribeRepository);
+    public List<Board> getBoards(User user) {
+        return subscribeRepository.findAllBoardsByUser(user);
     }
 
-    public List<PostFromUserResponse> getPosts(User user){
-        return PostFromUserResponse.fromUserEntity(user, postRepository);
+    public List<Post> getPosts(User user){
+        return postRepository.findAllByUser(user);
+    }
+
+    public List<Keyword> getCommonKeywords(User user){
+        return keywordRepository.findAllCommonByUser(user);
     }
 
 

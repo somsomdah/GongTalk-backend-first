@@ -23,7 +23,7 @@ public class Subscribe {
     @ManyToOne(fetch= FetchType.EAGER)
     private Keyword keyword;
 
-    private String type; // B(for 'Board') 또는 K (for 'Keyword')
+    private String type; // B(for 'Board') 또는 CK (for 'CommonKeyword') 또는 BK("BoardKeyword")
 
 
 }
