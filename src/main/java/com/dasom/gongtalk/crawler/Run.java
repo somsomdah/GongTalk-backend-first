@@ -16,10 +16,10 @@ public class Run {
     final BoardRepository boardRepository;
     final PostRepository postRepository;
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 1000 * 60)
     public void run(){
         for (Board board : boardRepository.findAll()){
-            Crawler.crawl(board, postRepository);
+            Crawler.crawl(board, postRepository, boardRepository);
         }
     }
 

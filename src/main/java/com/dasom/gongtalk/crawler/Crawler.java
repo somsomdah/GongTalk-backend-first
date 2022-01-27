@@ -2,6 +2,7 @@ package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class Crawler {
         return post;
     }
 
-    public static void crawl(Board board, PostRepository postRepository){
+    public static void crawl(Board board, PostRepository postRepository, BoardRepository boardRepository){
         Integer lastPostNum = board.getLastPostNum();
         Integer newPostNum = lastPostNum + 1;
         int noPostCount = 0;
@@ -51,6 +52,9 @@ public class Crawler {
             }
             newPostNum ++ ;
         }
+
+        board.setLastPostNum(lastPostNum);
+        boardRepository.save(board);
 
     }
 }

@@ -45,7 +45,8 @@ public class PostService {
         String title = post.getTitle();
 
         Komoran komoran = new Komoran(DEFAULT_MODEL.LIGHT);
-        KomoranResult resultFromContent = komoran.analyze(extractedText);
+        KomoranResult resultFromContent = komoran.
+                analyze(extractedText);
         KomoranResult resultFromTitle = komoran.analyze(title);
 
         List<Keyword> keywords = new ArrayList<>();
