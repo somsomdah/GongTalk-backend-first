@@ -16,7 +16,7 @@ public class File {
     private Integer id;
 
     @NotNull
-    private String source;
+    private String url;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull

@@ -16,7 +16,6 @@ public class PostListResponse {
     private Integer id;
     private Board board;
     private Integer postNum;
-    private String source;
     private String title;
     private String writer;
     private String category;
@@ -35,7 +34,6 @@ public class PostListResponse {
                     post.getId(),
                     post.getBoard(),
                     post.getPostNum(),
-                    post.getSource(),
                     post.getTitle(),
                     post.getWriter(),
                     post.getCategory(),

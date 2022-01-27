@@ -24,7 +24,6 @@ public class PostRequest {
 
         Post post = new Post();
         post.setPostNum(this.postNum);
-        post.setSource(this.source);
         post.setTitle(this.title);
         post.setWriter(this.writer);
         post.setCategory(this.category);

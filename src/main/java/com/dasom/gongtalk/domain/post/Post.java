@@ -26,16 +26,12 @@ public class Post {
     private Integer postNum;
 
     @NotNull
-    private String source;
-
-    @NotNull
     private String title;
 
     @NotNull
     @Column(columnDefinition = "varchar(50) default '관리자'")
     private String writer;
 
-    @NotNull
     @Column(columnDefinition = "varchar(50) default '일반'")
     private String category;
 
@@ -58,4 +54,11 @@ public class Post {
     private List<Keyword> keywords;
 
 
+    @Transient
+    private String url;
+
+    public String getUrl() {
+
+        return this.getBoard().getBaseUrl() + this.getPostNum();
+    }
 }

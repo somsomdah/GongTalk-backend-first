@@ -14,7 +14,6 @@ public class PostResponse {
     private Integer id;
     private Board board;
     private Integer postNum;
-    private String source;
     private String title;
     private String writer;
     private String category;
@@ -25,8 +24,8 @@ public class PostResponse {
 
     public static PostResponse fromPost(Post post){
         return new PostResponse(post.getId(), post.getBoard(),
-                post.getPostNum(), post.getSource(), post.getTitle(),
-                post.getWriter(), post.getCategory(), post.getContent(), post.getDate(),
+                post.getPostNum(), post.getTitle(), post.getWriter(),
+                post.getCategory(), post.getContent(), post.getDate(),
                 post.isDeleted(), post.isModified());
     }
 
