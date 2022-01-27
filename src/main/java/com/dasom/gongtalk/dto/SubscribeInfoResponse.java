@@ -4,7 +4,6 @@ import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;

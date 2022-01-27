@@ -5,12 +5,10 @@ import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.SubscribeRequest;
-import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
