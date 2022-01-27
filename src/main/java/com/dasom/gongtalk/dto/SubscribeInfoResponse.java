@@ -16,7 +16,7 @@ public class SubscribeInfoResponse {
     private String type;
     private Board board;
     private List<String> keywordContents;
-    private boolean notifyAll;
+    private boolean notifyAll = false;
 
 
     public static List<SubscribeInfoResponse> fromSubscribes(List<Subscribe> subscribes){
@@ -24,25 +24,32 @@ public class SubscribeInfoResponse {
         SubscribeInfoResponse typeCK = new SubscribeInfoResponse("CK", null, new ArrayList<>(), false);
 
         for (Subscribe subscribe : subscribes){
-            String keywordContent = subscribe.getKeyword().getContent();
-            if (subscribe.getType() == "CK"){
-                typeCK.getKeywordContents().add(keywordContent);
+
+            if (subscribe.getType().equals("CK")){
+                typeCK.getKeywordContents().add(subscribe.getKeyword().getContent());
             }else{
 
-                Stream<SubscribeInfoResponse> subscribeInfoResponseStream =
-                        response.stream().filter(r->r.getBoard().equals(subscribe.getBoard()));
-
-                if (subscribeInfoResponseStream.findAny().isEmpty()){
+                if (response
+                        .stream()
+                        .filter(r->r.getBoard().equals(subscribe.getBoard()))
+                        .findAny()
+                        .isEmpty()){
                     SubscribeInfoResponse subscribeInfoResponseNew = new SubscribeInfoResponse(subscribe.getType(), subscribe.getBoard(), new ArrayList<>(),false);
                     response.add(subscribeInfoResponseNew);
                 }
 
-                SubscribeInfoResponse subscribeInfoResponse = subscribeInfoResponseStream.findFirst().get();
+                SubscribeInfoResponse subscribeInfoResponse = response
+                        .stream()
+                        .filter(r->r.getBoard().equals(subscribe.getBoard()))
+                        .findFirst().get();
 
-                if(subscribe.getType()=="BK"){
-                    subscribeInfoResponse.getKeywordContents().add(keywordContent);
-                }else{
+                if (subscribe.getType().equals("B")){
                     subscribeInfoResponse.setNotifyAll(true);
+                    continue;
+                }
+
+                if(subscribe.getType().equals("BK")){
+                    subscribeInfoResponse.getKeywordContents().add(subscribe.getKeyword().getContent());
                 }
             }
         }
