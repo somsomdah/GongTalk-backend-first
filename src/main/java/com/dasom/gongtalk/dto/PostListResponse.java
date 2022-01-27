@@ -29,7 +29,6 @@ public class PostListResponse {
         List<PostListResponse> response = new ArrayList<>();
         for(Post post: posts){
             if (response.stream().anyMatch(r ->r.getId().equals(post.getId()))) {
-                System.out.println(111111);
                 continue;
             }
             PostListResponse resp = new PostListResponse(

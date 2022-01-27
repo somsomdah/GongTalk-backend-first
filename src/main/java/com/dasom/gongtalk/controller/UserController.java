@@ -3,11 +3,13 @@ package com.dasom.gongtalk.controller;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.dto.*;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.BoardService;
+import com.dasom.gongtalk.service.SubscribeService;
 import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final BoardService boardService;
+    private final SubscribeService subscribeService;
 
     @GetMapping
     public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -103,6 +106,23 @@ public class UserController {
         List<Keyword> keywords = userService.getCommonKeywords(user);
         List<KeywordResponse> response = KeywordResponse.fromKeywords(keywords);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("subscribes")
+    public  ResponseEntity<List<SubscribeInfoResponse>> getSubscribeInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<Subscribe> subscribes = subscribeService.getAllSubscribe(user);
+        List<SubscribeInfoResponse> response = SubscribeInfoResponse.fromSubscribes(subscribes);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("subscribes")
+    public ResponseEntity<Subscribe> createSubscribe(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                                 @RequestBody SubscribeRequest subscribeRequest){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Subscribe subscribe = subscribeService.createSubscribe(user, subscribeRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(subscribe);
     }
 
 }

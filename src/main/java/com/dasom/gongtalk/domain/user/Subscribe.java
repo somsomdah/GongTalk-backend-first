@@ -4,6 +4,7 @@ import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -18,8 +19,10 @@ public class Subscribe {
 
     @ManyToOne(fetch= FetchType.EAGER)
     private User user;
+
     @ManyToOne(fetch= FetchType.EAGER)
     private Board board;
+
     @ManyToOne(fetch= FetchType.EAGER)
     private Keyword keyword;
 
