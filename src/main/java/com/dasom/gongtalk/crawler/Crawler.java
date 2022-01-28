@@ -46,14 +46,14 @@ public class Crawler {
                 postRepository.save(post);
             }catch (Exception ex){
                 noPostCount ++;
-                if (noPostCount >= 20){
+                if (noPostCount >= 10){
                     break;
                 }
             }
             newPostNum ++ ;
         }
 
-        board.setLastPostNum(lastPostNum);
+        board.setLastPostNum(newPostNum);
         boardRepository.save(board);
 
     }
