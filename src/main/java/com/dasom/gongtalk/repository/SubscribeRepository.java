@@ -2,12 +2,14 @@ package com.dasom.gongtalk.repository;
 
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.print.attribute.standard.Sides;
 import java.util.List;
 
 @Repository
@@ -15,7 +17,6 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
 
     List<Subscribe> findAllByUser(User user);
 
-    @Query("select u.boards from User u where u=:user")
-    List<Board> findAllBoardsByUser(User user);
+    List<Subscribe> findAllByUserAndTypeAndBoardAndKeyword(User user, String type, Board board, Keyword keyword);
 
 }

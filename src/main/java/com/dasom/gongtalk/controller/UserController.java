@@ -125,4 +125,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscribe);
     }
 
+    @DeleteMapping("subscribes")
+    public ResponseEntity<?> deleteSubscribe(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                @RequestBody SubscribeDeleteRequest subscribeDeleteRequest){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        subscribeService.deleteSubscribe(user, subscribeDeleteRequest);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

@@ -4,6 +4,7 @@ import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.dto.SubscribeDeleteRequest;
 import com.dasom.gongtalk.dto.SubscribeRequest;
 import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,14 @@ public class SubscribeService {
         newSubscribe.setType(type);
 
         return subscribeRepository.save(newSubscribe);
+    }
+
+    public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest){
+        Board board = boardService.getFromId(subscribeDeleteRequest.getBoardId());
+        Keyword keyword = keywordService.getFromId(subscribeDeleteRequest.getKeywordId());
+        String type = subscribeDeleteRequest.getType();
+
+        subscribeRepository.deleteAll(subscribeRepository.findAllByUserAndTypeAndBoardAndKeyword(user, type, board, keyword));
+
     }
 }

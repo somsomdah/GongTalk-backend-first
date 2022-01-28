@@ -25,7 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final SettingRepository settingRepository;
-    private final SubscribeRepository subscribeRepository;
+    private final BoardRepository boardRepository;
     private final PostRepository postRepository;
     private final KeywordRepository keywordRepository;
     private final TokenProvider tokenProvider;
@@ -65,7 +65,7 @@ public class UserService {
     }
 
     public List<Board> getBoards(User user) {
-        return subscribeRepository.findAllBoardsByUser(user);
+        return boardRepository.findAllBoardsByUser(user);
     }
 
     public List<Post> getPosts(User user, int max){

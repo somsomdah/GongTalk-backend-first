@@ -1,6 +1,7 @@
 package com.dasom.gongtalk.dto;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class SubscribeInfoResponse {
 
     private String type;
     private Board board;
-    private List<String> keywordContents;
+    private List<Keyword> keywords;
     private boolean notifyAll = false;
 
 
@@ -25,7 +26,7 @@ public class SubscribeInfoResponse {
         for (Subscribe subscribe : subscribes){
 
             if (subscribe.getType().equals("CK")){
-                typeCK.getKeywordContents().add(subscribe.getKeyword().getContent());
+                typeCK.getKeywords().add(subscribe.getKeyword());
             }else{
 
                 if (response
@@ -48,7 +49,7 @@ public class SubscribeInfoResponse {
                 }
 
                 if(subscribe.getType().equals("BK")){
-                    subscribeInfoResponse.getKeywordContents().add(subscribe.getKeyword().getContent());
+                    subscribeInfoResponse.getKeywords().add(subscribe.getKeyword());
                 }
             }
         }

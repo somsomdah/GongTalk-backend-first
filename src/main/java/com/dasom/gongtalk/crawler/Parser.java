@@ -35,7 +35,9 @@ public class Parser {
     public String extractCategory(){
         String categorySelector = board.getCategorySelector();
         Elements categoryElement = this.doc.select(categorySelector);
-        return Jsoup.parse(categoryElement.toString()).text();
+        String categoryString = Jsoup.parse(categoryElement.toString()).text();
+        categoryString = categoryString.replace("[","").replace("]","");
+        return categoryString;
     }
 
     public String extractWriter(){

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +29,17 @@ public class PostResponse {
                 post.getPostNum(), post.getTitle(), post.getWriter(),
                 post.getCategory(), post.getContent(), post.getDate(),
                 post.isDeleted(), post.isModified());
+    }
+
+    public static List<PostResponse> fromPosts(List<Post> posts){
+
+        List<PostResponse> response = new ArrayList<>();
+
+        for (Post post :posts){
+            response.add(fromPost(post));
+        }
+
+        return response;
     }
 
 }
