@@ -21,4 +21,10 @@ public class Alarm {
     private Post post;
 
     private boolean isRead;
+
+    public Alarm(User user, Post post){
+        this.user = user;
+        this.post = post;
+        this.isRead = false;
+    }
 }

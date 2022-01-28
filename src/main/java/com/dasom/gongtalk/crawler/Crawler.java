@@ -1,16 +1,22 @@
 package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.user.Alarm;
+import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
+import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -20,20 +26,14 @@ public class Crawler {
     private PostService postService;
     @Autowired
     private BoardRepository boardRepository;
-
     @Autowired
-    private AlarmRepository alarmRepository;
-
-    @Autowired
-    private SubscribeRepository subscribeRepository;
+    private AlarmService alarmService;
 
     private static final int MAX_NO_POST_COUNT = 5;
 
-    public static Post createPost(Board board, Integer postNum) throws IOException {
+    public Post createPost(Board board, Integer postNum) throws IOException {
 
-        Post post = new Post();
-        post.setBoard(board);
-        post.setPostNum(postNum);
+        Post post = new Post(board, postNum);
 
         String pageUrl = post.getUrl();
 
@@ -45,7 +45,7 @@ public class Crawler {
 
         try{
             post.setCategory(parser.extractCategory());
-        }catch (Exception ex){
+        }catch (Exception ignored){
         }
 
         return post;
@@ -62,6 +62,7 @@ public class Crawler {
             try{
                 Post post = createPost(board, newPostNum);
                 postService.save(post);
+                alarmService.save(post);
             }catch (Exception ex){
                 noPostCount ++;
                 if (noPostCount >= MAX_NO_POST_COUNT){
@@ -75,4 +76,5 @@ public class Crawler {
         boardRepository.save(board);
 
     }
+
 }

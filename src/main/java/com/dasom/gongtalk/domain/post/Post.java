@@ -61,4 +61,10 @@ public class Post {
 
         return this.getBoard().getBaseUrl() + this.getPostNum();
     }
+
+    public Post(Board board, Integer postNum){
+        this.board = board;
+        this.postNum = postNum;
+    }
+
 }

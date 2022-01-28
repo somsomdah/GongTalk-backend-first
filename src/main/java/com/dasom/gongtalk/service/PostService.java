@@ -8,6 +8,7 @@ import com.dasom.gongtalk.domain.user.Alarm;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
@@ -31,6 +32,7 @@ public class PostService {
     private final KeywordService keywordService;
     private final SubscribeRepository subscribeRepository;
     private final BoardRepository boardRepository;
+    private final AlarmRepository alarmRepository;
 
     public Post getFromId(Integer id){
         Optional<Post> post = postRepository.findById(id);
@@ -69,6 +71,7 @@ public class PostService {
         }
 
         post.setKeywords(keywords);
+
         return postRepository.save(post);
     }
 
