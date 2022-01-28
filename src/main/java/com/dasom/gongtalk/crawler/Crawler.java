@@ -5,6 +5,7 @@ import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,6 +13,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Component
 public class Crawler {
+
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private BoardRepository boardRepository;
+    private static final int MAX_NO_POST_COUNT = 5;
 
     public static Post createPost(Board board, Integer postNum) throws IOException {
 
@@ -35,7 +42,7 @@ public class Crawler {
         return post;
     }
 
-    public static void crawl(Board board, PostService postService, BoardRepository boardRepository){
+    public void crawl(Board board){
         Integer lastPostNum = board.getLastPostNum();
         Integer newPostNum = lastPostNum + 1;
         int noPostCount = 0;
@@ -46,7 +53,7 @@ public class Crawler {
                 postService.save(post);
             }catch (Exception ex){
                 noPostCount ++;
-                if (noPostCount >= 10){
+                if (noPostCount >= MAX_NO_POST_COUNT){
                     break;
                 }
             }
