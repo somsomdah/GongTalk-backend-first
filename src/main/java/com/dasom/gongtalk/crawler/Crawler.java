@@ -2,7 +2,9 @@ package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.BoardRepository;
+import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,13 @@ public class Crawler {
     private PostService postService;
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private AlarmRepository alarmRepository;
+
+    @Autowired
+    private SubscribeRepository subscribeRepository;
+
     private static final int MAX_NO_POST_COUNT = 5;
 
     public static Post createPost(Board board, Integer postNum) throws IOException {
@@ -41,6 +50,8 @@ public class Crawler {
 
         return post;
     }
+
+
 
     public void crawl(Board board){
         Integer lastPostNum = board.getLastPostNum();

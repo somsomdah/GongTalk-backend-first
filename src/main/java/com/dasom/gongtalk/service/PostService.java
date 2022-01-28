@@ -4,9 +4,13 @@ package com.dasom.gongtalk.service;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.user.Alarm;
+import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
+import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.util.KeywordExtractor;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -25,6 +29,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final KeywordService keywordService;
+    private final SubscribeRepository subscribeRepository;
+    private final BoardRepository boardRepository;
 
     public Post getFromId(Integer id){
         Optional<Post> post = postRepository.findById(id);
@@ -68,6 +74,6 @@ public class PostService {
 
     public List<Post> getPostsFromBoard(Board board, int max){
         Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
-        return postRepository.findByBoard(board, limitMax);
+        return postRepository.findAllByBoard(board, limitMax);
     }
 }

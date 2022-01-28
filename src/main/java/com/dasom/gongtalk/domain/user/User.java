@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties({"username", "password", })
+@JsonIgnoreProperties({"username", "password", "subscribes" })
 public class User {
 
     @Id

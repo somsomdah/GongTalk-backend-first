@@ -120,7 +120,7 @@ public class UserController {
     public ResponseEntity<Subscribe> createSubscribe(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                                  @RequestBody SubscribeRequest subscribeRequest){
         User user = userService.getFromPrincipal(devicePrincipal);
-        Subscribe subscribe = subscribeService.createSubscribe(user, subscribeRequest);
+        Subscribe subscribe = subscribeService.save(user, subscribeRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(subscribe);
     }

@@ -24,7 +24,7 @@ public class SubscribeService {
         return subscribeRepository.findAllByUser(user);
     }
 
-    public Subscribe createSubscribe(User user, SubscribeRequest subscribeRequest){
+    public Subscribe save(User user, SubscribeRequest subscribeRequest){
         Board board = null;
         if (subscribeRequest.getBoardId() != null){
             board = boardService.getFromId(subscribeRequest.getBoardId());

@@ -71,7 +71,7 @@ public class UserService {
     public List<Post> getPosts(User user, int max){
         List<Board> boards = user.getBoards();
         Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
-        return postRepository.findByBoardIn(boards, limitMax);
+        return postRepository.findAllByBoardIn(boards, limitMax);
     }
 
     public List<Keyword> getCommonKeywords(User user){

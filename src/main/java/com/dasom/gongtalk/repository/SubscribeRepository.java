@@ -17,6 +17,8 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
 
     List<Subscribe> findAllByUser(User user);
 
+    List<Subscribe> findAllByUserAndType(User user, String type);
+
     List<Subscribe> findAllByUserAndTypeAndBoardAndKeyword(User user, String type, Board board, Keyword keyword);
 
 }
