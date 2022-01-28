@@ -1,6 +1,5 @@
 package com.dasom.gongtalk.util;
 
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.KomoranResult;

@@ -1,9 +1,7 @@
 package com.dasom.gongtalk.crawler;
 
-import com.dasom.gongtalk.config.AppProperties;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.repository.BoardRepository;
-import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;

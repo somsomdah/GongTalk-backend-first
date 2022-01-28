@@ -1,7 +1,5 @@
 package com.dasom.gongtalk.domain.board;
 
-import com.dasom.gongtalk.crawler.Parser;
-import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.school.School;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -9,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.IOException;
 
 @Entity
 @Data
