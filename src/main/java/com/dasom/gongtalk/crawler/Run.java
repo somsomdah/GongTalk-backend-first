@@ -1,5 +1,6 @@
 package com.dasom.gongtalk.crawler;
 
+import com.dasom.gongtalk.config.AppProperties;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Run {
 
+    private final BoardRepository boardRepository;
+    private final PostRepository postRepository;
+    private final static int SCHEDULE_INTERVAL_MIN = 20;
 
-    final BoardRepository boardRepository;
-    final PostRepository postRepository;
-
-    @Scheduled(fixedDelay = 1000 * 60)
+    @Scheduled(fixedDelay = SCHEDULE_INTERVAL_MIN * 1000 * 60)
     public void run(){
         for (Board board : boardRepository.findAll()){
             Crawler.crawl(board, postRepository, boardRepository);
