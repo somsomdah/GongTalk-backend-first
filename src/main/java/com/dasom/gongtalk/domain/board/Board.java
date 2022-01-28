@@ -3,6 +3,7 @@ package com.dasom.gongtalk.domain.board;
 import com.dasom.gongtalk.crawler.Parser;
 import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.school.School;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,9 @@ import java.io.IOException;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({
+        "baseUrl", "contentSelector", "titleSelector", "categorySelector",
+        "writerSelector", "dateSelector", "datePattern", "lastPostNum"})
 public class Board {
 
     @Id

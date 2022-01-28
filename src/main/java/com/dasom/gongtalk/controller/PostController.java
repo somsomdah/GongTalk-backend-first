@@ -28,17 +28,11 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping(params = {"search-keyword"})
-    public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@RequestParam(value = "search-keyword") List<String> searchKeywords){
+    @GetMapping(value = "search", params = {"keyword"})
+    public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@RequestParam(value = "keyword") List<String> searchKeywords){
         List<Post> posts = postRepository.findAllByKeywordsContentIn(searchKeywords);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PostMapping
-    public ResponseEntity<Post> createOnePost(@RequestBody PostRequest postRequest){
-        Post post = postService.save(postRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
 
 }
