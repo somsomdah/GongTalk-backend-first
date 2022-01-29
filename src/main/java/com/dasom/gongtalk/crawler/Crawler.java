@@ -18,7 +18,7 @@ public class Crawler {
     private final BoardRepository boardRepository;
     private final AlarmService alarmService;
 
-    private static final int MAX_NO_POST_COUNT = 5;
+    private static final int MAX_NO_POST_COUNT = 20;
 
     public Post createPost(Board board, Integer postNum) throws IOException {
 
@@ -43,22 +43,28 @@ public class Crawler {
 
 
     public void crawl(Board board){
-        Integer lastPostNum = board.getLastPostNum();
-        Integer newPostNum = lastPostNum + 1;
-        int noPostCount = 0;
+        Integer tempPostNum = board.getLastPostNum();
+        Integer newPostNum = board.getLastPostNum();
 
         while(true){
+            int noPostCount = 0;
+            tempPostNum ++ ;
             try{
-                Post post = createPost(board, newPostNum);
+                Post post = createPost(board, tempPostNum);
                 postService.save(post);
                 alarmService.save(post);
+                newPostNum = tempPostNum;
+
             }catch (Exception ex){
+                System.out.println(200001);
+                System.out.println(ex.toString());
                 noPostCount ++;
-                if (noPostCount >= MAX_NO_POST_COUNT){
+                if (noPostCount > MAX_NO_POST_COUNT){
+                    System.out.println(200001);
                     break;
                 }
             }
-            newPostNum ++ ;
+
         }
 
         board.setLastPostNum(newPostNum);

@@ -1,8 +1,7 @@
 package com.dasom.gongtalk.repository;
 
-import com.dasom.gongtalk.domain.user.Alarm;
+import com.dasom.gongtalk.domain.user.Scrap;
 import com.dasom.gongtalk.domain.user.User;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -10,8 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AlarmRepository extends CrudRepository<Alarm, Integer> {
+public interface ScrapRepository extends CrudRepository<Scrap, Integer> {
 
-    List<Alarm> getAllByUser(User user, Pageable pageable);
-
+    List<Scrap> getAllByUser(User user, Pageable pageable);
 }

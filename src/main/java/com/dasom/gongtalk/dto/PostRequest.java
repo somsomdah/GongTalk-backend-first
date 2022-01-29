@@ -20,19 +20,4 @@ public class PostRequest {
     private String content;
     private String date;
 
-    public Post toPost(){
-
-        Post post = new Post();
-        post.setPostNum(this.postNum);
-        post.setTitle(this.title);
-        post.setWriter(this.writer);
-        post.setCategory(this.category);
-        post.setContent(this.content);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-        LocalDate date = LocalDate.parse(this.date, formatter);
-        post.setDate(date);
-
-        return post;
-    }
 }

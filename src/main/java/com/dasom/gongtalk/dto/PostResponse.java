@@ -31,15 +31,4 @@ public class PostResponse {
                 post.isDeleted(), post.isModified());
     }
 
-    public static List<PostResponse> fromPosts(List<Post> posts){
-
-        List<PostResponse> response = new ArrayList<>();
-
-        for (Post post :posts){
-            response.add(fromPost(post));
-        }
-
-        return response;
-    }
-
 }

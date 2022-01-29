@@ -1,6 +1,7 @@
 package com.dasom.gongtalk.domain.user;
 
 import com.dasom.gongtalk.domain.post.Post;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"user"})
 public class Alarm {
 
     @Id

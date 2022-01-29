@@ -3,15 +3,17 @@ package com.dasom.gongtalk.controller;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.user.*;
 import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.repository.AlarmRepository;
+import com.dasom.gongtalk.repository.ScrapRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
-import com.dasom.gongtalk.service.BoardService;
-import com.dasom.gongtalk.service.SubscribeService;
-import com.dasom.gongtalk.service.UserService;
+import com.dasom.gongtalk.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +31,10 @@ public class UserController {
     private final UserRepository userRepository;
     private final BoardService boardService;
     private final SubscribeService subscribeService;
+    private final ScrapRepository scrapRepository;
+    private final PostService postService;
+    private final AlarmRepository alarmRepository;
+    private final AlarmService alarmService;
 
     @GetMapping
     public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -133,5 +139,70 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping(value="scraps", params = {"page", "size"})
+    public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                                  @RequestParam int page,
+                                                                  @RequestParam int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
+        User user = userService.getFromPrincipal(devicePrincipal);
+        List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(scraps);
+    }
+
+    @PostMapping("scraps")
+    public ResponseEntity<Scrap> createScrap(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                             @RequestBody PostIdRequest request){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Post post = postService.getFromId(request.getPostId());
+        Scrap scrap = new Scrap(user, post);
+        scrapRepository.save(scrap);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(scrap);
+
+    }
+
+    @DeleteMapping("scraps/{id}")
+    public ResponseEntity<?> deleteScrap(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                         @PathVariable Integer id){
+        scrapRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    @GetMapping(value = "alarms", params = {"page", "size"})
+    public ResponseEntity<List<Alarm>> getAlarms(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                 @RequestParam int page, @RequestParam int size){
+
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(new Sort.Order(Sort.Direction.DESC,"post.date")));
+        List<Alarm> alarms = alarmRepository.getAllByUser(user, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(alarms);
+    }
+
+    @PatchMapping("alarms/{id}")
+    public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                             @PathVariable Integer id, @RequestBody Alarm request){
+
+        Alarm alarm = alarmService.getFromId(id);
+        alarm.setRead(true);
+        alarmRepository.save(alarm);
+        return ResponseEntity.status(HttpStatus.OK).body(alarm);
+    }
+
+    @GetMapping("setting")
+    public ResponseEntity<Setting> getSetting(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        return ResponseEntity.status(HttpStatus.OK).body(user.getSetting());
+    }
+
+    @PatchMapping("setting")
+    public ResponseEntity<Setting> updateSetting(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                 @RequestBody Setting request){
+
+    }
+
+
 
 }

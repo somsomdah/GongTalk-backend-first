@@ -48,10 +48,24 @@ public class Parser {
 
     public LocalDate extractDate(String datePattern){
         String dateSelector = board.getDateSelector();
+        System.out.println(77777777);
+        System.out.println(dateSelector);
+        System.out.println(77777777);
         Elements dateElement = this.doc.select(dateSelector);
+        System.out.println(66666666);
+        System.out.println(dateElement.toString());
+        System.out.println(66666666);
         String dateString = Jsoup.parse(dateElement.toString()).text();
+        System.out.println(55555555);
+        System.out.println(dateString);
+        System.out.println(55555555);
 
-        String[] splitDate = dateString.split("[-.]");
+        String[] splitDate = dateString.split("[-./]");
+        System.out.println(44444444);
+        String.join("", splitDate);
+        System.out.println();
+        System.out.println(44444444);
+
         if (splitDate.length>3 && splitDate[0].length()==2){
             splitDate[0] = Integer.toString(LocalDate.now().getYear());
             dateString = String.join("",splitDate);

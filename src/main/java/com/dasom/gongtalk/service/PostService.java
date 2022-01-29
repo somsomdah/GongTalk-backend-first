@@ -30,9 +30,6 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final KeywordService keywordService;
-    private final SubscribeRepository subscribeRepository;
-    private final BoardRepository boardRepository;
-    private final AlarmRepository alarmRepository;
 
     public Post getFromId(Integer id){
         Optional<Post> post = postRepository.findById(id);
@@ -75,8 +72,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> getPostsFromBoard(Board board, int max){
-        Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
-        return postRepository.findAllByBoard(board, limitMax);
+    public List<Post> getPostsFromBoard(Board board, int page, int size){
+        Pageable pageable= PageRequest.of(page,size, Sort.by("date"));
+        return postRepository.findAllByBoard(board, pageable);
     }
 }
