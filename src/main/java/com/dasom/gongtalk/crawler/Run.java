@@ -13,7 +13,7 @@ public class Run {
 
     private final static int SCHEDULE_INTERVAL_MIN = 1;
     private final BoardRepository boardRepository;
-    private final Crawler crawler = new Crawler();
+    private final Crawler crawler;
 
     @Scheduled(fixedDelay = SCHEDULE_INTERVAL_MIN * 1000 * 60)
     public void run(){

@@ -21,37 +21,18 @@ public class AlarmService {
     private final SubscribeRepository subscribeRepository;
 
     public void save(Post post){
-        List<Keyword> keywords = post.getKeywords();
-        Board board = post.getBoard();
+        try{
+            List<Keyword> keywords = post.getKeywords();
+            Board board = post.getBoard();
 
-        List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("BK", board, keywords);
-        List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("CK", null, keywords);
-        List<Subscribe> subscribeTypeB = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("B", board, null);
+            List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("BK", board, keywords);
+            List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("CK", null, keywords);
+            List<Subscribe> subscribeTypeB = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("B", board, null);
 
-        List<Alarm> alarms = new ArrayList<>();
+            List<Alarm> alarms = new ArrayList<>();
 
-        for (Subscribe s : subscribeTypeBk) {
-            if (alarmRepository.findAllBySubscribe(s).isEmpty()){
-                if (s.getBoard() == board && keywords.contains(s.getKeyword())) {
-                    Alarm alarm = new Alarm(s.getUser(), post);
-                    alarms.add(alarm);
-                }
-            }
 
-        }
-
-        for (Subscribe s : subscribeTypeCk) {
-            if (alarmRepository.findAllBySubscribe(s).isEmpty()){
-                if (keywords.contains(s.getKeyword())) {
-                    Alarm alarm = new Alarm(s.getUser(), post);
-                    alarms.add(alarm);
-                }
-            }
-
-        }
-
-        for (Subscribe s : subscribeTypeB) {
-            if (alarmRepository.findAllBySubscribe(s).isEmpty()) {
+            for (Subscribe s : subscribeTypeB) {
                 if (s.getBoard() == board) {
                     Alarm alarm = new Alarm(s.getUser(), post);
                     alarms.add(alarm);
@@ -59,8 +40,28 @@ public class AlarmService {
             }
 
 
+            for (Subscribe s : subscribeTypeBk) {
+                if (s.getBoard() == board && keywords.contains(s.getKeyword())) {
+                    Alarm alarm = new Alarm(s.getUser(), post);
+                    alarms.add(alarm);
+                }
+            }
+
+            for (Subscribe s : subscribeTypeCk) {
+                if (keywords.contains(s.getKeyword())) {
+                    Alarm alarm = new Alarm(s.getUser(), post);
+                    alarms.add(alarm);
+                }
+            }
+
+            alarmRepository.saveAll(alarms);
+
+        }catch (Exception ex){
+            System.out.println(111111);
+            System.out.println(ex);
+            System.out.println(111111);
         }
-        alarmRepository.saveAll(alarms);
+
     }
 
 }

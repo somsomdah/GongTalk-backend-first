@@ -53,7 +53,6 @@ public class Post {
     @ManyToMany
     private List<Keyword> keywords;
 
-
     @Transient
     private String url;
 

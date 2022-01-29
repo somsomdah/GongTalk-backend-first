@@ -1,33 +1,22 @@
 package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Alarm;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.BoardRepository;
-import com.dasom.gongtalk.repository.SubscribeRepository;
 import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component
 public class Crawler {
 
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
-    private AlarmService alarmService;
+    private final PostService postService;
+    private final BoardRepository boardRepository;
+    private final AlarmService alarmService;
 
     private static final int MAX_NO_POST_COUNT = 5;
 
@@ -73,7 +62,17 @@ public class Crawler {
         }
 
         board.setLastPostNum(newPostNum);
-        boardRepository.save(board);
+        System.out.println(222222);
+        System.out.println(board.toString());
+        System.out.println(222222);
+
+        try{
+            boardRepository.save(board);
+        }catch (Exception ex){
+            System.out.println(333333);
+            System.out.println(ex);
+            System.out.println(333333);
+        }
 
     }
 
