@@ -4,10 +4,11 @@ import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.SettingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
+@Service
 @RequiredArgsConstructor
 public class SettingService {
 
