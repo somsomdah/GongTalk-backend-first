@@ -29,17 +29,17 @@ public class SettingService {
         try{
             setting.setSilence(newSetting.isSilence());
         }catch (Exception e){
-            System.out.println("Exception :updateSetting: "+e.toString());
+            System.out.println("Exception : SettingService : updateSetting 1 : "+e.toString());
         }
         try{
             setting.setPush(newSetting.isPush());
         }catch (Exception e){
-            System.out.println("Exception :updateSetting: "+e.toString());
+            System.out.println("Exception : SettingService : updateSetting 2 : "+e.toString());
         }
         try{
             setting.setVibration(newSetting.isVibration());
         }catch (Exception e){
-            System.out.println("Exception :updateSetting: "+e.toString());
+            System.out.println("Exception : SettingService : updateSetting 3 : "+e.toString());
         }
 
         return settingRepository.save(setting);

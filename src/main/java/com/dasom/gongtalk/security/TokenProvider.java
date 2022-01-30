@@ -54,7 +54,7 @@ public class TokenProvider {
             Jws<Claims> claims = Jwts.parser().setSigningKey(appProperties.getAuth().getTokenSecret()).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
         }catch(Exception ex){
-            System.out.println(ex.toString());
+            System.out.println("[Exception] TokenProvider : validateToken : "+ex.toString());
             log.error(ex.toString());
         }
         return false;

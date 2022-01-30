@@ -43,18 +43,11 @@ public class AlarmService {
             List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("CK", null, keywords);
             List<Subscribe> subscribeTypeB = subscribeRepository.findAllByTypeAndBoardAndKeyword("B", board, null);
 
-            System.out.println(100001);
-            System.out.println(board.toString());
-            System.out.println(subscribeTypeBk);
-            System.out.println(subscribeTypeCk);
-            System.out.println(subscribeTypeB);
-            System.out.println(100001);
-
             List<Alarm> alarms = new ArrayList<>();
 
             if (!subscribeTypeB.isEmpty()) {
                 for (Subscribe s : subscribeTypeB) {
-                    if (s.getBoard() == board) {
+                    if (s.getBoard().equals(board)) {
                         Alarm alarm = new Alarm(s.getUser(), post);
                         alarms.add(alarm);
                     }
@@ -63,7 +56,7 @@ public class AlarmService {
 
             if(!subscribeTypeBk.isEmpty()){
                 for (Subscribe s : subscribeTypeBk) {
-                    if (s.getBoard() == board && keywords.contains(s.getKeyword())) {
+                    if (s.getBoard().equals(board) && keywords.contains(s.getKeyword())) {
                         Alarm alarm = new Alarm(s.getUser(), post);
                         alarms.add(alarm);
                     }
@@ -78,19 +71,12 @@ public class AlarmService {
                         alarms.add(alarm);
                     }
                 }
-            }
-
-
-            System.out.println(110000);
-            System.out.println(alarms);
-            System.out.println(110000);
+            };
 
             alarmRepository.saveAll(alarms);
 
         }catch (Exception ex){
-            System.out.println(111111);
-            System.out.println(ex);
-            System.out.println(111111);
+            System.out.println("[Exception] AlarmService : save : "+ex.toString());
         }
 
     }

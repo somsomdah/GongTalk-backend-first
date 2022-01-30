@@ -56,11 +56,9 @@ public class Crawler {
                 newPostNum = tempPostNum;
 
             }catch (Exception ex){
-                System.out.println(200001);
-                System.out.println(ex.toString());
+                System.out.println("[Exception] Crawler : crawl : while : "+ex.toString());
                 noPostCount ++;
                 if (noPostCount > MAX_NO_POST_COUNT){
-                    System.out.println(200001);
                     break;
                 }
             }
@@ -68,16 +66,11 @@ public class Crawler {
         }
 
         board.setLastPostNum(newPostNum);
-        System.out.println(222222);
-        System.out.println(board.toString());
-        System.out.println(222222);
 
         try{
             boardRepository.save(board);
         }catch (Exception ex){
-            System.out.println(333333);
-            System.out.println(ex);
-            System.out.println(333333);
+            System.out.println("[Exception] Crawler : crawl : boardRepository.save : "+ex);
         }
 
     }
