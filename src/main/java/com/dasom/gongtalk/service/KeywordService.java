@@ -17,7 +17,7 @@ public class KeywordService {
     public Keyword getFromId(Integer id){
         Optional<Keyword> keyword = keywordRepository.findById(id);
         if(keyword.isEmpty()){
-            throw new ResourceNotFoundException("Keyword", "id", keyword);
+            throw new ResourceNotFoundException("Keyword", "id", id);
         }
         else return keyword.get();
     }
@@ -25,8 +25,7 @@ public class KeywordService {
     public Keyword getOrCreateFromContent(String content){
         Optional<Keyword> keyword = keywordRepository.findByContent(content);
         if (keyword.isEmpty()){
-            Keyword newKeyword = new Keyword();
-            newKeyword.setContent(content);
+            Keyword newKeyword = new Keyword(content);
             return keywordRepository.save(newKeyword);
         }
 

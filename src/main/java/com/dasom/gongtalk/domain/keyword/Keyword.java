@@ -21,4 +21,10 @@ public class Keyword {
     @NotNull
     @Column(columnDefinition="boolean default false")
     private boolean isDefault;
+
+    public Keyword(String content){
+        this.content = content;
+        this.isDefault = false;
+    }
+
 }
