@@ -185,10 +185,8 @@ public class UserController {
     @PatchMapping("alarms/{id}")
     public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                              @PathVariable Integer id, @RequestBody Alarm request){
-
-        Alarm alarm = alarmService.getFromId(id);
-        alarm.setRead(true);
-        alarmRepository.save(alarm);
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Alarm alarm = alarmService.update(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(alarm);
     }
 
@@ -205,8 +203,7 @@ public class UserController {
         Integer settingId = user.getSetting().getId();
         Setting setting = settingService.updateSetting(settingId, request);
         return ResponseEntity.status(HttpStatus.OK).body(setting);
+
     }
-
-
 
 }
