@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties("user")
+@Table(name="scrap", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
 public class Scrap {
 
     @Id

@@ -16,10 +16,10 @@ public class Keyword {
     private Integer id;
 
     @NotNull
+    @Column(unique = true)
     private String content;
 
     @NotNull
-    @Column(columnDefinition="boolean default false")
     private boolean isDefault;
 
     public Keyword(String content){

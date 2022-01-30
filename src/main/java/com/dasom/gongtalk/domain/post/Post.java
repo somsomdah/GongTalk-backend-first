@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"content", "keywords"})
+@Table(name="post", uniqueConstraints = @UniqueConstraint(columnNames = {"board_id","post_num"}))
 public class Post {
 
     @Id

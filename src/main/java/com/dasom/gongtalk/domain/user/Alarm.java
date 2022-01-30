@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"user"})
+@Table(name="alarm", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
 public class Alarm {
 
     @Id

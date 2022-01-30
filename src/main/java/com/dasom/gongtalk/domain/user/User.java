@@ -29,6 +29,7 @@ public class User {
 
 
     @Setter
+    @Column(unique = true)
     private String deviceNum;
 
     @Setter

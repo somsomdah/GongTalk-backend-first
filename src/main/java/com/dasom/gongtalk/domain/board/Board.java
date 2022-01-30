@@ -11,10 +11,10 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties({
         "baseUrl", "contentSelector", "titleSelector", "categorySelector",
         "writerSelector", "dateSelector", "datePattern", "lastPostNum"})
+@Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "school_id"})})
 public class Board {
 
     @Id
