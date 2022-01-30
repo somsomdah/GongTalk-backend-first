@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Run {
 
-    private final static int SCHEDULE_INTERVAL_MIN = 1;
+    private final static int SCHEDULE_INTERVAL_MIN = 60;
     private final BoardRepository boardRepository;
     private final Crawler crawler;
 

@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Setting {
 
     @Id
@@ -16,15 +15,18 @@ public class Setting {
     private Integer id;
 
     @NotNull
-    @Column(columnDefinition = "boolean default false")
     private boolean push;
 
     @NotNull
-    @Column(columnDefinition = "boolean default false")
     private boolean vibration;
 
     @NotNull
-    @Column(columnDefinition = "boolean default false")
     private boolean silence;
+
+    public Setting(){
+        this.push = true;
+        this.vibration = false;
+        this.silence = false;
+    }
 
 }

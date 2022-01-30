@@ -5,10 +5,13 @@ import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.Alarm;
 import com.dasom.gongtalk.domain.user.Subscribe;
+import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,6 +82,13 @@ public class AlarmService {
             System.out.println("[Exception] AlarmService : save : "+ex.toString());
         }
 
+    }
+
+    public Alarm update(Integer alarmId, Alarm newAlarm){
+        boolean isRead = newAlarm.isRead();
+        Alarm alarm = getFromId(alarmId);
+        alarm.setRead(isRead);
+        return  alarmRepository.save(alarm);
     }
 
 }

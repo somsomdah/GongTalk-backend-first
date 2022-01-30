@@ -2,6 +2,7 @@ package com.dasom.gongtalk.domain.post;
 
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,13 +14,14 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"content", "keywords"})
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     private Board board;
 
     @NotNull
@@ -43,11 +45,9 @@ public class Post {
     private LocalDate date;
 
     @NotNull
-    @Column(columnDefinition = "boolean default false")
     private boolean isDeleted;
 
     @NotNull
-    @Column(columnDefinition = "boolean default false")
     private boolean isModified;
 
     @ManyToMany
@@ -64,6 +64,8 @@ public class Post {
     public Post(Board board, Integer postNum){
         this.board = board;
         this.postNum = postNum;
+        this.isModified = false;
+        this.isDeleted = false;
     }
 
 }

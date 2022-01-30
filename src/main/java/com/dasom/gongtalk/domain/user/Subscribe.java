@@ -16,7 +16,7 @@ public class Subscribe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.LAZY)
     private User user;
 
     @ManyToOne(fetch= FetchType.EAGER)
@@ -26,6 +26,13 @@ public class Subscribe {
     private Keyword keyword;
 
     private String type; // B(for 'Board') 또는 CK (for 'CommonKeyword') 또는 BK("BoardKeyword")
+
+    public Subscribe(User user, Board board, Keyword keyword, String type){
+        this.user = user;
+        this.board = board;
+        this.keyword = keyword;
+        this.type = type;
+    }
 
 
 }

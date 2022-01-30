@@ -36,12 +36,7 @@ public class SubscribeService {
         }
 
         String type = subscribeRequest.getType();
-        Subscribe newSubscribe = new Subscribe();
-        newSubscribe.setUser(user);
-        newSubscribe.setBoard(board);
-        newSubscribe.setKeyword(keyword);
-        newSubscribe.setType(type);
-
+        Subscribe newSubscribe = new Subscribe(user, board, keyword, type);
         return subscribeRepository.save(newSubscribe);
     }
 
