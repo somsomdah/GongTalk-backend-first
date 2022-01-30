@@ -35,6 +35,7 @@ public class UserController {
     private final PostService postService;
     private final AlarmRepository alarmRepository;
     private final AlarmService alarmService;
+    private final SettingService settingService;
 
     @GetMapping
     public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -200,7 +201,10 @@ public class UserController {
     @PatchMapping("setting")
     public ResponseEntity<Setting> updateSetting(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                  @RequestBody Setting request){
-
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Integer settingId = user.getSetting().getId();
+        Setting setting = settingService.updateSetting(settingId, request);
+        return ResponseEntity.status(HttpStatus.OK).body(setting);
     }
 
 
