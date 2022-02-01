@@ -1,6 +1,5 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.user.Alarm;
 import com.dasom.gongtalk.domain.user.Scrap;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;

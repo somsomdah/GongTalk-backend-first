@@ -1,13 +1,10 @@
 package com.dasom.gongtalk.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 public class ExceptionResponse {

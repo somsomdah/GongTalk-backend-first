@@ -1,7 +1,5 @@
 package com.dasom.gongtalk.exception;
 
-import java.util.Date;
-
 public class BaseException extends RuntimeException{
 
     public BaseException(String message){

@@ -1,11 +1,7 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
