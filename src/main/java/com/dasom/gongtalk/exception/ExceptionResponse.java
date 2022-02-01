@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.dto;
+package com.dasom.gongtalk.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
