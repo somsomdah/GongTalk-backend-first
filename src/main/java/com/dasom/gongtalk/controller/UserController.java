@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,19 +37,20 @@ public class UserController {
     private final AlarmRepository alarmRepository;
     private final AlarmService alarmService;
     private final SettingService settingService;
+    private final ScrapService scrapService;
 
-    @GetMapping
-    public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
-        List<User> users = (List<User>) userRepository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUsers(users));
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<UserInfoResponse> getOneUser(@PathVariable Integer id){
-        User user = userService.getFromId(id);
-        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
-
-    }
+//    @GetMapping
+//    public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
+//        List<User> users = (List<User>) userRepository.findAll();
+//        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUsers(users));
+//    }
+//
+//    @GetMapping("{id}")
+//    public ResponseEntity<UserInfoResponse> getOneUser(@PathVariable Integer id){
+//        User user = userService.getFromId(id);
+//        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
+//
+//    }
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateRequest request){
@@ -93,16 +95,17 @@ public class UserController {
                                                          @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
+        boardService.checkAuthority(user, board);
         userService.deleteUserBoard(user,board);
         UserBoardResponse response = UserBoardResponse.fromUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping(value = "posts", params = {"max"})
+    @GetMapping(value = "posts", params = {"size"})
     public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                           @RequestParam int max) {
+                                                           @RequestParam int size) {
         User user = userService.getFromPrincipal(devicePrincipal);
-        List<Post> posts = userService.getPosts(user, max);
+        List<Post> posts = userService.getPosts(user, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.ok().body(response);
     }
@@ -128,7 +131,6 @@ public class UserController {
                                                                  @RequestBody SubscribeRequest subscribeRequest){
         User user = userService.getFromPrincipal(devicePrincipal);
         Subscribe subscribe = subscribeService.save(user, subscribeRequest);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(subscribe);
     }
 
@@ -137,18 +139,16 @@ public class UserController {
                                 @RequestBody SubscribeDeleteRequest subscribeDeleteRequest){
         User user = userService.getFromPrincipal(devicePrincipal);
         subscribeService.deleteSubscribe(user, subscribeDeleteRequest);
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value="scraps", params = {"page", "size"})
+    @GetMapping(value="scraps")
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                                  @RequestParam int page,
-                                                                  @RequestParam int size){
+                                                                  @RequestParam(required = false, defaultValue ="0") int page,
+                                                                  @RequestParam(required = false, defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);
-
         return ResponseEntity.status(HttpStatus.OK).body(scraps);
     }
 
@@ -159,34 +159,36 @@ public class UserController {
         Post post = postService.getFromId(request.getPostId());
         Scrap scrap = new Scrap(user, post);
         scrapRepository.save(scrap);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(scrap);
-
     }
 
-    @DeleteMapping("scraps/{id}")
+    @DeleteMapping("scraps/{scrapId}")
     public ResponseEntity<?> deleteScrap(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                         @PathVariable Integer id){
-        scrapRepository.deleteById(id);
+                                         @PathVariable Integer scrapId){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        Scrap scrap = scrapService.getFromId(scrapId);
+        scrapService.checkAuthority(user, scrap);
+        scrapRepository.deleteById(scrapId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
-    @GetMapping(value = "alarms", params = {"page", "size"})
+    @GetMapping(value = "alarms")
     public ResponseEntity<List<Alarm>> getAlarms(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                 @RequestParam int page, @RequestParam int size){
-
+                                                 @RequestParam(required = false, defaultValue = "0") int page,
+                                                 @RequestParam(required = false, defaultValue = "10") int size){
         User user = userService.getFromPrincipal(devicePrincipal);
         Pageable pageable = PageRequest.of(page, size, Sort.by(new Sort.Order(Sort.Direction.DESC,"post.date")));
-        List<Alarm> alarms = alarmRepository.getAllByUser(user, pageable);
+        List<Alarm> alarms = alarmRepository.findAllByUser(user, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(alarms);
     }
 
-    @PatchMapping("alarms/{id}")
+    @PatchMapping("alarms/{alarmId}")
     public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                             @PathVariable Integer id, @RequestBody Alarm request){
+                                             @PathVariable Integer alarmId, @RequestBody Alarm request){
         User user = userService.getFromPrincipal(devicePrincipal);
-        Alarm alarm = alarmService.update(id, request);
+        Alarm oldAlarm = alarmService.getFromId(alarmId);
+        alarmService.checkAuthority(user, oldAlarm);
+        Alarm alarm = alarmService.update(alarmId, request);
         return ResponseEntity.status(HttpStatus.OK).body(alarm);
     }
 

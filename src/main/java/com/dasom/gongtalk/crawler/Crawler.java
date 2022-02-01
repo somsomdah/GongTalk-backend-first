@@ -57,8 +57,6 @@ public class Crawler {
             }catch (Exception ex){
                 System.out.println("[Exception] Crawler : crawl : "+ex.toString());
                 noPostCount ++;
-                System.out.println(11111111);
-                System.out.println(noPostCount);
                 if (noPostCount > MAX_NO_POST_COUNT){
                     break;
                 }

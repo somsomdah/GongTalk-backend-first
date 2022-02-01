@@ -5,6 +5,7 @@ import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.CustomUserDetailsService;
 import com.dasom.gongtalk.security.TokenAuthenticationFilter;
 import com.dasom.gongtalk.security.TokenProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,8 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService userDetailsService;
-    private final TokenProvider tokenProvider;
-    private final UserRepository userRepository;
+    private final TokenAuthenticationFilter tokenAuthenticationFilter;
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,6 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "api/*").permitAll()
                 .antMatchers("/swagger-ui").permitAll();
 
-        http.addFilterBefore(new TokenAuthenticationFilter(tokenProvider, userRepository), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

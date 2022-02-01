@@ -37,10 +37,12 @@ public class UserService {
     public User getFromId(Integer id){
 
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()){
-            throw new ResourceNotFoundException("User", "id", id);
+        try{
+            return user.get();
+        }catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "user", "id", id);
         }
-        return user.get();
+
     }
 
     public User save(String deviceNum){

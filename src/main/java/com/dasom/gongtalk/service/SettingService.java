@@ -16,11 +16,11 @@ public class SettingService {
 
     public Setting getFromId(Integer id){
         Optional<Setting> setting= settingRepository.findById(id);
-        if(setting.isEmpty()){
-            throw new ResourceNotFoundException("Setting", "id", id);
+        try {
+            return setting.get();
+        } catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "setting", "id", id);
         }
-
-        return setting.get();
     }
 
     public Setting updateSetting(Integer settingId, Setting newSetting){

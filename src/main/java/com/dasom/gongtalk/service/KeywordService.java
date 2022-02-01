@@ -16,10 +16,10 @@ public class KeywordService {
 
     public Keyword getFromId(Integer id){
         Optional<Keyword> keyword = keywordRepository.findById(id);
-        if(keyword.isEmpty()){
-            throw new ResourceNotFoundException("Keyword", "id", id);
+        try {return keyword.get();}
+        catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "keyword", "id", id);
         }
-        else return keyword.get();
     }
 
     public Keyword getOrCreateFromContent(String content){

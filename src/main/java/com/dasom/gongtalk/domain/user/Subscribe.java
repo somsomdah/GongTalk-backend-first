@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -18,6 +19,7 @@ public class Subscribe {
     private Integer id;
 
     @ManyToOne(fetch= FetchType.LAZY)
+    @NotNull
     private User user;
 
     @ManyToOne(fetch= FetchType.EAGER)
@@ -25,6 +27,7 @@ public class Subscribe {
 
     @ManyToOne(fetch= FetchType.EAGER)
     private Keyword keyword;
+
 
     private String type; // B(for 'Board') 또는 CK (for 'CommonKeyword') 또는 BK("BoardKeyword")
 

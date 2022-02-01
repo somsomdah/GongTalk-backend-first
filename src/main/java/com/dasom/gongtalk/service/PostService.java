@@ -33,12 +33,11 @@ public class PostService {
 
     public Post getFromId(Integer id){
         Optional<Post> post = postRepository.findById(id);
-
-        if (post.isEmpty()){
-            throw new ResourceNotFoundException("Post", "id", id);
+        try{
+            return post.get();
+        }catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "post", "id", id);
         }
-
-        return post.get();
     }
 
     public Post save(Post post){

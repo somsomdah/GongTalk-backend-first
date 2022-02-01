@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface AlarmRepository extends CrudRepository<Alarm, Integer> {
 
-    List<Alarm> getAllByUser(User user, Pageable pageable);
+    List<Alarm> findAllByUser(User user, Pageable pageable);
 
 }

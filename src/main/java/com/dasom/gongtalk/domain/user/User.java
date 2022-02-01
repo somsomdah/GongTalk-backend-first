@@ -3,18 +3,20 @@ package com.dasom.gongtalk.domain.user;
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.util.RandomStringGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Getter
+@Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"username", "password", "boards" })
 public class User {
@@ -27,16 +29,13 @@ public class User {
     private String username;
     private String password;
 
-
-    @Setter
-    @Column(unique = true)
+    @NotNull
+    @Column(name="device_num", unique = true)
     private String deviceNum;
 
-    @Setter
     @OneToOne
     private Setting setting;
 
-    @Setter
     @ManyToMany
     private List<Board> boards;
 
@@ -62,10 +61,6 @@ public class User {
         String pswd = rsg.generate(8,8);
         this.password = (pswd);
     }
-
-
-
-
 
 }
 

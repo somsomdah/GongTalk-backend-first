@@ -26,6 +26,7 @@ public class Post {
     private Board board;
 
     @NotNull
+    @Column(name="post_num")
     private Integer postNum;
 
     @NotNull

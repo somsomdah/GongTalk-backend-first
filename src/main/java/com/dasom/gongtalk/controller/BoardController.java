@@ -23,10 +23,10 @@ public class BoardController {
     private final PostRepository postRepository;
     private final BoardService boardService;
 
-    @GetMapping(value="{id}/posts", params = {"page","size"})
+    @GetMapping(value="{id}/posts")
     public ResponseEntity<List<PostListResponse>> getPosts(@PathVariable Integer id,
-                                                             @RequestParam int page,
-                                                             @RequestParam int size){
+                                                           @RequestParam(required = false, defaultValue ="0") int page,
+                                                           @RequestParam(required = false, defaultValue = "3") int size){
         List<Post> posts = postService.getPostsFromBoard(boardService.getFromId(id),page, size );
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);

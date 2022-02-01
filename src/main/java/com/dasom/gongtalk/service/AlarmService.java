@@ -7,6 +7,7 @@ import com.dasom.gongtalk.domain.user.Alarm;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,17 @@ public class AlarmService {
 
     public Alarm getFromId(Integer id){
         Optional<Alarm> alarm = alarmRepository.findById(id);
-
-        if(alarm.isEmpty()){
-            throw new ResourceNotFoundException("Alarm", "id", id);
+        try{
+            return alarm.get();
+        }catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "alarm", "id", id);
         }
-
-        return alarm.get();
     }
 
     public void save(Post post){
         try{
             List<Keyword> keywords = post.getKeywords();
             Board board = post.getBoard();
-
-
 
             List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("BK", board, keywords);
             List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("CK", null, keywords);
@@ -89,6 +87,18 @@ public class AlarmService {
         Alarm alarm = getFromId(alarmId);
         alarm.setRead(isRead);
         return  alarmRepository.save(alarm);
+    }
+
+    public void checkAuthority(User user, Alarm alarm){
+        if (!user.equals(alarm.getUser())){
+            throw new UserForbiddenException(String.format("The user has no authority to alarm id %d",alarm.getId()));
+        }
+    }
+
+    public void checkAllAuthorities(User user, List<Alarm> alarms){
+        for(Alarm alarm : alarms){
+            checkAuthority(user, alarm);
+        }
     }
 
 }

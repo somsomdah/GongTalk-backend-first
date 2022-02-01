@@ -1,7 +1,9 @@
 package com.dasom.gongtalk.service;
 
 import com.dasom.gongtalk.domain.board.Board;
+import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,17 @@ public class BoardService {
 
     public Board getFromId(Integer id){
         Optional<Board> board = boardRepository.findById(id);
-        if (board.isEmpty()){
-            throw new ResourceNotFoundException("Board", "id", id);
+        try{
+            return board.get();
+        }catch (Exception e){
+            throw new ResourceNotFoundException(e.toString(), "board", "id", id);
         }
-        return board.get();
+    }
+
+    public void checkAuthority(User user, Board board){
+        if(!user.getBoards().contains(board)){
+            throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
+        }
     }
 
 }
