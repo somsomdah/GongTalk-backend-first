@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.FORBIDDEN)
-public class UserNotAuthorizedException extends BaseException {
-    public UserNotAuthorizedException(String message){
+public class UserForbiddenException extends BaseException {
+    public UserForbiddenException(String message){
         super(message);
     }
 }
