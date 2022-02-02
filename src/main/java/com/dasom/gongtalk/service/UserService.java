@@ -6,6 +6,7 @@ import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.Setting;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.security.TokenProvider;
@@ -14,7 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -46,9 +50,14 @@ public class UserService {
     }
 
     public User save(String deviceNum){
-        User newUser = new User(deviceNum);
-        newUser.setSetting(settingRepository.save(new Setting()));
-        return userRepository.save(newUser);
+        try {
+            User newUser = new User(deviceNum);
+            newUser.setSetting(settingRepository.save(new Setting()));
+            return userRepository.save(newUser);
+        }catch(Exception e){
+            throw new SqlException(e.toString(), "User with this device number already exists");
+        }
+
     }
 
     public void addUserBoard(User user, Board board){
@@ -57,7 +66,7 @@ public class UserService {
     }
 
     public void deleteUserBoard(User user, Board board){
-        user.getBoards().removeAll(Collections.singleton(board));
+        user.getBoards().remove(board);
         userRepository.save(user);
     }
 

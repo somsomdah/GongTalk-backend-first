@@ -7,6 +7,7 @@ import com.dasom.gongtalk.domain.user.Alarm;
 import com.dasom.gongtalk.domain.user.Subscribe;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.SubscribeRepository;
@@ -75,7 +76,7 @@ public class AlarmService {
             alarmRepository.saveAll(alarms);
 
         }catch (Exception ex){
-            System.out.println("[Exception] AlarmService : save : "+ex.toString());
+            throw new SqlException(ex.toString(), "Alarm create error");
         }
 
     }

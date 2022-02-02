@@ -2,6 +2,7 @@ package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
@@ -21,23 +22,27 @@ public class Crawler {
     private static final int MAX_NO_POST_COUNT = 10;
 
     public Post createPost(Board board, Integer postNum) throws IOException {
+        try {
+            Post post = new Post(board, postNum);
+            String pageUrl = post.getUrl();
 
-        Post post = new Post(board, postNum);
+            Parser parser = new Parser(board, pageUrl);
+            post.setContent(parser.extractContent());
+            post.setTitle(parser.extractTitle());
+            post.setWriter(parser.extractWriter());
+            post.setDate(parser.extractDate(board.getDatePattern()));
 
-        String pageUrl = post.getUrl();
+            try{
+                post.setCategory(parser.extractCategory());
+            }catch (Exception ignored){
+            }
+            return post;
 
-        Parser parser = new Parser(board, pageUrl);
-        post.setContent(parser.extractContent());
-        post.setTitle(parser.extractTitle());
-        post.setWriter(parser.extractWriter());
-        post.setDate(parser.extractDate(board.getDatePattern()));
-
-        try{
-            post.setCategory(parser.extractCategory());
-        }catch (Exception ignored){
+        }catch (Exception e){
+            throw new SqlException(e.toString(), "Post create error");
         }
 
-        return post;
+
     }
 
 

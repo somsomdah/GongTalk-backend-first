@@ -1,15 +1,19 @@
 package com.dasom.gongtalk.service;
 
+import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.Scrap;
 import com.dasom.gongtalk.domain.user.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.ScrapRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class ScrapService {
 
@@ -30,10 +34,13 @@ public class ScrapService {
         }
     }
 
-    public void checkAllAuthorities(User user, List<Scrap> scraps){
-
-        for(Scrap scrap : scraps){
-            checkAuthority(user, scrap);
+    public Scrap save(User user, Post post){
+        try {
+            Scrap scrap = new Scrap(user, post);
+            scrapRepository.save(scrap);
+            return scrap;
+        }catch (Exception e){
+            throw new SqlException(e.toString(), "Scrap create error");
         }
     }
 }

@@ -5,6 +5,7 @@ import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.*;
 import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.ScrapRepository;
 import com.dasom.gongtalk.repository.UserRepository;
@@ -20,6 +21,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -84,7 +87,6 @@ public class UserController {
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
         userService.addUserBoard(user,board);
-
         UserBoardResponse response = UserBoardResponse.fromUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -106,7 +108,7 @@ public class UserController {
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Post> posts = userService.getPosts(user, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("keywords/common")
@@ -156,8 +158,7 @@ public class UserController {
                                              @RequestBody PostIdRequest request){
         User user = userService.getFromPrincipal(devicePrincipal);
         Post post = postService.getFromId(request.getPostId());
-        Scrap scrap = new Scrap(user, post);
-        scrapRepository.save(scrap);
+        Scrap scrap = scrapService.save(user, post);
         return ResponseEntity.status(HttpStatus.CREATED).body(scrap);
     }
 
