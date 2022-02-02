@@ -52,9 +52,8 @@ public class Parser {
         String dateString = Jsoup.parse(dateElement.toString()).text();
 
         String[] splitDate = dateString.split("[-./]");
-        String.join("", splitDate);
 
-        if (splitDate.length>3 && splitDate[0].length()==2){
+        if (splitDate[0].length()==2){
             splitDate[0] = Integer.toString(LocalDate.now().getYear());
             dateString = String.join("",splitDate);
             datePattern = "yyyyMMdd";
