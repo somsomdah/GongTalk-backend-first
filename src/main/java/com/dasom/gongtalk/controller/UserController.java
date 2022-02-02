@@ -5,7 +5,6 @@ import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.dasom.gongtalk.domain.post.Post;
 import com.dasom.gongtalk.domain.user.*;
 import com.dasom.gongtalk.dto.*;
-import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.ScrapRepository;
 import com.dasom.gongtalk.repository.UserRepository;
@@ -21,8 +20,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
