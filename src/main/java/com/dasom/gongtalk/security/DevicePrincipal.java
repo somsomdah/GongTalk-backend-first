@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.security;
 
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,22 +1,20 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Date;
 
-@Service
-@Slf4j
+@Component
 @RequiredArgsConstructor
 public class TokenProvider {
 
@@ -55,7 +53,6 @@ public class TokenProvider {
             return !claims.getBody().getExpiration().before(new Date());
         }catch(Exception ex){
             System.out.println("[Exception] TokenProvider : validateToken : "+ex.toString());
-            log.error(ex.toString());
         }
         return false;
     }

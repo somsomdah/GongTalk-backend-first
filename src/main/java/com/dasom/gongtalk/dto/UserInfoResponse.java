@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.user.Setting;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Setting;
+import com.dasom.gongtalk.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

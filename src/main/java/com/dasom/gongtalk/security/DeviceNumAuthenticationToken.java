@@ -13,7 +13,7 @@ public class DeviceNumAuthenticationToken extends AbstractAuthenticationToken {
     private Object credentials;
 
     public DeviceNumAuthenticationToken(Object principal, Object credentials) {
-        super((Collection)null);
+        super(null);
         this.principal = principal;
         this.credentials = credentials;
         this.setAuthenticated(false);

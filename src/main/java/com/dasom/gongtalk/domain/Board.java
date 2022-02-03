@@ -1,11 +1,11 @@
-package com.dasom.gongtalk.domain.board;
+package com.dasom.gongtalk.domain;
 
-import com.dasom.gongtalk.domain.school.School;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -20,21 +20,25 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private String name;
 
+    @JoinColumn(name = "school_id")
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
+    private String url;
+
 
     //======================== Data For Crawling ========================//
-    private String baseUrl;
-    private String contentSelector;
-    private String titleSelector;
-    private String categorySelector;
-    private String writerSelector;
-    private String dateSelector;
-    private String datePattern;
-    private Integer lastPostNum;
+    @NotNull
+    private String postListUrl;
+    private String postContentSelector;
+    private String postTitleSelector;
+    private String postCategorySelector;
+    private String postWriterSelector;
+    private String postDateSelector;
+    private String postDatePattern;
 
 
 

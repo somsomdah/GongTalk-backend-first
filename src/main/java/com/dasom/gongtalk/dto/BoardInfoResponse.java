@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.school.School;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.School;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

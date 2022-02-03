@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.domain.Keyword;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;

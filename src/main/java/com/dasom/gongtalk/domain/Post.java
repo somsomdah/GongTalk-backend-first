@@ -1,7 +1,5 @@
-package com.dasom.gongtalk.domain.post;
+package com.dasom.gongtalk.domain;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,19 +13,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"content", "keywords"})
-@Table(name="post", uniqueConstraints = @UniqueConstraint(columnNames = {"board_id","post_num"}))
+@Table(name="post", uniqueConstraints = @UniqueConstraint(columnNames = {"board_id","url"}))
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JoinColumn(name = "board_id")
     @ManyToOne(fetch=FetchType.EAGER)
     private Board board;
-
-    @NotNull
-    @Column(name="post_num")
-    private Integer postNum;
 
     @NotNull
     private String title;
@@ -52,22 +47,38 @@ public class Post {
     @NotNull
     private boolean isModified;
 
-    @ManyToMany
-    private List<Keyword> keywords;
-
-    @Transient
+    @NotNull
     private String url;
 
-    public String getUrl() {
+    @Column(columnDefinition = "varchar(10) default 'POST'")
+    @Enumerated(EnumType.STRING)
+    private HttpMethod httpMethod; //post 또는 get;
 
-        return this.getBoard().getBaseUrl() + this.getPostNum();
-    }
+    private String httpBody;
 
-    public Post(Board board, Integer postNum){
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Alarm> alarms;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    List<Scrap> scraps;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    List<File> files;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    List<Image> images;
+
+    public Post(Board board, String url){
         this.board = board;
-        this.postNum = postNum;
+        this.url = url;
         this.isModified = false;
         this.isDeleted = false;
     }
+
+    public enum HttpMethod {
+        POST,
+        GET;
+    }
+
 
 }

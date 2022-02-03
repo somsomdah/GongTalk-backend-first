@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.domain.post;
+package com.dasom.gongtalk.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,7 @@ public class File {
     @NotNull
     private String url;
 
+    @JoinColumn(name = "post_id")
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Post post;

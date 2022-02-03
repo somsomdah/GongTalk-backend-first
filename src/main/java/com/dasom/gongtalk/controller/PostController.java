@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.controller;
 
-import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.dto.PostListResponse;
 import com.dasom.gongtalk.dto.PostResponse;
 import com.dasom.gongtalk.repository.PostRepository;

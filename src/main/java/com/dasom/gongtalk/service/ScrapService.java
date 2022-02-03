@@ -1,8 +1,8 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Scrap;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Post;
+import com.dasom.gongtalk.domain.Scrap;
+import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.exception.UserForbiddenException;

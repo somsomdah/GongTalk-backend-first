@@ -1,9 +1,9 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Keyword;
+import com.dasom.gongtalk.domain.Subscribe;
+import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.dto.SubscribeDeleteRequest;
 import com.dasom.gongtalk.dto.SubscribeRequest;
 import com.dasom.gongtalk.repository.SubscribeRepository;
@@ -35,7 +35,7 @@ public class SubscribeService {
             keyword = keywordService.getOrCreateFromContent(subscribeRequest.getKeywordContent());
         }
 
-        String type = subscribeRequest.getType();
+        Subscribe.Type type = subscribeRequest.getType();
         Subscribe newSubscribe = new Subscribe(user, board, keyword, type);
         return subscribeRepository.save(newSubscribe);
     }

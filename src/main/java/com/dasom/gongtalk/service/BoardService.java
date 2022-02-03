@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.BoardRepository;
@@ -26,8 +26,8 @@ public class BoardService {
     }
 
     public void checkAuthority(User user, Board board){
-        if(!user.getBoards().contains(board)){
-            throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
+            if(boardRepository.findAllBoardsByUser(user).contains(board)){
+                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
         }
     }
 

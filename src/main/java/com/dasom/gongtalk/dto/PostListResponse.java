@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.dto;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +15,7 @@ public class PostListResponse {
 
     private Integer id;
     private Board board;
-    private Integer postNum;
+    private String url;
     private String title;
     private String writer;
     private String category;
@@ -33,7 +33,7 @@ public class PostListResponse {
             PostListResponse resp = new PostListResponse(
                     post.getId(),
                     post.getBoard(),
-                    post.getPostNum(),
+                    post.getUrl(),
                     post.getTitle(),
                     post.getWriter(),
                     post.getCategory(),

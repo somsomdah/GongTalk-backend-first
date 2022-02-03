@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.keyword.Keyword;
+import com.dasom.gongtalk.domain.Keyword;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.KeywordRepository;
 import lombok.RequiredArgsConstructor;

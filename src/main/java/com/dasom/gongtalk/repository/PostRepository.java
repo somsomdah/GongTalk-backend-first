@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.repository;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Post;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,10 +17,10 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     List<Post> findAllByBoard(Board board, Pageable pageable);
 
-    @Query("select p from Post p join p.keywords k on k.content in :keywordsContent order by p.date desc ")
+    @Query("select pk.post from PostKeyword pk where pk.keyword.content in :KeywordContent order by pk.post.date desc")
     List<Post> findAllByKeywordsContentIn(List<String> keywordsContent);
 
-    @Query("select p from Post p join p.keywords k on k.content in :keywordsContent where p.board =:board order by p.date desc")
+    @Query("select pk.post from PostKeyword pk where pk.post.board=:board and pk.keyword.content in :keywordsContent order by pk.post.date desc")
     List<Post> findAllByBoardAndKeywordsContentIn(Board board,List<String> keywordsContent);
 
 

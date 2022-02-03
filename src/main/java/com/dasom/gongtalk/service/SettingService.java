@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.user.Setting;
+import com.dasom.gongtalk.domain.Setting;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.SettingRepository;
 import lombok.RequiredArgsConstructor;

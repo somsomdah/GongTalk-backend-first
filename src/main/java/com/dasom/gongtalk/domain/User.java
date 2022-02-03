@@ -1,6 +1,5 @@
-package com.dasom.gongtalk.domain.user;
+package com.dasom.gongtalk.domain;
 
-import com.dasom.gongtalk.domain.board.Board;
 import com.dasom.gongtalk.util.RandomStringGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -34,15 +33,21 @@ public class User {
     @OneToOne
     private Setting setting;
 
-    @ManyToMany
-    private List<Board> boards;
-
     public User(String deviceNum)
     {
         setDeviceNum(deviceNum);
         setUsername();
         setPassword();
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Alarm> alarms;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Scrap> scraps;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Subscribe> subscribes;
 
     public void setUsername()
     {

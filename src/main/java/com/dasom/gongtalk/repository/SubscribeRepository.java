@@ -1,10 +1,10 @@
 package com.dasom.gongtalk.repository;
 
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Keyword;
+import com.dasom.gongtalk.domain.Subscribe;
+import com.dasom.gongtalk.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

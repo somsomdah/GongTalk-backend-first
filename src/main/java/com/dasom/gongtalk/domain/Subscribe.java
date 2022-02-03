@@ -1,7 +1,5 @@
-package com.dasom.gongtalk.domain.user;
+package com.dasom.gongtalk.domain;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,24 +16,34 @@ public class Subscribe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch= FetchType.LAZY)
     @NotNull
     private User user;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name = "board_id")
+    @ManyToOne(fetch= FetchType.LAZY)
     private Board board;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name = "keyword_id")
+    @ManyToOne(fetch= FetchType.LAZY)
     private Keyword keyword;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
-    private String type; // B(for 'Board') 또는 CK (for 'CommonKeyword') 또는 BK("BoardKeyword")
-
-    public Subscribe(User user, Board board, Keyword keyword, String type){
+    public Subscribe(User user, Board board, Keyword keyword, Type type){
         this.user = user;
         this.board = board;
         this.keyword = keyword;
         this.type = type;
+    }
+
+    public enum Type{
+        BOARD,
+        CKEYWORD, //common keyword
+        BKEYWORD; //board keyword
     }
 
 

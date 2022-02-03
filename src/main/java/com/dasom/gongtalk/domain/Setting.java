@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.domain.user;
+package com.dasom.gongtalk.domain;
 
 import lombok.Data;
 

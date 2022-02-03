@@ -1,12 +1,10 @@
 package com.dasom.gongtalk.controller;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.*;
+import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.dto.*;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.ScrapRepository;
+import com.dasom.gongtalk.repository.UserBoardRepository;
 import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.*;
@@ -37,6 +35,7 @@ public class UserController {
     private final AlarmService alarmService;
     private final SettingService settingService;
     private final ScrapService scrapService;
+    private final UserBoardRepository userBoardRepository;
 
 //    @GetMapping
 //    public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
@@ -79,24 +78,21 @@ public class UserController {
     }
 
     @PostMapping("boards/{boardId}")
-    public ResponseEntity<UserBoardResponse> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                        @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
-        userService.addUserBoard(user,board);
-        UserBoardResponse response = UserBoardResponse.fromUser(user);
+        UserBoard response = userBoardRepository.save(new UserBoard(user, board));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("boards/{boardId}")
-    public ResponseEntity<UserBoardResponse> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                          @PathVariable Integer boardId){
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
-        boardService.checkAuthority(user, board);
-        userService.deleteUserBoard(user,board);
-        UserBoardResponse response = UserBoardResponse.fromUser(user);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        userService.deleteUserBoard(user, board);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping(value = "posts", params = {"size"})
@@ -142,8 +138,8 @@ public class UserController {
 
     @GetMapping(value="scraps")
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                                  @RequestParam(required = false, defaultValue ="0") int page,
-                                                                  @RequestParam(required = false, defaultValue = "10") int size){
+                                                       @RequestParam(required = false, defaultValue ="0") int page,
+                                                       @RequestParam(required = false, defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);

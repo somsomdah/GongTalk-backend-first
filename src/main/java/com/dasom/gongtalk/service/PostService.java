@@ -1,10 +1,12 @@
 package com.dasom.gongtalk.service;
 
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Keyword;
+import com.dasom.gongtalk.domain.Post;
+import com.dasom.gongtalk.domain.PostKeyword;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
+import com.dasom.gongtalk.repository.PostKeywordRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.util.KeywordExtractor;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final KeywordService keywordService;
+    private final PostKeywordRepository postKeywordRepository;
 
     public Post getFromId(Integer id){
         Optional<Post> post = postRepository.findById(id);
@@ -34,7 +37,7 @@ public class PostService {
         }
     }
 
-    public Post save(Post post){
+    public List<PostKeyword> save(Post post){
 
         String content = post.getContent();
         String parsedText = Jsoup.parse(content).text();
@@ -44,25 +47,27 @@ public class PostService {
         List<String> contentKeywordStings = extractor.extract(parsedText);
         List<String> titleKeywordStrings = extractor.extract(title);
 
-        List<Keyword> keywords = new ArrayList<>();
+        List<PostKeyword> postKeywords = new ArrayList<>();
+
 
         for (String keywordString: contentKeywordStings){
             Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
-            if (!keywords.contains(keyword)){
-                keywords.add(keyword);
+            PostKeyword postKeyword = new PostKeyword(post, keyword);
+            if (!postKeywords.contains(postKeyword)){
+                postKeywords.add(postKeywordRepository.save(postKeyword));
             }
         }
 
         for (String keywordString: titleKeywordStrings){
             Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
-            if (!keywords.contains(keyword)){
-                keywords.add(keyword);
+            PostKeyword postKeyword = new PostKeyword(post, keyword);
+            if (!postKeywords.contains(postKeyword)){
+                postKeywords.add(postKeywordRepository.save(postKeyword));
             }
         }
 
-        post.setKeywords(keywords);
+        return postKeywords;
 
-        return postRepository.save(post);
     }
 
     public List<Post> getPostsFromBoard(Board board, int page, int size){

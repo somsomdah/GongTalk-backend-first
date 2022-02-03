@@ -1,10 +1,6 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Setting;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
@@ -28,6 +24,7 @@ public class UserService {
     private final BoardRepository boardRepository;
     private final PostRepository postRepository;
     private final KeywordRepository keywordRepository;
+    private final UserBoardRepository userBoardRepository;
     private final TokenProvider tokenProvider;
 
     public User getFromPrincipal(DevicePrincipal devicePrincipal){
@@ -57,13 +54,11 @@ public class UserService {
     }
 
     public void addUserBoard(User user, Board board){
-        user.getBoards().add(board);
-        userRepository.save(user);
+        userBoardRepository.save(new UserBoard(user, board));
     }
 
     public void deleteUserBoard(User user, Board board){
-        user.getBoards().remove(board);
-        userRepository.save(user);
+        userBoardRepository.deleteAll(userBoardRepository.findAllByUserAndBoard(user, board));
     }
 
     public String getAuthToken(String deviceNum){
@@ -76,7 +71,7 @@ public class UserService {
     }
 
     public List<Post> getPosts(User user, int max){
-        List<Board> boards = user.getBoards();
+        List<Board> boards = boardRepository.findAllBoardsByUser(user);
         Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
         return postRepository.findAllByBoardIn(boards, limitMax);
     }

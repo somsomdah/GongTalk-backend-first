@@ -1,16 +1,15 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.keyword.Keyword;
-import com.dasom.gongtalk.domain.post.Post;
-import com.dasom.gongtalk.domain.user.Alarm;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Keyword;
+import com.dasom.gongtalk.domain.Post;
+import com.dasom.gongtalk.domain.Alarm;
+import com.dasom.gongtalk.domain.Subscribe;
+import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
-import com.dasom.gongtalk.repository.AlarmRepository;
-import com.dasom.gongtalk.repository.SubscribeRepository;
+import com.dasom.gongtalk.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,7 @@ public class AlarmService {
 
     private final AlarmRepository alarmRepository;
     private final SubscribeRepository subscribeRepository;
+    private final KeywordRepository keywordRepository;
 
     public Alarm getFromId(Integer id){
         Optional<Alarm> alarm = alarmRepository.findById(id);
@@ -36,7 +36,7 @@ public class AlarmService {
 
     public void save(Post post){
         try{
-            List<Keyword> keywords = post.getKeywords();
+            List<Keyword> keywords = keywordRepository.findAllByPost(post);
             Board board = post.getBoard();
 
             List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn("BK", board, keywords);

@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.domain.keyword;
+package com.dasom.gongtalk.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

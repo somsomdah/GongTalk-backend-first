@@ -1,8 +1,8 @@
 package com.dasom.gongtalk.repository;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.user.Subscribe;
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.Board;
+import com.dasom.gongtalk.domain.Subscribe;
+import com.dasom.gongtalk.domain.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface BoardRepository extends CrudRepository<Board, Integer> {
 
 
-    @Query("select u.boards from User u where u=:user")
+    @Query("select ub.user from UserBoard ub where ub.user=:user")
     List<Board> findAllBoardsByUser(User user);
 
     @Query("select s.board from Subscribe s where s in :subscribes")

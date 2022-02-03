@@ -1,6 +1,6 @@
 package com.dasom.gongtalk.security;
 
-import com.dasom.gongtalk.domain.user.User;
+import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.ExceptionResponse;
 import com.dasom.gongtalk.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final UserRepository userRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException {
 

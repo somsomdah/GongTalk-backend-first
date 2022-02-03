@@ -1,4 +1,4 @@
-package com.dasom.gongtalk.domain.school;
+package com.dasom.gongtalk.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
