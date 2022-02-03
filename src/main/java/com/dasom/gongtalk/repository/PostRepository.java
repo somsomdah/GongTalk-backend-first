@@ -17,10 +17,10 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
     List<Post> findAllByBoard(Board board, Pageable pageable);
 
-    @Query("select pk.post from PostKeyword pk where pk.keyword.content in :KeywordContent order by pk.post.date desc")
+    @Query("select pk.post from PostKeyword pk where pk.keyword.content in (:keywordsContent) order by pk.post.date desc")
     List<Post> findAllByKeywordsContentIn(List<String> keywordsContent);
 
-    @Query("select pk.post from PostKeyword pk where pk.post.board=:board and pk.keyword.content in :keywordsContent order by pk.post.date desc")
+    @Query("select pk.post from PostKeyword pk where pk.keyword.content in (:keywordsContent) and pk.post.board =:board order by pk.post.date desc")
     List<Post> findAllByBoardAndKeywordsContentIn(Board board,List<String> keywordsContent);
 
 
