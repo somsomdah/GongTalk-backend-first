@@ -10,9 +10,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({
-        "baseUrl", "contentSelector", "titleSelector", "categorySelector",
-        "writerSelector", "dateSelector", "datePattern", "lastPostNum"})
 @Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "school_id"})})
 public class Board {
 
@@ -27,18 +24,16 @@ public class Board {
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
-    private String url;
+
+    @OneToOne(mappedBy = "board", fetch = FetchType.LAZY)
+    CrawlingInfo crawlingInfo;
 
 
-    //======================== Data For Crawling ========================//
-    @NotNull
-    private String postListUrl;
-    private String postContentSelector;
-    private String postTitleSelector;
-    private String postCategorySelector;
-    private String postWriterSelector;
-    private String postDateSelector;
-    private String postDatePattern;
+
+
+
+
+
 
 
 

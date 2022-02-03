@@ -1,74 +1,67 @@
 package com.dasom.gongtalk.crawler;
 
-import com.dasom.gongtalk.domain.board.Board;
-import com.dasom.gongtalk.domain.post.Post;
+import com.dasom.gongtalk.domain.CrawlingInfo;
+import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.exception.SqlException;
-import com.dasom.gongtalk.repository.BoardRepository;
+import com.dasom.gongtalk.repository.CrawlingInfoRepository;
 import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
+//@EnableConfigurationProperties
+//@ConfigurationProperties(prefix = "app.crawling")
 public class Crawler {
 
     private final PostService postService;
-    private final BoardRepository boardRepository;
     private final AlarmService alarmService;
+    private final CrawlingInfoRepository infoRepository;
 
-    private static final int MAX_NO_POST_COUNT = 10;
+    private static final String TIMEZONE = "Asia/Seoul";
+//    private static final String CRON_EXPRESSION= "0 0 11,18 * * *";
+    private static final String CRON_EXPRESSION= "* 1 * * * *";
 
-    public Post createPost(Board board, Integer postNum) throws IOException {
-        try {
-            Post post = new Post(board, postNum);
-            String pageUrl = post.getUrl();
+    public void crawl(CrawlingInfo info) throws IOException {
 
-            Parser parser = new Parser(board, pageUrl);
+        Parser boardParser = new Parser(info);
+        List<String> postUrls = boardParser.extractPostUrls();
+
+        for (String url : postUrls) {
+
+            Post post = new Post(info.getBoard(), url);
+            Parser parser = new Parser(post);
+
             post.setContent(parser.extractContent());
             post.setTitle(parser.extractTitle());
             post.setWriter(parser.extractWriter());
-            post.setDate(parser.extractDate(board.getDatePattern()));
-
+            post.setDate(parser.extractDate(info.getPostDatePattern()));
             try{
                 post.setCategory(parser.extractCategory());
-            }catch (Exception ignored){
-            }
-            return post;
+            }catch (Exception ignored){}
 
-        }catch (Exception e){
-            throw new SqlException(e.toString(), "Post create error");
-        }
-
-
-    }
-
-
-
-    public void crawl(Board board){
-        Integer newPostNum = board.getLastPostNum();
-        int noPostCount = 0;
-
-        while(true){
-            newPostNum ++ ;
             try{
-                Post post = createPost(board, newPostNum);
                 postService.save(post);
                 alarmService.save(post);
-                board.setLastPostNum(newPostNum);
-                boardRepository.save(board);
-            }catch (Exception ex){
-                System.out.println("[Exception] Crawler : crawl : "+ex.toString());
-                noPostCount ++;
-                if (noPostCount > MAX_NO_POST_COUNT){
-                    break;
-                }
+            }catch (Exception e){
+                throw new SqlException(e.toString(), "Exception in Crawling");
             }
 
         }
 
     }
 
+    @Scheduled(cron= CRON_EXPRESSION, zone=TIMEZONE)
+    public void run() throws IOException {
+        for (CrawlingInfo info : infoRepository.findAll()){
+            this.crawl(info);
+        }
+    }
 }
