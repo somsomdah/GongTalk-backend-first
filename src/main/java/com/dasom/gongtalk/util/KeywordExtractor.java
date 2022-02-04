@@ -14,6 +14,9 @@ public class KeywordExtractor {
     private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
     public List<String> extract(String string){
+
+        string = string.replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", " "); // 특수문자 제거
+
         KomoranResult result = komoran.analyze(string);
 
         List<String> keywords = new ArrayList<>();
