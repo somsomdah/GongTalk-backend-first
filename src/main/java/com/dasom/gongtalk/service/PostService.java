@@ -37,7 +37,7 @@ public class PostService {
         }
     }
 
-    public List<PostKeyword> save(Post post){
+    public void save(Post post){
 
         String content = post.getContent();
         String parsedText = Jsoup.parse(content).text();
@@ -47,26 +47,28 @@ public class PostService {
         List<String> contentKeywordStings = extractor.extract(parsedText);
         List<String> titleKeywordStrings = extractor.extract(title);
 
-        List<PostKeyword> postKeywords = new ArrayList<>();
+        postRepository.save(post);
 
 
         for (String keywordString: contentKeywordStings){
-            Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
-            PostKeyword postKeyword = new PostKeyword(post, keyword);
-            if (!postKeywords.contains(postKeyword)){
-                postKeywords.add(postKeywordRepository.save(postKeyword));
+            try {
+                Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
+                PostKeyword postKeyword = new PostKeyword(post, keyword);
+                postKeywordRepository.save(postKeyword);
+            }catch (Exception e){
+                System.out.printf("[Exception] %s - in PostService.save%n",e.toString());
             }
         }
 
         for (String keywordString: titleKeywordStrings){
-            Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
-            PostKeyword postKeyword = new PostKeyword(post, keyword);
-            if (!postKeywords.contains(postKeyword)){
-                postKeywords.add(postKeywordRepository.save(postKeyword));
+            try {
+                Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
+                PostKeyword postKeyword = new PostKeyword(post, keyword);
+                postKeywordRepository.save(postKeyword);
+            }catch (Exception e){
+                System.out.printf("Exception] %s - in PostService.save%n",e.toString());
             }
         }
-
-        return postKeywords;
 
     }
 
