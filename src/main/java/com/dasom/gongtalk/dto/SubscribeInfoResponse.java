@@ -25,7 +25,7 @@ public class SubscribeInfoResponse {
 
         for (Subscribe subscribe : subscribes){
 
-            if (subscribe.getType().equals("CK")){
+            if (subscribe.getType().equals(Subscribe.Type.CKEYWORD)){
                 typeCK.getKeywords().add(subscribe.getKeyword());
             }else{
 
@@ -43,12 +43,12 @@ public class SubscribeInfoResponse {
                         .filter(r->r.getBoard().equals(subscribe.getBoard()))
                         .findFirst().get();
 
-                if (subscribe.getType().equals("B")){
+                if (subscribe.getType().equals(Subscribe.Type.BOARD)){
                     subscribeInfoResponse.setNotifyAll(true);
                     continue;
                 }
 
-                if(subscribe.getType().equals("BK")){
+                if(subscribe.getType().equals(Subscribe.Type.BKEYWORD)){
                     subscribeInfoResponse.getKeywords().add(subscribe.getKeyword());
                 }
             }

@@ -17,11 +17,11 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
 
     List<Subscribe> findAllByUserAndType(User user, String type);
 
-    List<Subscribe> findAllByUserAndTypeAndBoardAndKeyword(User user, String type, Board board, Keyword keyword);
+    List<Subscribe> findAllByUserAndTypeAndBoardAndKeyword(User user, Subscribe.Type type, Board board, Keyword keyword);
 
-    List<Subscribe> findAllByTypeAndBoardAndKeywordIn(String type, Board board, List<Keyword> keywords);
+    List<Subscribe> findAllByTypeAndBoardAndKeywordIn(Subscribe.Type type, Board board, List<Keyword> keywords);
 
-    List<Subscribe> findAllByTypeAndBoardAndKeyword(String type, Board board, Keyword keyword);
+    List<Subscribe> findAllByTypeAndBoardAndKeyword(Subscribe.Type type, Board board, Keyword keyword);
 
 
 

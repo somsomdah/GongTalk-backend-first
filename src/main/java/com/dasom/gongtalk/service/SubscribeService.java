@@ -10,6 +10,7 @@ import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Table;
 import java.util.List;
 
 @Service
@@ -43,7 +44,7 @@ public class SubscribeService {
     public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest){
         Board board = boardService.getFromId(subscribeDeleteRequest.getBoardId());
         Keyword keyword = keywordService.getFromId(subscribeDeleteRequest.getKeywordId());
-        String type = subscribeDeleteRequest.getType();
+        Subscribe.Type type = Subscribe.Type.valueOf(subscribeDeleteRequest.getType());
 
         subscribeRepository.deleteAll(subscribeRepository.findAllByUserAndTypeAndBoardAndKeyword(user, type, board, keyword));
 
