@@ -4,6 +4,7 @@ package com.dasom.gongtalk.crawler;
 import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.CrawlingInfo;
 import com.dasom.gongtalk.domain.Post;
+import kr.co.shineware.nlp.komoran.constant.SYMBOL;
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -32,7 +34,7 @@ public class Parser {
         List<String> postUrls = new ArrayList<>();
         for(Element row: rows){
             try {
-                String postUrl = row.select(info.getBoardRowItemSelector()).attr(info.getBoardRowItemAttr());
+                String postUrl = row.select(info.getBoardRowItemSelector()).first().attr(info.getBoardRowItemAttr());
                 String postFullUrl = String.format("%s/%s",
                         info.getPostBaseUrl(), postUrl);
 
@@ -52,19 +54,22 @@ public class Parser {
 
     public String extractTitle(){
         String titleSelector = info.getPostTitleSelector();
-        Elements titleElement = this.doc.select(titleSelector);
+        Element titleElement = this.doc.select(titleSelector).first();
+        assert  titleElement != null;
         return Jsoup.parse(titleElement.toString()).text();
     }
 
     public String extractContent(){
         String contentSelector = info.getPostContentSelector();
-        Elements contentElement = this.doc.select(contentSelector);
+        Element contentElement = this.doc.select(contentSelector).first();
+        assert contentElement != null;
         return contentElement.toString();
     }
 
     public String extractCategory(){
         String categorySelector = info.getPostCategorySelector();
-        Elements categoryElement = this.doc.select(categorySelector);
+        Element categoryElement = this.doc.select(categorySelector).first();
+        assert categoryElement != null;
         String categoryString = Jsoup.parse(categoryElement.toString()).text();
         categoryString = categoryString.replace("[","").replace("]","");
         return categoryString;
@@ -72,15 +77,17 @@ public class Parser {
 
     public String extractWriter(){
         String writerSelector = info.getPostWriterSelector();
-        Elements writerElement = this.doc.select(writerSelector);
+        Element writerElement = this.doc.select(writerSelector).first();
+        assert writerElement != null;
         return Jsoup.parse(writerElement.toString()).text();
     }
 
     public LocalDate extractDate(String datePattern){
         String dateSelector = info.getPostDateSelector();
-        Elements dateElement = this.doc.select(dateSelector);
-        String dateString = Jsoup.parse(dateElement.toString()).text();
+        Element dateElement = this.doc.select(dateSelector).first();
+        assert dateElement != null;
 
+        String dateString = Jsoup.parse(dateElement.toString()).text();
         String[] splitDate = dateString.split("[-./]");
 
         if (splitDate[0].length()==2){
@@ -88,7 +95,6 @@ public class Parser {
             dateString = String.join("",splitDate);
             datePattern = "yyyyMMdd";
         }
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
         return LocalDate.parse(dateString, formatter);
     }
