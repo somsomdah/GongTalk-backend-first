@@ -6,11 +6,12 @@ import kr.co.shineware.nlp.komoran.model.KomoranResult;
 import kr.co.shineware.nlp.komoran.model.Token;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class KeywordExtractor {
 
-    private final Komoran komoran = new Komoran(DEFAULT_MODEL.LIGHT);
+    private final Komoran komoran = new Komoran(DEFAULT_MODEL.FULL);
 
     public List<String> extract(String string){
         KomoranResult result = komoran.analyze(string);
@@ -20,6 +21,17 @@ public class KeywordExtractor {
 
         for (Token token : tokenList){
             String keywordString = token.getMorph();
+            if (keywords.contains(keywordString)){
+                continue;
+            }
+            keywords.add(keywordString);
+        }
+
+        String[] keywordStrings = string.split(" ");
+        for (String keywordString : keywordStrings){
+            if (keywords.contains(keywordString)){
+                continue;
+            }
             keywords.add(keywordString);
         }
 
