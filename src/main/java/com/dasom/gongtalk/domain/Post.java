@@ -50,10 +50,6 @@ public class Post {
     @NotNull
     private String url;
 
-    @Column(columnDefinition = "varchar(10) default 'POST'")
-    @Enumerated(EnumType.STRING)
-    private HttpMethod httpMethod; //post 또는 get;
-
     private String httpBody;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -73,11 +69,6 @@ public class Post {
         this.url = url;
         this.isModified = false;
         this.isDeleted = false;
-    }
-
-    public enum HttpMethod {
-        POST,
-        GET;
     }
 
 

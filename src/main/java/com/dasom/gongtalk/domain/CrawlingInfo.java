@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class CrawlingInfo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JoinColumn(name="board_id")
@@ -33,6 +33,15 @@ public class CrawlingInfo {
     private String postWriterSelector;
     private String postDateSelector;
     private String postDatePattern;
+
+    @Column(columnDefinition = "varchar(10) default 'POST'")
+    @Enumerated(EnumType.STRING)
+    private HttpMethod httpMethod;
+
+    public enum HttpMethod {
+        POST,
+        GET;
+    }
 
 
 }
