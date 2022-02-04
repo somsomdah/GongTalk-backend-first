@@ -25,6 +25,7 @@ public class Crawler {
     private final AlarmService alarmService;
     private final CrawlingInfoRepository infoRepository;
 
+    // TODO : 이 값들 property로 빼기
     private static final String TIMEZONE = "Asia/Seoul";
 //    private static final String CRON_EXPRESSION= "0 0 11,18 * * *";
     private static final String CRON_EXPRESSION= "* 1 * * * *";
@@ -35,7 +36,6 @@ public class Crawler {
         List<String> postUrls = boardParser.extractPostUrls();
 
         for (String url : postUrls) {
-
             Post post = new Post(info.getBoard(), url);
             Parser parser = new Parser(post);
 
@@ -51,14 +51,15 @@ public class Crawler {
                 postService.save(post);
                 alarmService.save(post);
             }catch (Exception e){
-                throw new SqlException(e.toString(), "Exception in Crawling");
+                System.out.printf("[Exception] %s - in Crawler.crawl%n",e.toString());
             }
 
         }
 
     }
 
-    @Scheduled(cron= CRON_EXPRESSION, zone=TIMEZONE)
+//    @Scheduled(cron= CRON_EXPRESSION, zone=TIMEZONE)
+    @Scheduled(fixedDelay = 10*1000)
     public void run() throws IOException {
         for (CrawlingInfo info : infoRepository.findAll()){
             this.crawl(info);

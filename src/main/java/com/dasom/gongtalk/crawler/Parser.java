@@ -47,6 +47,8 @@ public class Parser {
         return postUrls;
     }
 
+    // TODO : Body로 값을 넘겨야 할 경우 extractBodies 함수 만들기
+
     Parser(Post post) throws IOException {
         this.info = post.getBoard().getCrawlingInfo();
         this.doc = Jsoup.connect(post.getUrl()).get();

@@ -18,6 +18,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenProvider {
 
+    // TODO : Refresh Token 추가하기.
+
     private final AppProperties appProperties;
     private final CustomUserDetailsService userDetailsService;
 

@@ -35,6 +35,8 @@ public class AlarmService {
     }
 
     public void save(Post post){
+
+        // TODO : FCM NOTIFICATION
         try{
             List<Keyword> keywords = keywordRepository.findAllByPost(post);
             Board board = post.getBoard();
