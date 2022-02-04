@@ -34,6 +34,18 @@ public class CrawlingInfo {
     private String postDateSelector;
     private String postDatePattern;
 
+    @NotNull
+    private String imageBaseUrl;
+    private String imageRowSelector;
+    private String imageRowItemSelector;
+    private String imageRowItemAttr;
+
+    @NotNull
+    private String fileBaseUrl;
+    private String fileRowSelector;
+    private String fileRowItemSelector;
+    private String fileRowItemAttr;
+
     @Column(columnDefinition = "varchar(10) default 'POST'")
     @Enumerated(EnumType.STRING)
     private HttpMethod httpMethod;
