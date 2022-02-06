@@ -2,13 +2,10 @@ package com.dasom.gongtalk.crawler;
 
 import com.dasom.gongtalk.domain.CrawlingInfo;
 import com.dasom.gongtalk.domain.Post;
-import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.CrawlingInfoRepository;
 import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +14,6 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-//@EnableConfigurationProperties
-//@ConfigurationProperties(prefix = "app.crawling")
 public class Crawler {
 
     private final PostService postService;
@@ -27,8 +22,7 @@ public class Crawler {
 
     // TODO : 이 값들 property로 빼기
     private static final String TIMEZONE = "Asia/Seoul";
-//    private static final String CRON_EXPRESSION= "0 0 11,18 * * *";
-    private static final String CRON_EXPRESSION= "* 1 * * * *";
+    private static final String CRON_EXPRESSION= "0 0 11,18 * * *";
 
     public void crawl(CrawlingInfo info) throws IOException {
 
@@ -58,7 +52,7 @@ public class Crawler {
 
     }
 
-//    @Scheduled(cron= CRON_EXPRESSION, zone=TIMEZONE)
+//    @Scheduled(cron= CRON_EXPRESSION, zone= TIMEZONE)
     @Scheduled(fixedDelay = 10*1000)
     public void run() throws IOException {
         for (CrawlingInfo info : infoRepository.findAll()){
