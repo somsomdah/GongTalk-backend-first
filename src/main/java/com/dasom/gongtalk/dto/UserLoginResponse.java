@@ -6,9 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class UserLoginResponse {
-    private String token;
-
-    public static UserLoginResponse fromAuthTokenString(String token){
-        return new UserLoginResponse(token);
-    }
+    private String refreshToken;
+    private String accessToken;
 }

@@ -5,6 +5,7 @@ import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
+import com.dasom.gongtalk.security.RefreshTokenProvider;
 import com.dasom.gongtalk.security.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ public class UserService {
     private final KeywordRepository keywordRepository;
     private final UserBoardRepository userBoardRepository;
     private final TokenProvider tokenProvider;
+    private final RefreshTokenProvider refreshTokenProvider;
 
     public User getFromPrincipal(DevicePrincipal devicePrincipal){
         return getFromId(devicePrincipal.getId());
@@ -61,9 +63,14 @@ public class UserService {
         userBoardRepository.deleteAll(userBoardRepository.findAllByUserAndBoard(user, board));
     }
 
-    public String getAuthToken(String deviceNum){
+    public String getAccessToken(String refreshToken){
+        Integer userId = refreshTokenProvider.getUserIdFromToken(refreshToken);
+        return tokenProvider.createTokenWithUserId(userId);
+    }
+
+    public String getRefreshToken(String deviceNum){
         User user = userRepository.findByDeviceNum(deviceNum);
-        return tokenProvider.createToken(user);
+        return refreshTokenProvider.createToken(user);
     }
 
     public List<Board> getBoards(User user) {

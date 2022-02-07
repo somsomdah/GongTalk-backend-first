@@ -37,19 +37,6 @@ public class UserController {
     private final ScrapService scrapService;
     private final UserBoardRepository userBoardRepository;
 
-//    @GetMapping
-//    public ResponseEntity<List<UserInfoResponse>> getAllUsers(){
-//        List<User> users = (List<User>) userRepository.findAll();
-//        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUsers(users));
-//    }
-//
-//    @GetMapping("{id}")
-//    public ResponseEntity<UserInfoResponse> getOneUser(@PathVariable Integer id){
-//        User user = userService.getFromId(id);
-//        return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
-//
-//    }
-
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateRequest request){
         User user = userService.save(request.getDeviceNum());
@@ -58,9 +45,17 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
-        String token = userService.getAuthToken(request.getDeviceNum());
-        UserLoginResponse response = UserLoginResponse.fromAuthTokenString(token);
+        String refreshToken = userService.getRefreshToken(request.getDeviceNum());
+        String accessToken = userService.getAccessToken(refreshToken);
+        UserLoginResponse response = new UserLoginResponse(refreshToken, accessToken);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("token/access")
+    public ResponseEntity<TokenResponse> getAccessToken(@RequestHeader("Refresh-Token")String refreshToken){
+        String accessToken = userService.getAccessToken(refreshToken);
+        TokenResponse tokenResponse = new TokenResponse(accessToken);
+        return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
     }
 
     @GetMapping("me")
