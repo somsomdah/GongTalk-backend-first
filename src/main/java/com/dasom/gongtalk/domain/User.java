@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"username", "password", "boards" })
+@JsonIgnoreProperties({"username", "password", "alarms", "scraps", "subscribes" })
 public class User {
 
     @Id
@@ -33,21 +33,22 @@ public class User {
     @OneToOne
     private Setting setting;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Alarm> alarms;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Scrap> scraps;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Subscribe> subscribes;
+
+
     public User(String deviceNum)
     {
         setDeviceNum(deviceNum);
         setUsername();
         setPassword();
     }
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Alarm> alarms;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Scrap> scraps;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<Subscribe> subscribes;
 
     public void setUsername()
     {
