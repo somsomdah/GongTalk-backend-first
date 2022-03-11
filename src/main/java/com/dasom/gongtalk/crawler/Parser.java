@@ -73,7 +73,7 @@ public class Parser {
         Element categoryElement = this.doc.select(categorySelector).first();
         assert categoryElement != null;
         String categoryString = Jsoup.parse(categoryElement.toString()).text();
-        categoryString = categoryString.replace("[","").replace("]","");
+        categoryString = categoryString.replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "");
         return categoryString;
     }
 
