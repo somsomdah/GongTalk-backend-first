@@ -49,7 +49,6 @@ public class PostService {
 
         postRepository.save(post);
 
-
         for (String keywordString: contentKeywordStings){
             try {
                 Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
@@ -69,6 +68,11 @@ public class PostService {
                 System.out.printf("Exception] %s - in PostService.save%n",e.toString());
             }
         }
+
+        String category = post.getCategory();
+        Keyword keyword = keywordService.getOrCreateFromContent(category);
+        PostKeyword postKeyword = new PostKeyword(post, keyword);
+        postKeywordRepository.save(postKeyword);
 
     }
 
