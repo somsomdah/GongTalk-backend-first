@@ -69,10 +69,15 @@ public class PostService {
             }
         }
 
-        String category = post.getCategory();
-        Keyword keyword = keywordService.getOrCreateFromContent(category);
-        PostKeyword postKeyword = new PostKeyword(post, keyword);
-        postKeywordRepository.save(postKeyword);
+        try {
+            String category = post.getCategory();
+            Keyword keyword = keywordService.getOrCreateFromContent(category);
+            PostKeyword postKeyword = new PostKeyword(post, keyword);
+            postKeywordRepository.save(postKeyword);
+        }catch (Exception e){
+            System.out.printf("Exception] %s - in PostService.save%n",e.toString());
+        }
+
 
     }
 
