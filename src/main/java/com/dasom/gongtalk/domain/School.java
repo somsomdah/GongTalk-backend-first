@@ -19,6 +19,12 @@ public class School {
     private Integer id;
 
     @NotNull
+    private String image;
+
+    @NotNull
     private String name;
+    @NotNull
+    private String shortName;
+
     private String campus;
 }
