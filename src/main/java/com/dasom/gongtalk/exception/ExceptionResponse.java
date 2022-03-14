@@ -9,12 +9,12 @@ import java.util.HashMap;
 @Getter
 public class ExceptionResponse {
 
-    private Date timestamp;
+    private String timestamp;
     private String message;
     private String details;
 
     public ExceptionResponse(String message, String details){
-        this.timestamp = new Date();
+        this.timestamp = new Date().toString();
         this.message = message;
         this.details = details;
     }
@@ -22,7 +22,7 @@ public class ExceptionResponse {
     public JSONObject toJson(){
         HashMap<String, String> hashMap = new HashMap<>();
 
-        hashMap.put("timestamp", timestamp.toString());
+        hashMap.put("timestamp", timestamp);
         hashMap.put("message", this.message);
         hashMap.put("details", this.details);
 
