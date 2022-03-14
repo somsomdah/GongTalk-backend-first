@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class UserBoard {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,6 +22,9 @@ public class UserBoard {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Board board;
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer order;
 
     public UserBoard(User user, Board board){
         this.user = user;
