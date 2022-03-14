@@ -5,7 +5,6 @@ import com.dasom.gongtalk.dto.*;
 import com.dasom.gongtalk.repository.AlarmRepository;
 import com.dasom.gongtalk.repository.ScrapRepository;
 import com.dasom.gongtalk.repository.UserBoardRepository;
-import com.dasom.gongtalk.repository.UserRepository;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.*;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
     private final BoardService boardService;
     private final SubscribeService subscribeService;
     private final ScrapRepository scrapRepository;
@@ -41,21 +39,6 @@ public class UserController {
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateRequest request){
         User user = userService.save(request.getDeviceNum());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
-    }
-
-    @PostMapping("login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
-        String refreshToken = userService.getRefreshToken(request.getDeviceNum());
-        String accessToken = userService.getAccessToken(refreshToken);
-        UserLoginResponse response = new UserLoginResponse(refreshToken, accessToken);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @GetMapping("token/access")
-    public ResponseEntity<TokenResponse> getAccessToken(@RequestHeader("Refresh-Token")String refreshToken){
-        String accessToken = userService.getAccessToken(refreshToken);
-        TokenResponse tokenResponse = new TokenResponse(accessToken);
-        return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
     }
 
     @GetMapping("me")
