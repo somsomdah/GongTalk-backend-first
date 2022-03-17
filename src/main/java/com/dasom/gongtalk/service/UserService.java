@@ -39,7 +39,29 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("user", "id", id, e.toString());
+            throw new SqlException(String.format("user with id %s doesn't exist", id), e.toString());
+        }
+
+    }
+
+    public User getFromDeviceNum(String deviceNum){
+
+        Optional<User> user = userRepository.findByDeviceNum(deviceNum);
+        try{
+            return user.get();
+        }catch (Exception e){
+            throw new SqlException(String.format("user with deviceNum %s doesn't exist", deviceNum), e.toString());
+        }
+
+    }
+
+    public User getFromUsername(String username){
+
+        Optional<User> user = userRepository.findByUsername(username);
+        try{
+            return user.get();
+        }catch (Exception e){
+            throw new ResourceNotFoundException("user", "username", username, e.toString());
         }
 
     }
@@ -69,7 +91,7 @@ public class UserService {
     }
 
     public String getRefreshToken(String deviceNum){
-        User user = userRepository.findByDeviceNum(deviceNum);
+        User user = this.getFromDeviceNum(deviceNum);
         return refreshTokenProvider.createToken(user);
     }
 

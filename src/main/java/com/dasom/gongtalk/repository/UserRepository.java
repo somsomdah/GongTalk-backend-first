@@ -4,10 +4,12 @@ import com.dasom.gongtalk.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    User findByUsername(String username);
-    User findByDeviceNum(String deviceNum);
+    Optional<User> findByUsername(String username);
+    Optional<User> findByDeviceNum(String deviceNum);
 
 }

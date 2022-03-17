@@ -2,6 +2,7 @@ package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
 import com.dasom.gongtalk.domain.User;
+import com.dasom.gongtalk.exception.UserForbiddenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -30,17 +31,17 @@ public class TokenProvider {
         setTokenSecret();
     }
 
-    void setTokenDurationMin(){
+    void setTokenDurationMin() {
         this.tokenDurationMin = this.appProperties.getAuth().getTokenDurationMin();
     }
 
-    void setTokenSecret(){
+    void setTokenSecret() {
         this.tokenSecret = this.appProperties.getAuth().getTokenSecret();
     }
 
-    public String createToken(User user){
+    public String createToken(User user) {
         Date now = new Date();
-        Date expirationTime =new Date(now.getTime()+ Duration.ofMinutes(tokenDurationMin).toMillis());
+        Date expirationTime = new Date(now.getTime() + Duration.ofMinutes(tokenDurationMin).toMillis());
 
         return Jwts.builder()
                 .setSubject(user.getId().toString())
@@ -50,12 +51,12 @@ public class TokenProvider {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserById(this.getUserIdFromToken(token));
         return new DeviceNumAuthenticationToken(userDetails, userDetails.getAuthorities());
     }
 
-    public Integer getUserIdFromToken(String token){
+    public Integer getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(tokenSecret)
                 .parseClaimsJws(token)
@@ -63,19 +64,19 @@ public class TokenProvider {
         return Integer.parseInt(claims.getSubject());
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(tokenSecret).parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
-        }catch(Exception ex){
-            System.out.printf("[Exception] %s : validateToken : %s%n",this.getClass().toString(),ex.toString());
+        } catch (Exception e) {
+            return false;
         }
-        return false;
+
     }
 
-    public String createTokenWithUserId(Integer userId){
+    public String createTokenWithUserId(Integer userId) {
         Date now = new Date();
-        Date expirationTime =new Date(now.getTime()+ Duration.ofMinutes(tokenDurationMin).toMillis());
+        Date expirationTime = new Date(now.getTime() + Duration.ofMinutes(tokenDurationMin).toMillis());
 
         return Jwts.builder()
                 .setSubject(Integer.toString(userId))
