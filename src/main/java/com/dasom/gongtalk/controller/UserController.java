@@ -61,7 +61,7 @@ public class UserController {
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
         UserBoard response = userBoardRepository.save(new UserBoard(user, board));
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("boards/{boardId}")
