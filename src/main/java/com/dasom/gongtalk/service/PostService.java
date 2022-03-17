@@ -33,7 +33,7 @@ public class PostService {
         try{
             return post.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException(e.toString(), "post", "id", id);
+            throw new ResourceNotFoundException("post", "id", id, e.toString());
         }
     }
 

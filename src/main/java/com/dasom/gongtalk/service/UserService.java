@@ -39,7 +39,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException(e.toString(), "user", "id", id);
+            throw new ResourceNotFoundException("user", "id", id, e.toString());
         }
 
     }
@@ -50,7 +50,7 @@ public class UserService {
             newUser.setSetting(settingRepository.save(new Setting()));
             return userRepository.save(newUser);
         }catch(Exception e){
-            throw new SqlException(e.toString(), "User with this device number already exists");
+            throw new SqlException("User with this device number already exists", e.toString());
         }
 
     }

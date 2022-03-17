@@ -30,7 +30,7 @@ public class AlarmService {
         try{
             return alarm.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException(e.toString(), "alarm", "id", id);
+            throw new ResourceNotFoundException("alarm", "id", id, e.toString());
         }
     }
 
@@ -92,7 +92,7 @@ public class AlarmService {
 
     public void checkAuthority(User user, Alarm alarm){
         if (!user.equals(alarm.getUser())){
-            throw new UserForbiddenException(String.format("The user has no authority to alarm id %d",alarm.getId()));
+            throw new UserForbiddenException(String.format("The user has no authority to alarm id %d",alarm.getId()), "");
         }
     }
 

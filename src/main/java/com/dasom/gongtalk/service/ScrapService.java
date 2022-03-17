@@ -23,13 +23,13 @@ public class ScrapService {
         try{
             return scrap.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException(e.toString(), "scrap", "id", id);
+            throw new ResourceNotFoundException("scrap", "id", id, e.toString());
         }
     }
 
     public void checkAuthority(User user, Scrap scrap){
         if (!user.equals(scrap.getUser())){
-            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d",scrap.getId()));
+            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d",scrap.getId()), "");
         }
     }
 

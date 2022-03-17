@@ -21,13 +21,13 @@ public class BoardService {
         try{
             return board.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException(e.toString(), "board", "id", id);
+            throw new ResourceNotFoundException("board", "id", id, e.toString());
         }
     }
 
     public void checkAuthority(User user, Board board){
             if(boardRepository.findAllBoardsByUser(user).contains(board)){
-                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
+                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()), "");
         }
     }
 
