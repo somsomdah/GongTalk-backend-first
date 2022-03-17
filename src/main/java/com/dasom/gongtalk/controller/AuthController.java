@@ -33,10 +33,10 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
     }
 
-    @GetMapping("token/access")
-    public ResponseEntity<TokenResponse> getRefreshToken(@RequestParam("deviceNum")String deviceNum){
-        String refreshToken = userService.getRefreshToken(deviceNum);
-        TokenResponse tokenResponse = new TokenResponse(refreshToken);
-        return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
-    }
+//    @GetMapping("token/refresh")
+//    public ResponseEntity<TokenResponse> getRefreshToken(@RequestParam("deviceNum")String deviceNum){
+//        String refreshToken = userService.getRefreshToken(deviceNum);
+////        TokenResponse tokenResponse = new TokenResponse(refreshToken);
+//        return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
+//    }
 }
