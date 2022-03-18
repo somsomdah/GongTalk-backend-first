@@ -34,7 +34,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         try{
             String token = getTokenFromRequest(request);
 
-            if (token == null || !StringUtils.hasText(token)){
+            if (!StringUtils.hasText(token)){
                 SecurityContextHolder.clearContext();
                 filterChain.doFilter(request,response);
                 return;
