@@ -23,6 +23,7 @@ public class School {
 
     @NotNull
     private String name;
+
     @NotNull
     private String shortName;
 
