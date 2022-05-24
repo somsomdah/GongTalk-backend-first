@@ -59,13 +59,6 @@ public class Post {
     private List<Scrap> scraps;
 
 
-    // 나중에 추가
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-//    private List<File> files;
-//
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-//    private List<Image> images;
-
     public Post(Board board, String url){
         this.board = board;
         this.url = url;
