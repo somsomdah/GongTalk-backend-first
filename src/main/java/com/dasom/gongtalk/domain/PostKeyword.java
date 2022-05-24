@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class PostKeyword {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
