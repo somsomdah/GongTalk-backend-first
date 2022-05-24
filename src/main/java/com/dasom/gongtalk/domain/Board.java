@@ -1,8 +1,8 @@
 package com.dasom.gongtalk.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,11 +20,14 @@ public class Board {
     @NotNull
     private String name;
 
+    @NotNull
+    private String shortName;
+
     @JoinColumn(name = "school_id")
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
-
+    @ToString.Exclude
     @OneToOne(mappedBy = "board", fetch = FetchType.LAZY)
     CrawlingInfo crawlingInfo;
 
