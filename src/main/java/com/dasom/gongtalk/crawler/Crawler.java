@@ -33,19 +33,36 @@ public class Crawler {
             Post post = new Post(info.getBoard(), url);
             Parser parser = new Parser(post);
 
-            post.setContent(parser.extractContent());
-            post.setTitle(parser.extractTitle());
-            post.setWriter(parser.extractWriter());
-            post.setDate(parser.extractDate(info.getPostDatePattern()));
+            try{
+                post.setContent(parser.extractContent());
+            }catch(Exception e){
+                System.out.printf("[Exception] %s - in Crawler.crawl - 1%n",e.toString());
+            }
+            try{
+                post.setTitle(parser.extractTitle());
+            }catch(Exception e){
+                System.out.printf("[Exception] %s - in Crawler.crawl - 2%n",e.toString());
+            }
+            try{
+                post.setWriter(parser.extractWriter());
+            }catch(Exception e){
+                System.out.printf("[Exception] %s - in Crawler.crawl - 3%n",e.toString());
+            }
+            try{
+                post.setDate(parser.extractDate(info.getPostDatePattern()));
+            }catch(Exception e){
+                System.out.printf("[Exception] %s - in Crawler.crawl - 4%n",e.toString());
+            }
             try{
                 post.setCategory(parser.extractCategory());
-            }catch (Exception ignored){}
-
+            }catch (Exception e){
+                System.out.printf("[Exception] %s - in Crawler.crawl - 5%n",e.toString());
+            }
             try{
                 postService.save(post);
                 alarmService.save(post);
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - 2%n",e.toString());
             }
 
         }
@@ -53,7 +70,7 @@ public class Crawler {
     }
 
 //    @Scheduled(cron= CRON_EXPRESSION, zone= TIMEZONE)
-    @Scheduled(fixedDelay = 10*1000)
+    @Scheduled(fixedDelay = 300*1000)
     public void run() throws IOException {
         for (CrawlingInfo info : infoRepository.findAll()){
             this.crawl(info);
