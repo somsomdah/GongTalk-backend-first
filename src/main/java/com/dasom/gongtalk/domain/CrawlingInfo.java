@@ -34,19 +34,14 @@ public class CrawlingInfo {
     private String postDateSelector;
     private String postDatePattern;
 
-//    @NotNull
-//    private String fileBaseUrl;
-//    private String fileRowSelector;
-//    private String fileRowItemSelector;
-//    private String fileRowItemAttr;
 
-    @Column(columnDefinition = "varchar(10) default 'POST'")
+    @Column(columnDefinition = "varchar(10) default 'GET'")
     @Enumerated(EnumType.STRING)
     private HttpMethod httpMethod;
 
     public enum HttpMethod {
-        POST,
-        GET;
+        GET,
+        POST;
     }
 
 
