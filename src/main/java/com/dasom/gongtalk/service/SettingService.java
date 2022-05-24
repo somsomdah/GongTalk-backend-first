@@ -27,7 +27,7 @@ public class SettingService {
         Setting setting = this.getFromId(settingId);
 
         try{
-            setting.setSilence(newSetting.isSilence());
+            setting.setSound(newSetting.isSound());
         }catch (Exception e){
             System.out.println("[Exception] : SettingService : updateSetting 1 : "+e.toString());
         }

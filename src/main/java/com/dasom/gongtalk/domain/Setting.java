@@ -20,15 +20,15 @@ public class Setting {
     private boolean push;
 
     @NotNull
-    private boolean vibration;
+    private boolean sound;
 
     @NotNull
-    private boolean silence;
+    private boolean vibration;
 
     public Setting(){
         this.push = true;
+        this.sound = true;
         this.vibration = false;
-        this.silence = false;
     }
 
 }
