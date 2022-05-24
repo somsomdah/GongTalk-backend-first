@@ -2,6 +2,7 @@ package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.dto.TokenResponse;
 import com.dasom.gongtalk.dto.UserLoginByDeviceRequest;
+import com.dasom.gongtalk.dto.IssueAccessTokenRequest;
 import com.dasom.gongtalk.dto.UserLoginResponse;
 import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,17 +27,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("token/access")
-    public ResponseEntity<TokenResponse> getAccessToken(@RequestHeader("Refresh-Token")String refreshToken){
-        String accessToken = userService.getAccessToken(refreshToken);
+    @PostMapping("token/issue")
+    public ResponseEntity<TokenResponse> getAccessToken(@RequestBody IssueAccessTokenRequest request){
+        String accessToken = userService.getAccessToken(request.getRefreshToken());
         TokenResponse tokenResponse = new TokenResponse(accessToken);
         return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
     }
 
-//    @GetMapping("token/refresh")
-//    public ResponseEntity<TokenResponse> getRefreshToken(@RequestParam("deviceNum")String deviceNum){
-//        String refreshToken = userService.getRefreshToken(deviceNum);
-////        TokenResponse tokenResponse = new TokenResponse(refreshToken);
-//        return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
-//    }
 }
