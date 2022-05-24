@@ -35,8 +35,18 @@ public class Parser {
         for(Element row: rows){
             try {
                 String postUrl = row.select(info.getBoardRowItemSelector()).first().attr(info.getBoardRowItemAttr());
-                String postFullUrl = String.format("%s/%s",
-                        info.getPostBaseUrl(), postUrl);
+                String postFullUrl;
+                if (info.getPostBaseUrl().isBlank() || info.getPostBaseUrl().isEmpty()){
+                    postFullUrl = postUrl;
+                }
+                else if (postUrl.startsWith("?")){
+                    postFullUrl = String.format("%s%s",
+                            info.getPostBaseUrl(), postUrl);
+                }
+                else{
+                    postFullUrl = String.format("%s/%s",
+                            info.getPostBaseUrl(), postUrl);
+                }
 
                 postUrls.add(postFullUrl);
             }catch (Exception e){
@@ -90,13 +100,6 @@ public class Parser {
         assert dateElement != null;
 
         String dateString = Jsoup.parse(dateElement.toString()).text();
-        String[] splitDate = dateString.split("[-./]");
-
-        if (splitDate[0].length()==2){
-            splitDate[0] = Integer.toString(LocalDate.now().getYear());
-            dateString = String.join("",splitDate);
-            datePattern = "yyyyMMdd";
-        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
         return LocalDate.parse(dateString, formatter);
     }
