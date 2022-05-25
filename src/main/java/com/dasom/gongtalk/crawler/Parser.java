@@ -12,6 +12,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,21 +38,9 @@ public class Parser {
         List<String> postUrls = new ArrayList<>();
         for(Element row: rows){
             try {
-                String postUrl = row.select(info.getBoardRowItemSelector()).first().attr(info.getBoardRowItemAttr());
-                String postFullUrl;
-                if (info.getPostBaseUrl().isBlank() || info.getPostBaseUrl().isEmpty()){
-                    postFullUrl = postUrl;
-                }
-                else if (postUrl.startsWith("?")){
-                    postFullUrl = String.format("%s%s",
-                            info.getPostBaseUrl(), postUrl);
-                }
-                else{
-                    postFullUrl = String.format("%s/%s",
-                            info.getPostBaseUrl(), postUrl);
-                }
 
-                postUrls.add(postFullUrl);
+                String postUrl = row.select(info.getBoardRowItemSelector()).first().absUrl("href");
+                postUrls.add(getValidUrl(postUrl));
             }catch (Exception e){
                 System.out.println("[Exception] Parser - extractPostUrls : "+e.toString());
                 break;
@@ -57,11 +49,20 @@ public class Parser {
         return postUrls;
     }
 
+    public static String getValidUrl(String urlString) throws MalformedURLException, URISyntaxException {
+        URL url = new URL(urlString);
+        URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+        return uri.toURL().toString();
+    }
+
     // TODO : Body로 값을 넘겨야 할 경우 extractBodies 함수 만들기
 
     Parser(Post post) throws IOException {
         this.info = post.getBoard().getCrawlingInfo();
         this.doc = Jsoup.connect(post.getUrl()).get();
+        System.out.println("===========================");
+        System.out.println(post.getUrl());
+        System.out.println("===========================");
     }
 
     public String extractTitle(){
@@ -80,6 +81,9 @@ public class Parser {
 
     public String extractCategory(){
         String categorySelector = info.getPostCategorySelector();
+        if (categorySelector.isEmpty() || categorySelector.isBlank()){
+            return "";
+        }
         Element categoryElement = this.doc.select(categorySelector).first();
         assert categoryElement != null;
         String categoryString = Jsoup.parse(categoryElement.toString()).text();
@@ -97,6 +101,7 @@ public class Parser {
     public LocalDate extractDate(String datePattern){
         String dateSelector = info.getPostDateSelector();
         Element dateElement = this.doc.select(dateSelector).first();
+
         assert dateElement != null;
 
         String dateString = Jsoup.parse(dateElement.toString()).text();
