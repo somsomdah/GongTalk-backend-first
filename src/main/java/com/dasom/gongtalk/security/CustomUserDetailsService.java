@@ -3,7 +3,6 @@ package com.dasom.gongtalk.security;
 import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.UserRepository;
-import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,10 +1,8 @@
 package com.dasom.gongtalk.crawler;
 
 
-import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.CrawlingInfo;
 import com.dasom.gongtalk.domain.Post;
-import kr.co.shineware.nlp.komoran.constant.SYMBOL;
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +17,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Data

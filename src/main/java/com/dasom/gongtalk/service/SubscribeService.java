@@ -10,7 +10,6 @@ import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Table;
 import java.util.List;
 
 @Service

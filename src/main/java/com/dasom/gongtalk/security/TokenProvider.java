@@ -2,12 +2,10 @@ package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
 import com.dasom.gongtalk.domain.User;
-import com.dasom.gongtalk.exception.UserForbiddenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.tomcat.util.descriptor.web.ContextResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

@@ -1,15 +1,12 @@
 package com.dasom.gongtalk.service;
 
-import com.dasom.gongtalk.domain.Board;
-import com.dasom.gongtalk.domain.Keyword;
-import com.dasom.gongtalk.domain.Post;
-import com.dasom.gongtalk.domain.Alarm;
-import com.dasom.gongtalk.domain.Subscribe;
-import com.dasom.gongtalk.domain.User;
+import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
-import com.dasom.gongtalk.repository.*;
+import com.dasom.gongtalk.repository.AlarmRepository;
+import com.dasom.gongtalk.repository.KeywordRepository;
+import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
