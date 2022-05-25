@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"content", "keywords"})
-@Table(name="post", uniqueConstraints = @UniqueConstraint(columnNames = {"board_id","url"}))
+@Table(name="post")
 public class Post {
 
     @Id
@@ -48,6 +48,7 @@ public class Post {
     private boolean isModified;
 
     @NotNull
+    @Column(columnDefinition = "LONGTEXT", unique = true)
     private String url;
 
     private String httpBody;
