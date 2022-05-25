@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "school_id"})})
+@Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"gubun", "name", "school_id"})})
 public class Board {
 
     @Id
@@ -23,21 +23,14 @@ public class Board {
     @NotNull
     private String shortName;
 
+    private String gubun;
+
     @JoinColumn(name = "school_id")
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
     @ToString.Exclude
     @OneToOne(mappedBy = "board", fetch = FetchType.LAZY)
-    CrawlingInfo crawlingInfo;
-
-
-
-
-
-
-
-
-
+    private CrawlingInfo crawlingInfo;
 
 }
