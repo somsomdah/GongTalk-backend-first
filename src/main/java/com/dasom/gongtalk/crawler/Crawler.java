@@ -36,33 +36,33 @@ public class Crawler {
             try{
                 post.setContent(parser.extractContent());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 1%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n",e.toString());
             }
             try{
                 post.setTitle(parser.extractTitle());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 2%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n",e.toString());
             }
             try{
                 post.setWriter(parser.extractWriter());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 3%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setWriter%n",e.toString());
             }
             try{
                 post.setDate(parser.extractDate(info.getPostDatePattern()));
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 4%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setDate%n",e.toString());
             }
             try{
                 post.setCategory(parser.extractCategory());
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 5%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n",e.toString());
             }
             try{
                 postService.save(post);
                 alarmService.save(post);
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - 2%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - save post and alarm%n",e.toString());
             }
 
         }
@@ -75,5 +75,6 @@ public class Crawler {
         for (CrawlingInfo info : infoRepository.findAll()){
             this.crawl(info);
         }
+
     }
 }
