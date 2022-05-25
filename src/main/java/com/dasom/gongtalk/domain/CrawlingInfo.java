@@ -17,7 +17,7 @@ public class CrawlingInfo {
 
     @JoinColumn(name="board_id")
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Board board;
+    private Board board;
 
     @NotNull
     private String boardUrl;
