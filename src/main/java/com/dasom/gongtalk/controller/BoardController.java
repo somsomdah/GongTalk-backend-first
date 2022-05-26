@@ -3,6 +3,7 @@ package com.dasom.gongtalk.controller;
 import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.dto.PostListResponse;
+import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.service.BoardService;
 import com.dasom.gongtalk.service.PostService;
@@ -21,6 +22,16 @@ public class BoardController {
     private final PostService postService;
     private final PostRepository postRepository;
     private final BoardService boardService;
+    private final BoardRepository boardRepository;
+
+    @GetMapping
+    public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) int schoolId,
+                                                 @RequestParam(required = false, defaultValue ="0") int page,
+                                                 @RequestParam(required = false, defaultValue = "3") int size
+                                                 ){
+        List<Board> boards = boardService.getAllFromSchoolId(schoolId, page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(boards);
+    }
 
     @GetMapping(value="{id}/posts")
     public ResponseEntity<List<PostListResponse>> getPosts(@PathVariable Integer id,

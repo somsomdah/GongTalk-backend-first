@@ -3,6 +3,7 @@ package com.dasom.gongtalk.repository;
 import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Subscribe;
 import com.dasom.gongtalk.domain.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,4 +19,6 @@ public interface BoardRepository extends CrudRepository<Board, Integer> {
 
     @Query("select s.board from Subscribe s where s in :subscribes")
     List<Board> findAllBySubscribe(List<Subscribe> subscribes);
+
+    List<Board> findAllBySchoolId(Integer id, Pageable pageable);
 }
