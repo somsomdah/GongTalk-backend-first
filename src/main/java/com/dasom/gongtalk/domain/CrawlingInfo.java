@@ -23,10 +23,8 @@ public class CrawlingInfo {
     private String boardUrl;
     private String boardRowSelector;
     private String boardRowItemSelector;
-    private String boardRowItemAttr;
 
     @NotNull
-    private String postBaseUrl;
     private String postContentSelector;
     private String postTitleSelector;
     private String postCategorySelector;
