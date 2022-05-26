@@ -1,5 +1,6 @@
 package com.dasom.gongtalk.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -29,6 +30,7 @@ public class Board {
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
+    @JsonIgnore
     @ToString.Exclude
     @OneToOne(mappedBy = "board", fetch = FetchType.LAZY)
     private CrawlingInfo crawlingInfo;
