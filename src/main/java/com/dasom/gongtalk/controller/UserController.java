@@ -55,23 +55,24 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("boards/{boardId}")
-    public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                       @PathVariable Integer boardId){
-        User user = userService.getFromPrincipal(devicePrincipal);
-        Board board = boardService.getFromId(boardId);
-        UserBoard response = userBoardRepository.save(new UserBoard(user, board));
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
-    @DeleteMapping("boards/{boardId}")
-    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                         @PathVariable Integer boardId){
-        User user = userService.getFromPrincipal(devicePrincipal);
-        Board board = boardService.getFromId(boardId);
-        userService.deleteUserBoard(user, board);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+    // subscribe API로 대체 가능
+//    @PostMapping("boards/{boardId}")
+//    public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+//                                                       @PathVariable Integer boardId){
+//        User user = userService.getFromPrincipal(devicePrincipal);
+//        Board board = boardService.getFromId(boardId);
+//        UserBoard response = userBoardRepository.save(new UserBoard(user, board));
+//        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+//    }
+//
+//    @DeleteMapping("boards/{boardId}")
+//    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+//                                                         @PathVariable Integer boardId){
+//        User user = userService.getFromPrincipal(devicePrincipal);
+//        Board board = boardService.getFromId(boardId);
+//        userService.deleteUserBoard(user, board);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//    }
 
     @GetMapping(value = "posts", params = {"size"})
     public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
