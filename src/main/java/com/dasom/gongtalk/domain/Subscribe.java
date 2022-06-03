@@ -42,8 +42,8 @@ public class Subscribe {
 
     public enum Type{
         BOARD,
-        CKEYWORD, //common keyword
-        BKEYWORD; //board keyword
+        KEYWORD_COMMON, //common keyword
+        KEYWORD_BOARD; //board keyword
     }
 
 
