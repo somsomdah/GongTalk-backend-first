@@ -16,9 +16,12 @@ public interface KeywordRepository extends CrudRepository<Keyword, Integer> {
 
     Optional<Keyword> findByContent(String content);
 
-    @Query("select s.keyword from Subscribe s where s.user=:user and s.type='CK'")
+    @Query("select s.keyword from Subscribe s where s.user=:user and s.type='KEYWORD_COMMON'")
     List<Keyword> findAllCommonByUser(User user);
 
     @Query("select pk.keyword from PostKeyword pk where pk.post = :post")
     List<Keyword> findAllByPost(Post post);
+
+    @Query("select k from Keyword k where k.isRecommended = true")
+    List<Keyword> findAllRecommended();
 }
