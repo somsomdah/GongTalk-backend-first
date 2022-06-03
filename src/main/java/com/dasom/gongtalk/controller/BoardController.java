@@ -2,9 +2,11 @@ package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
+import com.dasom.gongtalk.domain.School;
 import com.dasom.gongtalk.dto.PostListResponse;
 import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
+import com.dasom.gongtalk.repository.SchoolRepository;
 import com.dasom.gongtalk.service.BoardService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class BoardController {
     private final PostRepository postRepository;
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+    private final SchoolRepository schoolRepository;
 
     @GetMapping
     public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) int schoolId,
@@ -49,5 +52,11 @@ public class BoardController {
         List<Post> posts = postRepository.findAllByBoardAndKeywordsContentIn(board,searchKeywords);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping(value = "schools")
+    public ResponseEntity<List<School>> getAllSchools(){
+        List<School> schools = schoolRepository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(schools);
     }
 }
