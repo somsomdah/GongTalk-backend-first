@@ -20,11 +20,11 @@ public class Keyword {
     private String content;
 
     @NotNull
-    private boolean isDefault;
+    private boolean isRecommended;
 
     public Keyword(String content){
         this.content = content;
-        this.isDefault = false;
+        this.isRecommended = false;
     }
 
 }
