@@ -38,8 +38,8 @@ public class AlarmService {
             List<Keyword> keywords = keywordRepository.findAllByPost(post);
             Board board = post.getBoard();
 
-            List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn(Subscribe.Type.BKEYWORD, board, keywords);
-            List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn(Subscribe.Type.CKEYWORD, null, keywords);
+            List<Subscribe> subscribeTypeBk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn(Subscribe.Type.KEYWORD_BOARD, board, keywords);
+            List<Subscribe> subscribeTypeCk = subscribeRepository.findAllByTypeAndBoardAndKeywordIn(Subscribe.Type.KEYWORD_COMMON, null, keywords);
             List<Subscribe> subscribeTypeB = subscribeRepository.findAllByTypeAndBoardAndKeyword(Subscribe.Type.BOARD, board, null);
 
             List<Alarm> alarms = new ArrayList<>();

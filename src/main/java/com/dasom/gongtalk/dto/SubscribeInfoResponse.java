@@ -21,11 +21,11 @@ public class SubscribeInfoResponse {
 
     public static List<SubscribeInfoResponse> fromSubscribes(List<Subscribe> subscribes){
         List<SubscribeInfoResponse> response = new ArrayList<>();
-        SubscribeInfoResponse typeCK = new SubscribeInfoResponse(Subscribe.Type.CKEYWORD, null, new ArrayList<>(), false);
+        SubscribeInfoResponse typeCK = new SubscribeInfoResponse(Subscribe.Type.KEYWORD_COMMON, null, new ArrayList<>(), false);
 
         for (Subscribe subscribe : subscribes){
 
-            if (subscribe.getType().equals(Subscribe.Type.CKEYWORD)){
+            if (subscribe.getType().equals(Subscribe.Type.KEYWORD_COMMON)){
                 typeCK.getKeywords().add(subscribe.getKeyword());
             }else{
 
@@ -48,7 +48,7 @@ public class SubscribeInfoResponse {
                     continue;
                 }
 
-                if(subscribe.getType().equals(Subscribe.Type.BKEYWORD)){
+                if(subscribe.getType().equals(Subscribe.Type.KEYWORD_BOARD)){
                     subscribeInfoResponse.getKeywords().add(subscribe.getKeyword());
                 }
             }
