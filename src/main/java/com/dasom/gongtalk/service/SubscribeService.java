@@ -20,9 +20,6 @@ public class SubscribeService {
     private final BoardService boardService;
     private final KeywordService keywordService;
 
-    public List<Subscribe> getAllSubscribe(User user){
-        return subscribeRepository.findAllByUser(user);
-    }
 
     public Subscribe save(User user, SubscribeRequest subscribeRequest){
         Board board = null;
