@@ -23,7 +23,7 @@ public class AuthController {
 
 
     @PostMapping("login")
-    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request){
+    public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginByDeviceRequest request) {
         String refreshToken = userService.getRefreshToken(request.getDeviceNum());
         String accessToken = userService.getAccessToken(refreshToken);
         UserLoginResponse response = new UserLoginResponse(refreshToken, accessToken);
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("token/issue")
-    public ResponseEntity<TokenResponse> getAccessToken(@RequestBody IssueAccessTokenRequest request){
+    public ResponseEntity<TokenResponse> getAccessToken(@RequestBody IssueAccessTokenRequest request) {
         String accessToken = userService.getAccessToken(request.getRefreshToken());
         TokenResponse tokenResponse = new TokenResponse(accessToken);
         return ResponseEntity.status(HttpStatus.OK).body(tokenResponse);
