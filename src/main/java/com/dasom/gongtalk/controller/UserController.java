@@ -2,10 +2,7 @@ package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.dto.*;
-import com.dasom.gongtalk.repository.AlarmRepository;
-import com.dasom.gongtalk.repository.ScrapRepository;
-import com.dasom.gongtalk.repository.SubscribeRepository;
-import com.dasom.gongtalk.repository.UserBoardRepository;
+import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.*;
 import lombok.RequiredArgsConstructor;
@@ -26,21 +23,29 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
     private final BoardService boardService;
     private final SubscribeService subscribeService;
     private final SubscribeRepository subscribeRepository;
+    private final ScrapService scrapService;
     private final ScrapRepository scrapRepository;
     private final PostService postService;
     private final AlarmRepository alarmRepository;
     private final AlarmService alarmService;
     private final SettingService settingService;
-    private final ScrapService scrapService;
     private final UserBoardRepository userBoardRepository;
 
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateRequest request) {
         User user = userService.save(request.getDeviceNum());
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
+        User user = userService.getFromPrincipal(devicePrincipal);
+        userRepository.delete(user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("me")
@@ -72,7 +77,7 @@ public class UserController {
         User user = userService.getFromPrincipal(devicePrincipal);
         Board board = boardService.getFromId(boardId);
         userService.deleteUserBoard(user, board);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "posts", params = {"size"})
@@ -96,7 +101,6 @@ public class UserController {
     public ResponseEntity<List<Subscribe>> getSubscribeInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                             @RequestParam(required = false) Integer boardId,
                                                             @RequestParam(required = false) Subscribe.Type type
-
     ) {
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Subscribe> subscribes = subscribeRepository.findAllByUserAndTypeAndBoardId(user,type,boardId);
