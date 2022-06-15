@@ -17,16 +17,16 @@ public class Subscribe {
     private Integer id;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @NotNull
     private User user;
 
     @JoinColumn(name = "board_id")
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     private Board board;
 
     @JoinColumn(name = "keyword_id")
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     private Keyword keyword;
 
     @NotNull
