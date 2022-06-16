@@ -126,7 +126,7 @@ public class UserController {
     @GetMapping(value = "scraps")
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                        @RequestParam(required = false, defaultValue = "0") int page,
-                                                       @RequestParam(required = false, defaultValue = "10") int size) {
+                                                       @RequestParam(required = false, defaultValue = "100") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);
@@ -155,7 +155,7 @@ public class UserController {
     @GetMapping(value = "alarms")
     public ResponseEntity<List<Alarm>> getAlarms(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
                                                  @RequestParam(required = false, defaultValue = "0") int page,
-                                                 @RequestParam(required = false, defaultValue = "10") int size) {
+                                                 @RequestParam(required = false, defaultValue = "100") int size) {
         User user = userService.getFromPrincipal(devicePrincipal);
         Pageable pageable = PageRequest.of(page, size, Sort.by(new Sort.Order(Sort.Direction.DESC, "post.date")));
         List<Alarm> alarms = alarmRepository.findAllByUser(user, pageable);
