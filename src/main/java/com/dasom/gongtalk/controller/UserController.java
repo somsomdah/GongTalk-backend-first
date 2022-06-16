@@ -80,9 +80,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "posts", params = {"size"})
+    @GetMapping(value = "posts")
     public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
-                                                           @RequestParam int size) {
+                                                           @RequestParam(required=false, defaultValue="100") int size) {
         User user = userService.getFromPrincipal(devicePrincipal);
         List<Post> posts = userService.getPosts(user, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
