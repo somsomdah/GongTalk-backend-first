@@ -24,13 +24,12 @@ public class BoardController {
     private final PostService postService;
     private final PostRepository postRepository;
     private final BoardService boardService;
-    private final BoardRepository boardRepository;
     private final SchoolRepository schoolRepository;
 
     @GetMapping
     public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) int schoolId,
                                                  @RequestParam(required = false, defaultValue ="0") int page,
-                                                 @RequestParam(required = false, defaultValue = "3") int size
+                                                 @RequestParam(required = false, defaultValue = "100") int size
                                                  ){
         List<Board> boards = boardService.getAllFromSchoolId(schoolId, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(boards);
@@ -45,11 +44,10 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping(value = "{id}/search", params = {"keyword"})
+    @GetMapping(value = "{id}/post/search", params = {"keywordContent"})
     public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@PathVariable Integer id,
-                                                                          @RequestParam(value = "keyword") List<String> searchKeywords){
-        Board board = boardService.getFromId(id);
-        List<Post> posts = postRepository.findAllByBoardAndKeywordsContentIn(board,searchKeywords);
+                                                                          @RequestParam(value = "keywordContent") List<String> searchKeywords){
+        List<Post> posts = postRepository.findAllByBoardIdAndKeywordsContentIn(id,searchKeywords);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
