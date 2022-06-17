@@ -36,7 +36,7 @@ public class BoardService {
     }
 
     public void checkAuthority(User user, Board board){
-            if(boardRepository.findAllBoardsByUser(user).contains(board)){
+            if(boardRepository.findAllByUser(user).contains(board)){
                 throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()), "");
         }
     }

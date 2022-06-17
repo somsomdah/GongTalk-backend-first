@@ -96,11 +96,11 @@ public class UserService {
     }
 
     public List<Board> getBoards(User user) {
-        return boardRepository.findAllBoardsByUser(user);
+        return boardRepository.findAllByUser(user);
     }
 
     public List<Post> getPosts(User user, int max){
-        List<Board> boards = boardRepository.findAllBoardsByUser(user);
+        List<Board> boards = boardRepository.findAllByUser(user);
         Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
         return postRepository.findAllByBoardIn(boards, limitMax);
     }
