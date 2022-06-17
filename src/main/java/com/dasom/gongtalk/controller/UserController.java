@@ -2,6 +2,7 @@ package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.dto.*;
+import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.service.*;
@@ -69,6 +70,18 @@ public class UserController {
         Board board = boardService.getFromId(boardId);
         UserBoard response = userBoardRepository.save(new UserBoard(user, board));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PatchMapping("boards/{boardId}")
+    public ResponseEntity<?> updateBoardOrder(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+                                                            @PathVariable Integer boardId,
+                                                            @RequestBody UserBoardPatchRequest userBoardPatchRequest
+    ) {
+        User user = userService.getFromPrincipal(devicePrincipal);
+        UserBoard userBoard = userBoardRepository.findByUserAndBoardId(user, boardId);
+        userBoard.setOrderValue(userBoardPatchRequest.getOrderValue());
+        userBoardRepository.save(userBoard);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("boards/{boardId}")

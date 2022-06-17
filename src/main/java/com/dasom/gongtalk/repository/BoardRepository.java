@@ -14,8 +14,8 @@ import java.util.List;
 public interface BoardRepository extends CrudRepository<Board, Integer> {
 
 
-    @Query("select ub.board from UserBoard ub where ub.user=:user")
-    List<Board> findAllBoardsByUser(User user);
+    @Query("select ub.board from UserBoard ub where ub.user=:user order by ub.orderValue")
+    List<Board> findAllByUser(User user);
 
     @Query("select s.board from Subscribe s where s in :subscribes")
     List<Board> findAllBySubscribe(List<Subscribe> subscribes);
