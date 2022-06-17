@@ -23,13 +23,13 @@ public class ScrapService {
         try{
             return scrap.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("scrap", "id", id, e.toString());
+            throw new ResourceNotFoundException("scrap", "id", id);
         }
     }
 
     public void checkAuthority(User user, Scrap scrap){
         if (!user.equals(scrap.getUser())){
-            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d",scrap.getId()), "");
+            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d",scrap.getId()));
         }
     }
 
@@ -39,7 +39,7 @@ public class ScrapService {
             scrapRepository.save(scrap);
             return scrap;
         }catch (Exception e){
-            throw new SqlException(e.toString(), "Scrap create error");
+            throw new SqlException("Scrap create error");
         }
     }
 }

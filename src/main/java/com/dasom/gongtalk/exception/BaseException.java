@@ -9,9 +9,9 @@ public class BaseException extends RuntimeException{
 
     private String details;
 
-    public BaseException(String message, String details){
+    public BaseException(String message){
         super(message);
-        setDetails(details);
+        setDetails(this.toString());
 
         System.out.printf("[Exception] %s%n", message);
     }

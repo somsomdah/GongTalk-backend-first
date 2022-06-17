@@ -22,9 +22,9 @@ public class ExceptionResponse {
     public JSONObject toJson(){
         HashMap<String, String> hashMap = new HashMap<>();
 
-        hashMap.put("timestamp", timestamp);
-        hashMap.put("message", this.message);
         hashMap.put("details", this.details);
+        hashMap.put("message", this.message);
+        hashMap.put("timestamp", timestamp);
 
         return new JSONObject(hashMap);
     }

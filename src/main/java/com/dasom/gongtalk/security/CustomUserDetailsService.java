@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("user", "id", id, e.toString());
+            throw new ResourceNotFoundException("user", "id", id);
         }
 
     }
@@ -47,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("user", "username", username, e.toString());
+            throw new ResourceNotFoundException("user", "username", username);
         }
 
     }

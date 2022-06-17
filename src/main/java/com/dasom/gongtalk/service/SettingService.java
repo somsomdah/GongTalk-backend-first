@@ -19,7 +19,7 @@ public class SettingService {
         try {
             return setting.get();
         } catch (Exception e){
-            throw new ResourceNotFoundException("setting", "id", id, e.toString());
+            throw new ResourceNotFoundException("setting", "id", id);
         }
     }
 

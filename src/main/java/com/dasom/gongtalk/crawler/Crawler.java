@@ -28,7 +28,6 @@ public class Crawler {
 
         Parser boardParser = new Parser(info);
         List<String> postUrls = boardParser.extractPostUrls();
-
         for (String url : postUrls) {
             Post post = new Post(info.getBoard(), url);
             Parser parser = new Parser(post);
@@ -36,12 +35,12 @@ public class Crawler {
             try{
                 post.setContent(parser.extractContent());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n");
             }
             try{
                 post.setTitle(parser.extractTitle());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n");
             }
             try{
                 post.setWriter(parser.extractWriter());
@@ -56,13 +55,13 @@ public class Crawler {
             try{
                 post.setCategory(parser.extractCategory());
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n");
             }
             try{
                 postService.save(post);
                 alarmService.save(post);
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - save post and alarm%n",e.toString());
+                System.out.printf("[Exception] %s - in Crawler.crawl - save post and alarm%n");
             }
 
         }
@@ -70,11 +69,11 @@ public class Crawler {
     }
 
 //    @Scheduled(cron= CRON_EXPRESSION, zone= TIMEZONE)
-    @Scheduled(fixedDelay = 300*1000)
+    @Scheduled(fixedDelay=30*60*1000)
     public void run() throws IOException {
-        for (CrawlingInfo info : infoRepository.findAll()){
-            this.crawl(info);
-        }
+//        for (CrawlingInfo info : infoRepository.findAll()){
+//            this.crawl(info);
+//        }
 
     }
 }

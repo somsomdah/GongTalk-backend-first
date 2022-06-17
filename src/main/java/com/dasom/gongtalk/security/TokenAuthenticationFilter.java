@@ -1,6 +1,7 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.exception.ExceptionResponse;
+import com.dasom.gongtalk.exception.UserNotAuthorizedException;
 import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,11 +43,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request,response);
 
-        } catch (Exception e) {
+        } catch (UserNotAuthorizedException e) {
 
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType("application/json");
-            ExceptionResponse eresp = new ExceptionResponse("Invalid Token",e.toString());
+            ExceptionResponse eresp = new ExceptionResponse(e.toString(), request.toString());
             response.getWriter().print(eresp.toJson());
             response.getWriter().flush();
         }

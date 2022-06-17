@@ -26,7 +26,7 @@ public class BoardService {
         try{
             return board.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("board", "id", id, e.toString());
+            throw new ResourceNotFoundException("board", "id", id);
         }
     }
 
@@ -37,7 +37,7 @@ public class BoardService {
 
     public void checkAuthority(User user, Board board){
             if(boardRepository.findAllByUser(user).contains(board)){
-                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()), "");
+                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
         }
     }
 

@@ -39,7 +39,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new SqlException(String.format("user with id %s doesn't exist", id), e.toString());
+            throw new SqlException(String.format("user with id [%s] doesn't exist", id));
         }
 
     }
@@ -50,7 +50,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new SqlException(String.format("user with deviceNum %s doesn't exist", deviceNum), e.toString());
+            throw new SqlException(String.format("user with deviceNum [%s] doesn't exist", deviceNum));
         }
 
     }
@@ -61,7 +61,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("user", "username", username, e.toString());
+            throw new ResourceNotFoundException("user", "username", username);
         }
 
     }
@@ -72,7 +72,7 @@ public class UserService {
             newUser.setSetting(settingRepository.save(new Setting()));
             return userRepository.save(newUser);
         }catch(Exception e){
-            throw new SqlException("User with this device number already exists", e.toString());
+            throw new SqlException("user with this device number already exists");
         }
 
     }

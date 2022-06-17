@@ -2,6 +2,7 @@ package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
 import com.dasom.gongtalk.domain.User;
+import com.dasom.gongtalk.exception.UserNotAuthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -55,11 +56,17 @@ public class TokenProvider {
     }
 
     public Integer getUserIdFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(tokenSecret)
-                .parseClaimsJws(token)
-                .getBody();
-        return Integer.parseInt(claims.getSubject());
+        try{
+            Claims claims = Jwts.parser()
+                    .setSigningKey(tokenSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
+            return Integer.parseInt(claims.getSubject());
+        }catch (Exception e){
+            throw new UserNotAuthorizedException("Invalid JWT");
+        }
+
+
     }
 
     public boolean validateToken(String token) {

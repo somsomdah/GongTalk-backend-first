@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class SqlException extends BaseException {
-    public SqlException(String message, String details){
-        super(message, details);
+    public SqlException(String message){
+        super(message);
     }
 
 }
