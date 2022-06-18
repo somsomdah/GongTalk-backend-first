@@ -48,7 +48,7 @@ public class Post {
     private boolean isModified;
 
     @NotNull
-    @Column(columnDefinition = "LONGTEXT", unique = true)
+    @Column(columnDefinition = "varchar(1000) CHARACTER SET ascii", unique = true)
     private String url;
 
     private String httpBody;
