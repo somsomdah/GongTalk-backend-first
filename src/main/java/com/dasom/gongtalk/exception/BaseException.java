@@ -13,6 +13,6 @@ public class BaseException extends RuntimeException{
         super(message);
         setDetails(this.toString());
 
-        System.out.printf("[Exception] %s%n", message);
+        System.out.printf("[Exception] %s : %s%n", message, this.details);
     }
 }
