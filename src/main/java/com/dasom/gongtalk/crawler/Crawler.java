@@ -35,12 +35,12 @@ public class Crawler {
             try{
                 post.setContent(parser.extractContent());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n");
+                System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n",e.toString());
             }
             try{
                 post.setTitle(parser.extractTitle());
             }catch(Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n");
+                System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n",e.toString());
             }
             try{
                 post.setWriter(parser.extractWriter());
@@ -55,13 +55,13 @@ public class Crawler {
             try{
                 post.setCategory(parser.extractCategory());
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n");
+                System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n", e.toString());
             }
             try{
                 postService.save(post);
                 alarmService.save(post);
             }catch (Exception e){
-                System.out.printf("[Exception] %s - in Crawler.crawl - save post and alarm%n");
+                System.out.printf("[Exception] %s - in Crawler.crawl - save post and alarm%n", e.toString());
             }
 
         }
