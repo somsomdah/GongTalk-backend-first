@@ -25,7 +25,6 @@ public class UserBoard {
     @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer orderValue; // NOTE: order는 예약어이기 때문에 이를 컬럼명으로 하면 안됨!
 
     public UserBoard(User user, Board board){
