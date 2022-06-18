@@ -46,7 +46,7 @@ public class AlarmService {
 
             if (!subscribeTypeB.isEmpty()) {
                 for (Subscribe s : subscribeTypeB) {
-                    if (s.getBoard().equals(board)) {
+                    if (s.getBoard().getId().equals(board.getId())) {
                         Alarm alarm = new Alarm(s.getUser(), post);
                         alarms.add(alarm);
                     }
@@ -55,7 +55,7 @@ public class AlarmService {
 
             if(!subscribeTypeBk.isEmpty()){
                 for (Subscribe s : subscribeTypeBk) {
-                    if (s.getBoard().equals(board) && keywords.contains(s.getKeyword())) {
+                    if (s.getBoard().getId().equals(board.getId()) && keywords.contains(s.getKeyword())) {
                         Alarm alarm = new Alarm(s.getUser(), post);
                         alarms.add(alarm);
                     }
