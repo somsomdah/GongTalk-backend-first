@@ -26,34 +26,34 @@ public class Crawler {
 
     public void crawl(CrawlingInfo info) throws IOException {
 
-        Parser boardParser = new Parser(info);
-        List<String> postUrls = boardParser.extractPostUrls();
+        OldParser boardOldParser = new OldParser(info);
+        List<String> postUrls = boardOldParser.extractPostUrls();
         for (String url : postUrls) {
             Post post = new Post(info.getBoard(), url);
-            Parser parser = new Parser(post);
+            OldParser oldParser = new OldParser(post);
 
             try{
-                post.setContent(parser.extractContent());
+                post.setContent(oldParser.extractContent());
             }catch(Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setContent%n",e.toString());
             }
             try{
-                post.setTitle(parser.extractTitle());
+                post.setTitle(oldParser.extractTitle());
             }catch(Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setTitle%n",e.toString());
             }
             try{
-                post.setWriter(parser.extractWriter());
+                post.setWriter(oldParser.extractWriter());
             }catch(Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setWriter%n",e.toString());
             }
             try{
-                post.setDate(parser.extractDate(info.getPostDatePattern()));
+                post.setDate(oldParser.extractDate(info.getPostDatePattern()));
             }catch(Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setDate%n",e.toString());
             }
             try{
-                post.setCategory(parser.extractCategory());
+                post.setCategory(oldParser.extractCategory());
             }catch (Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setCategory%n", e.toString());
             }
