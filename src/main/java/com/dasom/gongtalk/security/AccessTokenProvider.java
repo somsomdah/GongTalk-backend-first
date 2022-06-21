@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class AccessTokenProvider extends TokenProvider {
 
 
-    public AccessTokenProvider(AppProperties appProperties, CustomUserDetailsService userDetailsService) {
-        super(appProperties, userDetailsService);
+    public AccessTokenProvider(AppProperties appProperties, UserPrincipalService userPrincipalService) {
+        super(appProperties, userPrincipalService);
     }
 
 
@@ -21,14 +21,6 @@ public class AccessTokenProvider extends TokenProvider {
     void setTokenSecret() {
         this.tokenSecret = this.appProperties.getAuth().getAccessTokenSecret();
     }
-
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserById(this.getUserIdFromToken(token));
-        return new DeviceNumAuthentication(userDetails, userDetails.getAuthorities());
-    }
-
-
 
 
 }

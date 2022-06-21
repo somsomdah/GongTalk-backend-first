@@ -9,13 +9,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @Data
-@AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
     private Integer id;
+    private String deviceNum;
     private String username;
     private String password;
-    private String deviceNum;
+
+    UserPrincipal(Integer id){
+        this.id = id;
+    }
+
+    UserPrincipal(Integer id, String username){
+        this(id);
+        this.username = username;
+    }
+
+
+    UserPrincipal(Integer id, String deviceNum, String username, String password){
+        this(id, username);
+        this.deviceNum = deviceNum;
+        this.password = password;
+    }
+
+    public UserPrincipal(User user) {
+        this(user.getId(), user.getDeviceNum(), user.getUsername(), user.getPassword());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -45,7 +64,6 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal create(User user){
         return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
-
 
 
 }

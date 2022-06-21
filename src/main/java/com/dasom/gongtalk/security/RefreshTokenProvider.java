@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class RefreshTokenProvider extends TokenProvider {
 
 
-    public RefreshTokenProvider(AppProperties appProperties, CustomUserDetailsService userDetailsService){
+    public RefreshTokenProvider(AppProperties appProperties, UserPrincipalService userDetailsService){
         super(appProperties, userDetailsService);
     }
 

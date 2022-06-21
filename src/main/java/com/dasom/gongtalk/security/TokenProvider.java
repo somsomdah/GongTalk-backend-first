@@ -1,11 +1,11 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
-import com.dasom.gongtalk.domain.User;
 import com.dasom.gongtalk.exception.UserNotAuthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -15,14 +15,14 @@ import java.util.Date;
 public abstract class TokenProvider {
 
     protected final AppProperties appProperties;
-    protected final CustomUserDetailsService userDetailsService;
+    protected final UserPrincipalService userPrincipalService;
 
     protected int tokenDurationMin;
     protected String tokenSecret;
 
-    public TokenProvider(AppProperties appProperties, CustomUserDetailsService userDetailsService) {
+    public TokenProvider(AppProperties appProperties, UserPrincipalService userPrincipalService) {
         this.appProperties = appProperties;
-        this.userDetailsService = userDetailsService;
+        this.userPrincipalService = userPrincipalService;
         setTokenDurationMin();
         setTokenSecret();
     }
@@ -53,6 +53,10 @@ public abstract class TokenProvider {
             throw new UserNotAuthorizedException("Invalid JWT");
         }
 
+    }
 
+    public Authentication getAuthentication(String token) {
+        UserPrincipal principal = this.userPrincipalService.loadUserPrincipalById(this.getUserIdFromToken(token));
+        return new UserAuthentication(principal);
     }
 }

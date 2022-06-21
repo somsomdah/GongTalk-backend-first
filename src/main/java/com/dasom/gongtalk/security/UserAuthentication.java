@@ -7,31 +7,36 @@ import org.springframework.util.Assert;
 
 import java.util.Collection;
 
-public class DeviceNumAuthentication extends AbstractAuthenticationToken {
+public class UserAuthentication extends AbstractAuthenticationToken {
     private static final long serialVersionUID = 560L;
     private final Object principal;
     private Object credentials;
 
-    public DeviceNumAuthentication(Object principal, Object credentials) {
+    public UserAuthentication(Object principal) {
         super(null);
         this.principal = principal;
-        this.credentials = credentials;
-        this.setAuthenticated(false);
     }
 
-    public DeviceNumAuthentication(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+    public UserAuthentication(Object principal, Collection<? extends GrantedAuthority> authorities) {
+        super(authorities);
+        this.principal = principal;
+        super.setAuthenticated(true);
+    }
+
+    public UserAuthentication(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
         super.setAuthenticated(true);
     }
 
-    public Object getCredentials() {
-        return this.credentials;
-    }
 
     public Object getPrincipal() {
         return this.principal;
+    }
+
+    public Object getCredentials() {
+        return this.credentials;
     }
 
 
