@@ -10,7 +10,7 @@ import java.util.Collection;
 
 @Data
 @AllArgsConstructor
-public class DevicePrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
     private Integer id;
     private String username;
@@ -42,8 +42,8 @@ public class DevicePrincipal implements UserDetails {
         return true;
     }
 
-    public static DevicePrincipal create(User user){
-        return new DevicePrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
+    public static UserPrincipal create(User user){
+        return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
 
 

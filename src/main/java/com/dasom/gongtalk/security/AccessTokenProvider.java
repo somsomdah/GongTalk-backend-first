@@ -25,7 +25,7 @@ public class AccessTokenProvider extends TokenProvider {
 
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserById(this.getUserIdFromToken(token));
-        return new DeviceNumAuthenticationToken(userDetails, userDetails.getAuthorities());
+        return new DeviceNumAuthentication(userDetails, userDetails.getAuthorities());
     }
 
 

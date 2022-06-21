@@ -4,7 +4,7 @@ import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
-import com.dasom.gongtalk.security.DevicePrincipal;
+import com.dasom.gongtalk.security.UserPrincipal;
 import com.dasom.gongtalk.security.RefreshTokenProvider;
 import com.dasom.gongtalk.security.AccessTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class UserService {
     private final AccessTokenProvider accessTokenProvider;
     private final RefreshTokenProvider refreshTokenProvider;
 
-    public User getFromPrincipal(DevicePrincipal devicePrincipal){
-        return getFromId(devicePrincipal.getId());
+    public User getFromPrincipal(UserPrincipal userPrincipal){
+        return getFromId(userPrincipal.getId());
     }
 
     public User getFromId(Integer id){

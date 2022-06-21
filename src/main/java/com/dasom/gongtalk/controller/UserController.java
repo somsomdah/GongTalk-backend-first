@@ -2,9 +2,8 @@ package com.dasom.gongtalk.controller;
 
 import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.dto.*;
-import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.repository.*;
-import com.dasom.gongtalk.security.DevicePrincipal;
+import com.dasom.gongtalk.security.UserPrincipal;
 import com.dasom.gongtalk.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -43,41 +42,41 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal DevicePrincipal devicePrincipal){
-        User user = userService.getFromPrincipal(devicePrincipal);
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        User user = userService.getFromPrincipal(userPrincipal);
         userRepository.delete(user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("me")
-    public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+    public ResponseEntity<UserInfoResponse> getMyInfo(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userService.getFromPrincipal(userPrincipal);
         return ResponseEntity.status(HttpStatus.OK).body(UserInfoResponse.fromUser(user));
     }
 
     @GetMapping("boards")
-    public ResponseEntity<List<BoardInfoResponse>> getBoards(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+    public ResponseEntity<List<BoardInfoResponse>> getBoards(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userService.getFromPrincipal(userPrincipal);
         List<Board> boards = userService.getBoards(user);
         List<BoardInfoResponse> response = BoardInfoResponse.fromBoards(boards);
         return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("boards/{boardId}")
-    public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                               @PathVariable Integer boardId) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Board board = boardService.getFromId(boardId);
         UserBoard response = userBoardRepository.save(new UserBoard(user, board));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PatchMapping("boards/{boardId}")
-    public ResponseEntity<?> updateBoardOrder(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<?> updateBoardOrder(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                             @PathVariable Integer boardId,
                                                             @RequestBody UserBoardPatchRequest userBoardPatchRequest
     ) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         UserBoard userBoard = userBoardRepository.findByUserAndBoardId(user, boardId);
         userBoard.setOrderValue(userBoardPatchRequest.getOrderValue());
         userBoardRepository.save(userBoard);
@@ -85,80 +84,80 @@ public class UserController {
     }
 
     @DeleteMapping("boards/{boardId}")
-    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                          @PathVariable Integer boardId) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Board board = boardService.getFromId(boardId);
         userService.deleteUserBoard(user, board);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "posts")
-    public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                            @RequestParam(required=false, defaultValue="100") int size) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         List<Post> posts = userService.getPosts(user, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("keywords/common")
-    public ResponseEntity<List<KeywordResponse>> getCommonKeywords(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+    public ResponseEntity<List<KeywordResponse>> getCommonKeywords(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userService.getFromPrincipal(userPrincipal);
         List<Keyword> keywords = userService.getCommonKeywords(user);
         List<KeywordResponse> response = KeywordResponse.fromKeywords(keywords);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("subscribes")
-    public ResponseEntity<List<Subscribe>> getSubscribeInfo(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<List<Subscribe>> getSubscribeInfo(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                             @RequestParam(required = false) Integer boardId,
                                                             @RequestParam(required = false) Subscribe.Type type
     ) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         List<Subscribe> subscribes = subscribeRepository.findAllByUserAndTypeAndBoardId(user,type,boardId);
         return ResponseEntity.status(HttpStatus.OK).body(subscribes);
     }
 
     @PostMapping("subscribes")
-    public ResponseEntity<Subscribe> createSubscribe(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<Subscribe> createSubscribe(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                      @RequestBody SubscribeRequest subscribeRequest) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Subscribe subscribe = subscribeService.save(user, subscribeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(subscribe);
     }
 
     @DeleteMapping("subscribes")
-    public ResponseEntity<?> deleteSubscribe(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<?> deleteSubscribe(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                              @RequestBody SubscribeDeleteRequest subscribeDeleteRequest) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         subscribeService.deleteSubscribe(user, subscribeDeleteRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping(value = "scraps")
-    public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                        @RequestParam(required = false, defaultValue = "0") int page,
                                                        @RequestParam(required = false, defaultValue = "100") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(scraps);
     }
 
     @PostMapping("scraps")
-    public ResponseEntity<Scrap> createScrap(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<Scrap> createScrap(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                              @RequestBody PostIdRequest request) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Post post = postService.getFromId(request.getPostId());
         Scrap scrap = scrapService.save(user, post);
         return ResponseEntity.status(HttpStatus.CREATED).body(scrap);
     }
 
     @DeleteMapping("scraps/{scrapId}")
-    public ResponseEntity<?> deleteScrap(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<?> deleteScrap(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                          @PathVariable Integer scrapId) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Scrap scrap = scrapService.getFromId(scrapId);
         scrapService.checkAuthority(user, scrap);
         scrapRepository.deleteById(scrapId);
@@ -166,19 +165,19 @@ public class UserController {
     }
 
     @GetMapping(value = "alarms")
-    public ResponseEntity<List<Alarm>> getAlarms(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<List<Alarm>> getAlarms(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                  @RequestParam(required = false, defaultValue = "0") int page,
                                                  @RequestParam(required = false, defaultValue = "100") int size) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Pageable pageable = PageRequest.of(page, size, Sort.by(new Sort.Order(Sort.Direction.DESC, "post.date")));
         List<Alarm> alarms = alarmRepository.findAllByUser(user, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(alarms);
     }
 
     @PatchMapping("alarms/{alarmId}")
-    public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                              @PathVariable Integer alarmId, @RequestBody Alarm request) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Alarm oldAlarm = alarmService.getFromId(alarmId);
         alarmService.checkAuthority(user, oldAlarm);
         Alarm alarm = alarmService.update(alarmId, request);
@@ -186,15 +185,15 @@ public class UserController {
     }
 
     @GetMapping("setting")
-    public ResponseEntity<Setting> getSetting(@AuthenticationPrincipal DevicePrincipal devicePrincipal) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+    public ResponseEntity<Setting> getSetting(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        User user = userService.getFromPrincipal(userPrincipal);
         return ResponseEntity.status(HttpStatus.OK).body(user.getSetting());
     }
 
     @PatchMapping("setting")
-    public ResponseEntity<Setting> updateSetting(@AuthenticationPrincipal DevicePrincipal devicePrincipal,
+    public ResponseEntity<Setting> updateSetting(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                  @RequestBody Setting request) {
-        User user = userService.getFromPrincipal(devicePrincipal);
+        User user = userService.getFromPrincipal(userPrincipal);
         Integer settingId = user.getSetting().getId();
         Setting setting = settingService.updateSetting(settingId, request);
         return ResponseEntity.status(HttpStatus.OK).body(setting);

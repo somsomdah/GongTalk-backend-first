@@ -17,16 +17,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public DevicePrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
-        return DevicePrincipal.create(getFromUsername(username));
+    public UserPrincipal loadUserByUsername(String username) throws UsernameNotFoundException {
+        return UserPrincipal.create(getFromUsername(username));
     }
 
-    public DevicePrincipal loadUserById(Integer id) {
-        return DevicePrincipal.create(getFromId(id));
+    public UserPrincipal loadUserById(Integer id) {
+        return UserPrincipal.create(getFromId(id));
     }
 
-    public DevicePrincipal loadUserByObject(User user) {
-        return DevicePrincipal.create(user);
+    public UserPrincipal loadUserByObject(User user) {
+        return UserPrincipal.create(user);
     }
 
 
