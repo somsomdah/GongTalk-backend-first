@@ -1,6 +1,7 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
+import com.dasom.gongtalk.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,6 +10,10 @@ public class RefreshTokenProvider extends TokenProvider {
 
     public RefreshTokenProvider(AppProperties appProperties, CustomUserDetailsService userDetailsService){
         super(appProperties, userDetailsService);
+    }
+
+    public String createTokenWithUser(User user) {
+        return super.createTokenWithUserId(user.getId());
     }
 
     @Override

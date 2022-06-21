@@ -21,8 +21,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final TokenProvider tokenProvider;
-    private final UserService userService;
+    private final AccessTokenProvider accessTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -36,10 +35,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
 
-            Integer userId = tokenProvider.getUserIdFromToken(token);
-            userService.getFromId(userId);
-
-            Authentication auth = tokenProvider.getAuthentication(token);
+            Authentication auth = accessTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
             filterChain.doFilter(request,response);
 

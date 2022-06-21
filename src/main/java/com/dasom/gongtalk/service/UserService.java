@@ -6,7 +6,7 @@ import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.DevicePrincipal;
 import com.dasom.gongtalk.security.RefreshTokenProvider;
-import com.dasom.gongtalk.security.TokenProvider;
+import com.dasom.gongtalk.security.AccessTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +26,7 @@ public class UserService {
     private final PostRepository postRepository;
     private final KeywordRepository keywordRepository;
     private final UserBoardRepository userBoardRepository;
-    private final TokenProvider tokenProvider;
+    private final AccessTokenProvider accessTokenProvider;
     private final RefreshTokenProvider refreshTokenProvider;
 
     public User getFromPrincipal(DevicePrincipal devicePrincipal){
@@ -87,12 +87,12 @@ public class UserService {
 
     public String getAccessToken(String refreshToken){
         Integer userId = refreshTokenProvider.getUserIdFromToken(refreshToken);
-        return tokenProvider.createTokenWithUserId(userId);
+        return accessTokenProvider.createTokenWithUserId(userId);
     }
 
     public String getRefreshToken(String deviceNum){
         User user = this.getFromDeviceNum(deviceNum);
-        return refreshTokenProvider.createToken(user);
+        return refreshTokenProvider.createTokenWithUser(user);
     }
 
     public List<Board> getBoards(User user) {
