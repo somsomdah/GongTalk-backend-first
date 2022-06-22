@@ -20,7 +20,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(SqlException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestException(BaseException ex){
+    public final ResponseEntity<ExceptionResponse> handleSqlException(BaseException ex){
         ExceptionResponse response = new ExceptionResponse(ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

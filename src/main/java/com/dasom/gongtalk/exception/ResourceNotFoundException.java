@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Setter
 public class ResourceNotFoundException extends BaseException {
 
-    public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue){
-        super(String.format("%s with %s [%s] not found", resourceName, fieldName, fieldValue));
+    public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue, String details){
+        super(String.format("%s with %s [%s] not found", resourceName, fieldName, fieldValue), details);
     }
 }

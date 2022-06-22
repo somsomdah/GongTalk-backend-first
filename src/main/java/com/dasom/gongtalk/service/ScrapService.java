@@ -23,7 +23,7 @@ public class ScrapService {
         try{
             return scrap.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("scrap", "id", id);
+            throw new ResourceNotFoundException("scrap", "id", id, e.toString());
         }
     }
 
@@ -39,7 +39,7 @@ public class ScrapService {
             scrapRepository.save(scrap);
             return scrap;
         }catch (Exception e){
-            throw new SqlException("Scrap create error");
+            throw new SqlException("Scrap create error", e.toString());
         }
     }
 }

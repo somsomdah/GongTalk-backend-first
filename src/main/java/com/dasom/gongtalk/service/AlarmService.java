@@ -27,7 +27,7 @@ public class AlarmService {
         try{
             return alarm.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("alarm", "id", id);
+            throw new ResourceNotFoundException("alarm", "id", id, e.toString());
         }
     }
 
@@ -75,7 +75,7 @@ public class AlarmService {
             alarmRepository.saveAll(alarms);
 
         }catch (Exception ex){
-            throw new SqlException("Alarm create error");
+            throw new SqlException("Alarm create error", ex.toString());
         }
 
     }

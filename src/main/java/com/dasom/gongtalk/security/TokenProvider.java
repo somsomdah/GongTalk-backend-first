@@ -50,7 +50,7 @@ public abstract class TokenProvider {
                     .getBody();
             return Integer.parseInt(claims.getSubject());
         }catch (Exception e){
-            throw new UserNotAuthorizedException("Invalid JWT");
+            throw new UserNotAuthorizedException("Invalid JWT", e.toString());
         }
 
     }

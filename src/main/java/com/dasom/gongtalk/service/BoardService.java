@@ -26,7 +26,7 @@ public class BoardService {
         try{
             return board.get();
         }catch (Exception e){
-            throw new ResourceNotFoundException("board", "id", id);
+            throw new ResourceNotFoundException("board", "id", id, e.toString());
         }
     }
 

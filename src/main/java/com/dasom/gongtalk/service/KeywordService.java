@@ -18,7 +18,7 @@ public class KeywordService {
         Optional<Keyword> keyword = keywordRepository.findById(id);
         try {return keyword.get();}
         catch (Exception e){
-            throw new ResourceNotFoundException("keyword", "id", id);
+            throw new ResourceNotFoundException("keyword", "id", id, e.toString());
         }
     }
 
