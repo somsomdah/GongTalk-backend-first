@@ -1,8 +1,7 @@
 package com.dasom.gongtalk.security;
 
-import com.dasom.gongtalk.exception.ExceptionResponse;
+import com.dasom.gongtalk.dto.ExceptionResponse;
 import com.dasom.gongtalk.exception.UserNotAuthorizedException;
-import com.dasom.gongtalk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

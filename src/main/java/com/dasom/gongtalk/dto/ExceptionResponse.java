@@ -1,5 +1,6 @@
-package com.dasom.gongtalk.exception;
+package com.dasom.gongtalk.dto;
 
+import com.dasom.gongtalk.exception.BaseException;
 import lombok.Getter;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
@@ -17,6 +18,12 @@ public class ExceptionResponse {
         this.timestamp = new Date().toString();
         this.message = message;
         this.details = details;
+    }
+
+    public ExceptionResponse(BaseException exception){
+        this.timestamp = new Date().toString();
+        this.message = exception.getMessage();
+        this.details = exception.getDetails();
     }
 
     public JSONObject toJson(){

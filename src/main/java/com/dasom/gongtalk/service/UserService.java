@@ -2,7 +2,6 @@ package com.dasom.gongtalk.service;
 
 import com.dasom.gongtalk.domain.*;
 import com.dasom.gongtalk.exception.ResourceNotFoundException;
-import com.dasom.gongtalk.exception.SqlException;
 import com.dasom.gongtalk.repository.*;
 import com.dasom.gongtalk.security.UserPrincipal;
 import com.dasom.gongtalk.security.RefreshTokenProvider;
@@ -39,7 +38,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new SqlException(String.format("user with id [%s] doesn't exist", id));
+            throw new ResourceNotFoundException("user", "id", id);
         }
 
     }
@@ -50,7 +49,7 @@ public class UserService {
         try{
             return user.get();
         }catch (Exception e){
-            throw new SqlException(String.format("user with deviceNum [%s] doesn't exist", deviceNum));
+            throw new ResourceNotFoundException("setting", "deviceNum", deviceNum);
         }
 
     }
@@ -72,7 +71,7 @@ public class UserService {
             newUser.setSetting(settingRepository.save(new Setting()));
             return userRepository.save(newUser);
         }catch(Exception e){
-            throw new SqlException("user with this device number already exists");
+            throw new ResourceNotFoundException("user", "deviceNum", deviceNum);
         }
 
     }
