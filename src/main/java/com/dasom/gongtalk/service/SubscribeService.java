@@ -38,11 +38,11 @@ public class SubscribeService {
     }
 
     public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest){
-        Board board = boardService.getFromId(subscribeDeleteRequest.getBoardId());
-        Keyword keyword = keywordService.getFromId(subscribeDeleteRequest.getKeywordId());
+        Integer boardId = subscribeDeleteRequest.getBoardId();
+        Integer keywordId = subscribeDeleteRequest.getKeywordId();
         Subscribe.Type type = Subscribe.Type.valueOf(subscribeDeleteRequest.getType());
 
-        subscribeRepository.deleteAll(subscribeRepository.findAllByUserAndTypeAndBoardAndKeyword(user, type, board, keyword));
+        subscribeRepository.deleteAll(subscribeRepository.findAllByUserAndTypeAndBoardIdAndKeywordId(user, type, boardId, keywordId));
 
     }
 }

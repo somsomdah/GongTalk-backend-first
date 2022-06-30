@@ -23,5 +23,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     @Query("select pk.post from PostKeyword pk where pk.keyword.content in (:keywordsContent) and pk.post.board.id =:boardId order by pk.post.date desc")
     List<Post> findAllByBoardIdAndKeywordsContentIn(Integer boardId ,List<String> keywordsContent);
 
+    List<Post> findAllByIdIn(List<Integer> Ids);
+
 
 }

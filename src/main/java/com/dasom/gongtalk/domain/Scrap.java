@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties("user")
+@JsonIgnoreProperties({"user", "post_content"})
 @Table(name="scrap", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
 public class Scrap {
 

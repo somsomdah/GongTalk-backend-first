@@ -81,7 +81,7 @@ public class PostService {
     }
 
     public List<Post> getPostsFromBoard(Board board, int page, int size){
-        Pageable pageable= PageRequest.of(page,size, Sort.by("date"));
+        Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"date"));
         return postRepository.findAllByBoard(board, pageable);
     }
 }

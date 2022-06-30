@@ -30,6 +30,7 @@ public class UserController {
     private final ScrapService scrapService;
     private final ScrapRepository scrapRepository;
     private final PostService postService;
+    private final PostRepository postRepository;
     private final AlarmRepository alarmRepository;
     private final AlarmService alarmService;
     private final SettingService settingService;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrincipal userPrincipal){
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         User user = userService.getFromPrincipal(userPrincipal);
         userRepository.delete(user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -73,8 +74,8 @@ public class UserController {
 
     @PatchMapping("boards/{boardId}")
     public ResponseEntity<?> updateBoardOrder(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                            @PathVariable Integer boardId,
-                                                            @RequestBody UserBoardPatchRequest userBoardPatchRequest
+                                              @PathVariable Integer boardId,
+                                              @RequestBody UserBoardPatchRequest userBoardPatchRequest
     ) {
         User user = userService.getFromPrincipal(userPrincipal);
         UserBoard userBoard = userBoardRepository.findByUserAndBoardId(user, boardId);
@@ -94,7 +95,7 @@ public class UserController {
 
     @GetMapping(value = "posts")
     public ResponseEntity<List<PostListResponse>> getPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                           @RequestParam(required=false, defaultValue="100") int size) {
+                                                           @RequestParam(required = false, defaultValue = "100") int size) {
         User user = userService.getFromPrincipal(userPrincipal);
         List<Post> posts = userService.getPosts(user, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
@@ -115,7 +116,7 @@ public class UserController {
                                                             @RequestParam(required = false) Subscribe.Type type
     ) {
         User user = userService.getFromPrincipal(userPrincipal);
-        List<Subscribe> subscribes = subscribeRepository.findAllByUserAndTypeAndBoardId(user,type,boardId);
+        List<Subscribe> subscribes = subscribeRepository.findAllByUserAndTypeAndBoardId(user, type, boardId);
         return ResponseEntity.status(HttpStatus.OK).body(subscribes);
     }
 
@@ -137,12 +138,19 @@ public class UserController {
 
     @GetMapping(value = "scraps")
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                       @RequestParam(required = false, defaultValue = "0") int page,
-                                                       @RequestParam(required = false, defaultValue = "100") int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("date"));
+                                             @RequestParam(required = false, defaultValue = "0") int page,
+                                             @RequestParam(required = false, defaultValue = "100") int size,
+                                             @RequestParam(required = false) Integer postId) {
         User user = userService.getFromPrincipal(userPrincipal);
-        List<Scrap> scraps = scrapRepository.getAllByUser(user, pageable);
+        List<Scrap> scraps;
+        if (postId != null) {
+            scraps = scrapRepository.findAllByUserAndPostId(user, postId);
+        } else {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"id"));
+            scraps = scrapRepository.findAllByUser(user, pageable);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(scraps);
+
     }
 
     @PostMapping("scraps")

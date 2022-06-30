@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"content", "keywords"})
+@JsonIgnoreProperties({"content", "keywords", "alarms", "scraps"})
 @Table(name="post")
 public class Post {
 

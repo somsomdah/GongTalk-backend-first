@@ -104,7 +104,7 @@ public class UserService {
 
     public List<Post> getPosts(User user, int max){
         List<Board> boards = boardRepository.findAllByUser(user);
-        Pageable limitMax= PageRequest.of(0,max, Sort.by("date"));
+        Pageable limitMax= PageRequest.of(0,max, Sort.by(Sort.Direction.DESC,"date"));
         return postRepository.findAllByBoardIn(boards, limitMax);
     }
 
