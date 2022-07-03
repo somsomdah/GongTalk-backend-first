@@ -20,6 +20,7 @@ public class GongtalkApplication {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("========================== 자동배포 Test ==========================");
 		SpringApplication.run(GongtalkApplication.class, args);
 	}
 
