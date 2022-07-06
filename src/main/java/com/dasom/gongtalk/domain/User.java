@@ -30,6 +30,8 @@ public class User {
     @Column(name="device_num", unique = true)
     private String deviceNum;
 
+    private String pushToken;
+
     @OneToOne
     private Setting setting;
 
