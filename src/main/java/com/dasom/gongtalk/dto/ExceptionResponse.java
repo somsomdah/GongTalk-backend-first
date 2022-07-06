@@ -26,6 +26,12 @@ public class ExceptionResponse {
         this.details = exception.getDetails();
     }
 
+    public ExceptionResponse(Exception exception){
+        this.timestamp = new Date().toString();
+        this.message = exception.getMessage();
+        this.details = exception.toString();
+    }
+
     public JSONObject toJson(){
         HashMap<String, String> hashMap = new HashMap<>();
 

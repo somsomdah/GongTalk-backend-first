@@ -37,4 +37,10 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
+
+    @ExceptionHandler(Exception.class)
+    public final ResponseEntity<ExceptionResponse> handleException(Exception ex){
+        ExceptionResponse response = new ExceptionResponse(ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 }
