@@ -5,13 +5,13 @@ import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Keyword;
 import com.dasom.gongtalk.domain.Subscribe;
 import com.dasom.gongtalk.domain.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> {
+public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
 
     List<Subscribe> findAllByUser(User user);
 

@@ -4,14 +4,14 @@ import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Subscribe;
 import com.dasom.gongtalk.domain.User;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BoardRepository extends CrudRepository<Board, Integer> {
+public interface BoardRepository extends JpaRepository<Board, Integer> {
 
 
     @Query("select ub.board from UserBoard ub where ub.user=:user order by ub.orderValue")

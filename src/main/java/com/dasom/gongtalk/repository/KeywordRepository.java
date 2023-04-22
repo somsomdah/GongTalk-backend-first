@@ -4,15 +4,15 @@ package com.dasom.gongtalk.repository;
 import com.dasom.gongtalk.domain.Keyword;
 import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface KeywordRepository extends CrudRepository<Keyword, Integer> {
+public interface KeywordRepository extends JpaRepository<Keyword, Integer> {
 
     Optional<Keyword> findByContent(String content);
 
