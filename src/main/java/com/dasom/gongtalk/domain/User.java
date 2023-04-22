@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"username", "password", "alarms", "scraps", "subscribes", "setting" })
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

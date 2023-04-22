@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"gubun", "name", "school_id"})})
-public class Board {
+public class Board extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,27 @@ public class Board {
     @ManyToOne(fetch= FetchType.EAGER)
     private School school;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToOne(mappedBy = "board", fetch = FetchType.LAZY)
-    private CrawlingInfo crawlingInfo;
+    @NotNull
+    private String url;
+    private String rowSelector;
+    private String rowItemSelector;
+
+    @NotNull
+    private String postContentSelector;
+    private String postTitleSelector;
+    private String postCategorySelector;
+    private String postWriterSelector;
+    private String postDateSelector;
+    private String postDatePattern;
+
+
+    @Column(columnDefinition = "varchar(10) default 'GET'")
+    @Enumerated(EnumType.STRING)
+    private HttpMethod httpMethod;
+
+    public enum HttpMethod {
+        GET,
+        POST;
+    }
 
 }

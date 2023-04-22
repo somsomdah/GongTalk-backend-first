@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Data
 @Table(name="post_keyword", uniqueConstraints = @UniqueConstraint(columnNames = {"post_id","keyword_id"}))
-public class PostKeyword {
+public class PostKeyword extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonIgnoreProperties({"user"})
 @Table(name="alarm", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
-public class Alarm {
+public class Alarm extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

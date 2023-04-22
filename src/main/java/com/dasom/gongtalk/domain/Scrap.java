@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonIgnoreProperties({"user", "post_content"})
 @Table(name="scrap", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
-public class Scrap {
+public class Scrap extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

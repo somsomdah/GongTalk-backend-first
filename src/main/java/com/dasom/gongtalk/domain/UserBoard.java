@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @JsonIgnoreProperties({"user", "board" })
 @Table(name="user_board", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","board_id"}))
-public class UserBoard {
+public class UserBoard extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

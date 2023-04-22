@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonIgnoreProperties({"content", "keywords", "alarms", "scraps"})
 @Table(name="post")
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +42,6 @@ public class Post {
     private LocalDate date;
 
     @NotNull
-    private boolean isDeleted;
-
-    @NotNull
-    private boolean isModified;
-
-    @NotNull
     @Column(columnDefinition = "varchar(1000) CHARACTER SET ascii", unique = true)
     private String url;
 
@@ -59,13 +53,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Scrap> scraps;
 
-
-    public Post(Board board, String url){
-        this.board = board;
-        this.url = url;
-        this.isModified = false;
-        this.isDeleted = false;
+    public static Post createPost(Board board, String url) {
+        return new Post(board, url);
     }
 
+    Post(Board board, String url) {
+        this.setBoard(board);
+        this.setUrl(url);
+    }
 
 }

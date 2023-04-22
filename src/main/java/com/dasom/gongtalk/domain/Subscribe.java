@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @Table(name="subscribe", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "board_id", "keyword_id"}))
-public class Subscribe {
+public class Subscribe extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

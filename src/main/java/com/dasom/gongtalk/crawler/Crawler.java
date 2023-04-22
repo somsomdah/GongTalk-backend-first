@@ -1,12 +1,11 @@
 package com.dasom.gongtalk.crawler;
 
-import com.dasom.gongtalk.domain.CrawlingInfo;
+import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
-import com.dasom.gongtalk.repository.CrawlingInfoRepository;
+import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.service.AlarmService;
 import com.dasom.gongtalk.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,19 +17,17 @@ public class Crawler {
 
     private final PostService postService;
     private final AlarmService alarmService;
-    private final CrawlingInfoRepository infoRepository;
 
     // TODO : 이 값들 property로 빼기
     private static final String TIMEZONE = "Asia/Seoul";
     private static final String CRON_EXPRESSION= "0 0 11,18 * * *";
 
-    public void crawl(CrawlingInfo info) throws IOException {
+    public void crawl(Board board) throws IOException {
 
-        Parser boardParser = new Parser(info);
-        List<String> postUrls = boardParser.extractPostUrls();
+        Parser parser = new Parser(board);
+        List<String> postUrls = parser.extractPostUrls();
         for (String url : postUrls) {
-            Post post = new Post(info.getBoard(), url);
-            Parser parser = new Parser(post);
+            Post post = Post.createPost(board, url);
 
             try{
                 post.setContent(parser.extractContent());
@@ -48,7 +45,7 @@ public class Crawler {
                 System.out.printf("[Exception] %s - in Crawler.crawl - setWriter%n",e.toString());
             }
             try{
-                post.setDate(parser.extractDate(info.getPostDatePattern()));
+                post.setDate(parser.extractDate(board.getPostDatePattern()));
             }catch(Exception e){
                 System.out.printf("[Exception] %s - in Crawler.crawl - setDate%n",e.toString());
             }
@@ -67,13 +64,11 @@ public class Crawler {
         }
 
     }
-
-//    @Scheduled(cron= CRON_EXPRESSION, zone= TIMEZONE)
-    @Scheduled(fixedDelay=30*60*1000)
-    public void run() throws IOException {
-//        for (CrawlingInfo info : infoRepository.findAll()){
-//            this.crawl(info);
+//    @Scheduled(fixedDelay=30*60*1000)
+//    public void run() throws IOException {
+//        for (Board board : boardRepository.findAll()){
+//            this.crawl(board);
 //        }
+//    }
 
-    }
 }

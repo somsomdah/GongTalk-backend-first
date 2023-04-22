@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="school", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "campus"})})
-public class School {
+public class School extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

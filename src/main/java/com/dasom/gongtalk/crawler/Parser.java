@@ -1,7 +1,7 @@
 package com.dasom.gongtalk.crawler;
 
 
-import com.dasom.gongtalk.domain.CrawlingInfo;
+import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
 import lombok.Data;
 import org.jsoup.Jsoup;
@@ -22,21 +22,28 @@ import java.util.List;
 @Data
 public class Parser {
 
-    private CrawlingInfo info;
+    private Board board;
     private Document doc;
 
-    Parser (CrawlingInfo info) throws IOException {
-        this.info = info;
-        this.doc = Jsoup.connect(info.getBoardUrl()).get();
+    Parser(Board board) throws IOException {
+        this.doc = Jsoup.connect(board.getUrl()).get();
+    }
+    public static Parser createParser(Board board) throws IOException {
+        return new Parser(board);
     }
 
+    public static Parser createParser(Post post) throws IOException {
+        return new Parser(post.getBoard());
+    }
+
+
     public List<String> extractPostUrls(){
-        Elements rows = this.doc.select(info.getBoardRowSelector());
+        Elements rows = this.doc.select(board.getRowSelector());
         List<String> postUrls = new ArrayList<>();
         for(Element row: rows){
             try {
 
-                String postUrl = row.select(info.getBoardRowItemSelector()).first().absUrl("href");
+                String postUrl = row.select(board.getRowItemSelector()).first().absUrl("href");
                 postUrls.add(getValidUrl(postUrl));
             }catch (Exception e){
                 System.out.println("[Exception] Parser - extractPostUrls : "+e.toString());
@@ -54,30 +61,22 @@ public class Parser {
 
     // TODO : Body로 값을 넘겨야 할 경우 extractBodies 함수 만들기
 
-    Parser(Post post) throws IOException {
-        this.info = post.getBoard().getCrawlingInfo();
-        this.doc = Jsoup.connect(post.getUrl()).get();
-        System.out.println("===========================");
-        System.out.println(post.getUrl());
-        System.out.println("===========================");
-    }
-
     public String extractTitle(){
-        String titleSelector = info.getPostTitleSelector();
+        String titleSelector = board.getPostTitleSelector();
         Element titleElement = this.doc.select(titleSelector).first();
         assert  titleElement != null;
         return Jsoup.parse(titleElement.toString()).text();
     }
 
     public String extractContent(){
-        String contentSelector = info.getPostContentSelector();
+        String contentSelector = board.getPostContentSelector();
         Element contentElement = this.doc.select(contentSelector).first();
         assert contentElement != null;
         return contentElement.toString();
     }
 
     public String extractCategory(){
-        String categorySelector = info.getPostCategorySelector();
+        String categorySelector = board.getPostCategorySelector();
         if (categorySelector.isEmpty() || categorySelector.isBlank()){
             return "";
         }
@@ -89,14 +88,14 @@ public class Parser {
     }
 
     public String extractWriter(){
-        String writerSelector = info.getPostWriterSelector();
+        String writerSelector = board.getPostWriterSelector();
         Element writerElement = this.doc.select(writerSelector).first();
         assert writerElement != null;
         return Jsoup.parse(writerElement.toString()).text();
     }
 
     public LocalDate extractDate(String datePattern){
-        String dateSelector = info.getPostDateSelector();
+        String dateSelector = board.getPostDateSelector();
         Element dateElement = this.doc.select(dateSelector).first();
 
         assert dateElement != null;
