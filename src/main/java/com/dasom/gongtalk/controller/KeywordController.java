@@ -20,7 +20,7 @@ public class KeywordController {
     private final KeywordRepository keywordRepository;
 
     @GetMapping("recommended")
-    public ResponseEntity<List<Keyword>> getRecommendedKeywords(){
+    public ResponseEntity<List<Keyword>> getRecommendedKeywords() {
         List<Keyword> keywords = keywordRepository.findAllRecommended();
         return ResponseEntity.status(HttpStatus.OK).body(keywords);
     }

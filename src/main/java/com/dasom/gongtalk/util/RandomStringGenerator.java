@@ -8,8 +8,7 @@ public class RandomStringGenerator {
     private int z = 122; // letter 'z'
     private Random random = new Random();
 
-    public String generate(int length, int numLength)
-    {
+    public String generate(int length, int numLength) {
         int wordLength = length - numLength;
         StringBuilder buffer = new StringBuilder(wordLength);
 
@@ -19,7 +18,7 @@ public class RandomStringGenerator {
             buffer.append((char) randomLimitedInt);
         }
 
-        if (numLength > 0){
+        if (numLength > 0) {
             int upperBound = (int) Math.pow(10, numLength);
             int lowerBound = (int) Math.pow(10, numLength - 1);
             int randomNum = random.nextInt(upperBound - lowerBound) + lowerBound;

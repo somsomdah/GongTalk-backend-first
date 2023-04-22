@@ -27,16 +27,16 @@ public class PostService {
     private final KeywordService keywordService;
     private final PostKeywordRepository postKeywordRepository;
 
-    public Post getFromId(Integer id){
+    public Post getFromId(Integer id) {
         Optional<Post> post = postRepository.findById(id);
-        try{
+        try {
             return post.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException("post", "id", id, e.toString());
         }
     }
 
-    public void save(Post post){
+    public void save(Post post) {
 
         String content = post.getContent();
         String parsedText = Jsoup.parse(content).text();
@@ -48,23 +48,23 @@ public class PostService {
 
         postRepository.save(post);
 
-        for (String keywordString: contentKeywordStings){
+        for (String keywordString : contentKeywordStings) {
             try {
                 Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
                 PostKeyword postKeyword = new PostKeyword(post, keyword);
                 postKeywordRepository.save(postKeyword);
-            }catch (Exception e){
-                System.out.printf("[Exception] %s - in PostService.save%n",e.toString());
+            } catch (Exception e) {
+                System.out.printf("[Exception] %s - in PostService.save%n", e.toString());
             }
         }
 
-        for (String keywordString: titleKeywordStrings){
+        for (String keywordString : titleKeywordStrings) {
             try {
                 Keyword keyword = keywordService.getOrCreateFromContent(keywordString);
                 PostKeyword postKeyword = new PostKeyword(post, keyword);
                 postKeywordRepository.save(postKeyword);
-            }catch (Exception e){
-                System.out.printf("Exception] %s - in PostService.save%n",e.toString());
+            } catch (Exception e) {
+                System.out.printf("Exception] %s - in PostService.save%n", e.toString());
             }
         }
 
@@ -73,15 +73,15 @@ public class PostService {
             Keyword keyword = keywordService.getOrCreateFromContent(category);
             PostKeyword postKeyword = new PostKeyword(post, keyword);
             postKeywordRepository.save(postKeyword);
-        }catch (Exception e){
-            System.out.printf("Exception] %s - in PostService.save%n",e.toString());
+        } catch (Exception e) {
+            System.out.printf("Exception] %s - in PostService.save%n", e.toString());
         }
 
 
     }
 
-    public List<Post> getPostsFromBoard(Board board, int page, int size){
-        Pageable pageable= PageRequest.of(page,size, Sort.by(Sort.Direction.DESC,"date"));
+    public List<Post> getPostsFromBoard(Board board, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "date"));
         return postRepository.findAllByBoard(board, pageable);
     }
 }

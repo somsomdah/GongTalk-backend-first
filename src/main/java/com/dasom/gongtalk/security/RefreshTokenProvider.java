@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class RefreshTokenProvider extends TokenProvider {
 
 
-    public RefreshTokenProvider(AppProperties appProperties, UserPrincipalService userDetailsService){
+    public RefreshTokenProvider(AppProperties appProperties, UserPrincipalService userDetailsService) {
         super(appProperties, userDetailsService);
     }
 
@@ -17,12 +17,12 @@ public class RefreshTokenProvider extends TokenProvider {
     }
 
     @Override
-    void setTokenDurationMin(){
+    void setTokenDurationMin() {
         this.tokenDurationMin = this.appProperties.getAuth().getRefreshTokenDurationMin();
     }
 
     @Override
-    void setTokenSecret(){
+    void setTokenSecret() {
         this.tokenSecret = this.appProperties.getAuth().getRefreshTokenSecret();
     }
 

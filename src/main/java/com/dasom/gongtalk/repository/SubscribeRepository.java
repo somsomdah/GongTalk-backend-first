@@ -26,5 +26,4 @@ public interface SubscribeRepository extends CrudRepository<Subscribe, Integer> 
     List<Subscribe> findAllByTypeAndBoardAndKeyword(Subscribe.Type type, Board board, Keyword keyword);
 
 
-
 }

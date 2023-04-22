@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="subscribe", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "board_id", "keyword_id"}))
+@Table(name = "subscribe", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "board_id", "keyword_id"}))
 public class Subscribe extends BaseTimeEntity {
 
     @Id
@@ -17,30 +17,30 @@ public class Subscribe extends BaseTimeEntity {
     private Integer id;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private User user;
 
     @JoinColumn(name = "board_id")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Board board;
 
     @JoinColumn(name = "keyword_id")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Keyword keyword;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    public Subscribe(User user, Board board, Keyword keyword, Type type){
+    public Subscribe(User user, Board board, Keyword keyword, Type type) {
         this.user = user;
         this.board = board;
         this.keyword = keyword;
         this.type = type;
     }
 
-    public enum Type{
+    public enum Type {
         BOARD,
         KEYWORD_COMMON, //common keyword
         KEYWORD_BOARD; //board keyword

@@ -1,6 +1,5 @@
 package com.dasom.gongtalk.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

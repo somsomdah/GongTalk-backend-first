@@ -1,6 +1,5 @@
 package com.dasom.gongtalk.controller;
 
-import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.dto.PostListResponse;
 import com.dasom.gongtalk.dto.PostResponse;
@@ -24,30 +23,30 @@ public class PostController {
     private final BoardService boardService;
 
     @GetMapping("{id}")
-    public ResponseEntity<PostResponse> getOnePost(@PathVariable Integer id){
+    public ResponseEntity<PostResponse> getOnePost(@PathVariable Integer id) {
         Post post = postService.getFromId(id);
         PostResponse response = PostResponse.fromPost(post);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<PostListResponse>> getPosts(@RequestParam(required = false, defaultValue ="0") Integer page,
+    public ResponseEntity<List<PostListResponse>> getPosts(@RequestParam(required = false, defaultValue = "0") Integer page,
                                                            @RequestParam(required = false, defaultValue = "100") Integer size,
                                                            @RequestParam(required = false) Integer boardId,
                                                            @RequestParam(required = false) List<String> keywordContent
-    ){
-        List <Post> posts;
-        if (boardId != null){
-            if (keywordContent!=null){
-                posts = postRepository.findAllByBoardIdAndKeywordsContentIn(boardId,keywordContent);
-            }else{
-                posts = postService.getPostsFromBoard(boardService.getFromId(boardId), page, size );
+    ) {
+        List<Post> posts;
+        if (boardId != null) {
+            if (keywordContent != null) {
+                posts = postRepository.findAllByBoardIdAndKeywordsContentIn(boardId, keywordContent);
+            } else {
+                posts = postService.getPostsFromBoard(boardService.getFromId(boardId), page, size);
             }
 
-        }else{
-            if (keywordContent!=null){
+        } else {
+            if (keywordContent != null) {
                 posts = postRepository.findAllByKeywordsContentIn(keywordContent);
-            }else{
+            } else {
                 posts = (List<Post>) postRepository.findAll();
             }
         }

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="notice")
+@Table(name = "notice")
 public class Notice extends BaseTimeEntity {
 
     @Id
@@ -29,7 +29,7 @@ public class Notice extends BaseTimeEntity {
     @Column(unique = true)
     private String url;
 
-    public Notice(String title, String url){
+    public Notice(String title, String url) {
         this.title = title;
         this.url = url;
         this.date = LocalDate.now();

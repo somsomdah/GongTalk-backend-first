@@ -25,7 +25,7 @@ public class Setting extends BaseTimeEntity {
     @NotNull
     private boolean vibration;
 
-    public Setting(){
+    public Setting() {
         this.push = true;
         this.sound = true;
         this.vibration = false;

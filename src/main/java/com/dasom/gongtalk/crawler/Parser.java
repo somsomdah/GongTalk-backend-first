@@ -28,6 +28,7 @@ public class Parser {
     Parser(Board board) throws IOException {
         this.doc = Jsoup.connect(board.getUrl()).get();
     }
+
     public static Parser createParser(Board board) throws IOException {
         return new Parser(board);
     }
@@ -36,48 +37,47 @@ public class Parser {
         return new Parser(post.getBoard());
     }
 
-
-    public List<String> extractPostUrls(){
-        Elements rows = this.doc.select(board.getRowSelector());
-        List<String> postUrls = new ArrayList<>();
-        for(Element row: rows){
-            try {
-
-                String postUrl = row.select(board.getRowItemSelector()).first().absUrl("href");
-                postUrls.add(getValidUrl(postUrl));
-            }catch (Exception e){
-                System.out.println("[Exception] Parser - extractPostUrls : "+e.toString());
-                break;
-            }
-        }
-        return postUrls;
-    }
-
     public static String getValidUrl(String urlString) throws MalformedURLException, URISyntaxException {
         URL url = new URL(urlString);
         URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
         return uri.toURL().toString();
     }
 
+    public List<String> extractPostUrls() {
+        Elements rows = this.doc.select(board.getRowSelector());
+        List<String> postUrls = new ArrayList<>();
+        for (Element row : rows) {
+            try {
+
+                String postUrl = row.select(board.getRowItemSelector()).first().absUrl("href");
+                postUrls.add(getValidUrl(postUrl));
+            } catch (Exception e) {
+                System.out.println("[Exception] Parser - extractPostUrls : " + e.toString());
+                break;
+            }
+        }
+        return postUrls;
+    }
+
     // TODO : Body로 값을 넘겨야 할 경우 extractBodies 함수 만들기
 
-    public String extractTitle(){
+    public String extractTitle() {
         String titleSelector = board.getPostTitleSelector();
         Element titleElement = this.doc.select(titleSelector).first();
-        assert  titleElement != null;
+        assert titleElement != null;
         return Jsoup.parse(titleElement.toString()).text();
     }
 
-    public String extractContent(){
+    public String extractContent() {
         String contentSelector = board.getPostContentSelector();
         Element contentElement = this.doc.select(contentSelector).first();
         assert contentElement != null;
         return contentElement.toString();
     }
 
-    public String extractCategory(){
+    public String extractCategory() {
         String categorySelector = board.getPostCategorySelector();
-        if (categorySelector.isEmpty() || categorySelector.isBlank()){
+        if (categorySelector.isEmpty() || categorySelector.isBlank()) {
             return "";
         }
         Element categoryElement = this.doc.select(categorySelector).first();
@@ -87,14 +87,14 @@ public class Parser {
         return categoryString;
     }
 
-    public String extractWriter(){
+    public String extractWriter() {
         String writerSelector = board.getPostWriterSelector();
         Element writerElement = this.doc.select(writerSelector).first();
         assert writerElement != null;
         return Jsoup.parse(writerElement.toString()).text();
     }
 
-    public LocalDate extractDate(String datePattern){
+    public LocalDate extractDate(String datePattern) {
         String dateSelector = board.getPostDateSelector();
         Element dateElement = this.doc.select(dateSelector).first();
 

@@ -14,17 +14,18 @@ public class KeywordService {
 
     private final KeywordRepository keywordRepository;
 
-    public Keyword getFromId(Integer id){
+    public Keyword getFromId(Integer id) {
         Optional<Keyword> keyword = keywordRepository.findById(id);
-        try {return keyword.get();}
-        catch (Exception e){
+        try {
+            return keyword.get();
+        } catch (Exception e) {
             throw new ResourceNotFoundException("keyword", "id", id, e.toString());
         }
     }
 
-    public Keyword getOrCreateFromContent(String content){
+    public Keyword getOrCreateFromContent(String content) {
         Optional<Keyword> keyword = keywordRepository.findByContent(content);
-        if (keyword.isEmpty()){
+        if (keyword.isEmpty()) {
             Keyword newKeyword = new Keyword(content);
             return keywordRepository.save(newKeyword);
         }

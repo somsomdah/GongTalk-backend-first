@@ -21,7 +21,7 @@ public class SwaggerConfig {
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(Arrays.asList("application/json", "application/xml"));
 
     @Bean
-    public Docket api(){
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .produces(DEFAULT_PRODUCES_AND_CONSUMES)
@@ -30,6 +30,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any()).build();
     }
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().build();
     }

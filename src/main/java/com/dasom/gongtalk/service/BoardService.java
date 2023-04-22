@@ -6,9 +6,8 @@ import com.dasom.gongtalk.exception.ResourceNotFoundException;
 import com.dasom.gongtalk.exception.UserForbiddenException;
 import com.dasom.gongtalk.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,23 +20,23 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Board getFromId(Integer id){
+    public Board getFromId(Integer id) {
         Optional<Board> board = boardRepository.findById(id);
-        try{
+        try {
             return board.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException("board", "id", id, e.toString());
         }
     }
 
-    public List<Board> getAllFromSchoolId(Integer schoolId, int page, int size){
+    public List<Board> getAllFromSchoolId(Integer schoolId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("name"));
         return boardRepository.findAllBySchoolId(schoolId, pageable);
     }
 
-    public void checkAuthority(User user, Board board){
-            if(boardRepository.findAllByUser(user).contains(board)){
-                throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
+    public void checkAuthority(User user, Board board) {
+        if (boardRepository.findAllByUser(user).contains(board)) {
+            throw new UserForbiddenException(String.format("The user has no authority to board id %d", board.getId()));
         }
     }
 

@@ -23,11 +23,11 @@ public class PostListResponse {
     private boolean isDeleted;
     private boolean isModified;
 
-    public static List<PostListResponse> fromPosts(List<Post> posts){
+    public static List<PostListResponse> fromPosts(List<Post> posts) {
 
         List<PostListResponse> response = new ArrayList<>();
-        for(Post post: posts){
-            if (response.stream().anyMatch(r ->r.getId().equals(post.getId()))) {
+        for (Post post : posts) {
+            if (response.stream().anyMatch(r -> r.getId().equals(post.getId()))) {
                 continue;
             }
             PostListResponse resp = new PostListResponse(

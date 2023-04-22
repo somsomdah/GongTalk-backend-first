@@ -18,27 +18,27 @@ public class ScrapService {
 
     private final ScrapRepository scrapRepository;
 
-    public Scrap getFromId(Integer id){
+    public Scrap getFromId(Integer id) {
         Optional<Scrap> scrap = scrapRepository.findById(id);
-        try{
+        try {
             return scrap.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException("scrap", "id", id, e.toString());
         }
     }
 
-    public void checkAuthority(User user, Scrap scrap){
-        if (!user.equals(scrap.getUser())){
-            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d",scrap.getId()));
+    public void checkAuthority(User user, Scrap scrap) {
+        if (!user.equals(scrap.getUser())) {
+            throw new UserForbiddenException(String.format("The user has no authority to scrap id %d", scrap.getId()));
         }
     }
 
-    public Scrap save(User user, Post post){
+    public Scrap save(User user, Post post) {
         try {
             Scrap scrap = new Scrap(user, post);
             scrapRepository.save(scrap);
             return scrap;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new SqlException("Scrap create error", e.toString());
         }
     }

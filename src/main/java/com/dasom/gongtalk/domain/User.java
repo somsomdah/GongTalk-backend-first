@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"username", "password", "alarms", "scraps", "subscribes", "setting" })
+@JsonIgnoreProperties({"username", "password", "alarms", "scraps", "subscribes", "setting"})
 public class User extends BaseTimeEntity {
 
     @Id
@@ -27,7 +27,7 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @NotNull
-    @Column(name="device_num", unique = true)
+    @Column(name = "device_num", unique = true)
     private String deviceNum;
 
     private String pushToken;
@@ -45,26 +45,23 @@ public class User extends BaseTimeEntity {
     private List<Subscribe> subscribes;
 
 
-    public User(String deviceNum)
-    {
+    public User(String deviceNum) {
         setDeviceNum(deviceNum);
         setUsername();
         setPassword();
     }
 
-    public void setUsername()
-    {
+    public void setUsername() {
         RandomStringGenerator rsg = new RandomStringGenerator();
         DateFormat formatter = new SimpleDateFormat("yyMMdd");
-        String usnm = rsg.generate(4,0);
+        String usnm = rsg.generate(4, 0);
         String date = formatter.format(new Date());
         this.username = (usnm + date);
     }
 
-    public void setPassword()
-    {
+    public void setPassword() {
         RandomStringGenerator rsg = new RandomStringGenerator();
-        String pswd = rsg.generate(8,8);
+        String pswd = rsg.generate(8, 8);
         this.password = (pswd);
     }
 

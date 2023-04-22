@@ -25,18 +25,18 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        try{
+        try {
             String token = getTokenFromRequest(request);
 
-            if (!StringUtils.hasText(token)){
+            if (!StringUtils.hasText(token)) {
                 SecurityContextHolder.clearContext();
-                filterChain.doFilter(request,response);
+                filterChain.doFilter(request, response);
                 return;
             }
 
             Authentication auth = accessTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
 
         } catch (UserNotAuthorizedException e) {
 
@@ -49,11 +49,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
 
-    private String getTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         String tokenPrefix = "Bearer ";
 
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(tokenPrefix)){
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(tokenPrefix)) {
             return bearerToken.substring(tokenPrefix.length());
         }
         return null;

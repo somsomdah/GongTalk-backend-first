@@ -15,7 +15,7 @@ public class AppProperties {
 
     @Data
     @NoArgsConstructor
-    public static class Auth{
+    public static class Auth {
         private String accessTokenSecret;
         private int accessTokenDurationMin;
         private String refreshTokenSecret;

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"user", "post_content"})
-@Table(name="scrap", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
+@Table(name = "scrap", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
 public class Scrap extends BaseTimeEntity {
 
     @Id
@@ -28,7 +28,7 @@ public class Scrap extends BaseTimeEntity {
     @NotNull
     private Post post;
 
-    public Scrap(User user, Post post){
+    public Scrap(User user, Post post) {
         this.user = user;
         this.post = post;
     }

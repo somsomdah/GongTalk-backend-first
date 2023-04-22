@@ -18,7 +18,7 @@ public class UserInfoResponse {
     private String deviceNum;
     private Setting setting;
 
-    public static UserInfoResponse fromUser(User user){
+    public static UserInfoResponse fromUser(User user) {
         return new UserInfoResponse(
                 user.getId(),
                 user.getUsername(),
@@ -27,17 +27,14 @@ public class UserInfoResponse {
                 user.getSetting());
     }
 
-    public static List<UserInfoResponse> fromUsers(List<User> users){
+    public static List<UserInfoResponse> fromUsers(List<User> users) {
         List<UserInfoResponse> response = new ArrayList<>();
-        for (User user: users){
+        for (User user : users) {
             response.add(UserInfoResponse.fromUser(user));
         }
 
         return response;
     }
-
-
-
 
 
 }

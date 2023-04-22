@@ -22,7 +22,7 @@ public class Keyword extends BaseTimeEntity {
     @NotNull
     private boolean isRecommended;
 
-    public Keyword(String content){
+    public Keyword(String content) {
         this.content = content;
         this.isRecommended = false;
     }

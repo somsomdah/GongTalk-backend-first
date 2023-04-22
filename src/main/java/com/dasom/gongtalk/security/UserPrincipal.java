@@ -1,7 +1,6 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.domain.User;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,17 +15,17 @@ public class UserPrincipal implements UserDetails {
     private String username;
     private String password;
 
-    UserPrincipal(Integer id){
+    UserPrincipal(Integer id) {
         this.id = id;
     }
 
-    UserPrincipal(Integer id, String username){
+    UserPrincipal(Integer id, String username) {
         this(id);
         this.username = username;
     }
 
 
-    UserPrincipal(Integer id, String deviceNum, String username, String password){
+    UserPrincipal(Integer id, String deviceNum, String username, String password) {
         this(id, username);
         this.deviceNum = deviceNum;
         this.password = password;
@@ -34,6 +33,10 @@ public class UserPrincipal implements UserDetails {
 
     public UserPrincipal(User user) {
         this(user.getId(), user.getDeviceNum(), user.getUsername(), user.getPassword());
+    }
+
+    public static UserPrincipal create(User user) {
+        return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
 
     @Override
@@ -59,10 +62,6 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public static UserPrincipal create(User user){
-        return new UserPrincipal(user.getId(), user.getUsername(), user.getPassword(), user.getDeviceNum());
     }
 
 

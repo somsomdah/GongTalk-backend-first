@@ -14,13 +14,13 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class GongtalkApplication {
 
-	@PostConstruct
-	void started() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GongtalkApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(GongtalkApplication.class, args);
-	}
+    @PostConstruct
+    void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+    }
 
 }

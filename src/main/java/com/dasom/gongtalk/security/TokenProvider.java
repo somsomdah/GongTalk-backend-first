@@ -28,6 +28,7 @@ public abstract class TokenProvider {
     }
 
     abstract void setTokenDurationMin();
+
     abstract void setTokenSecret();
 
     public String createTokenWithUserId(Integer userId) {
@@ -43,13 +44,13 @@ public abstract class TokenProvider {
     }
 
     public Integer getUserIdFromToken(String token) {
-        try{
+        try {
             Claims claims = Jwts.parser()
                     .setSigningKey(tokenSecret)
                     .parseClaimsJws(token)
                     .getBody();
             return Integer.parseInt(claims.getSubject());
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new UserNotAuthorizedException("Invalid JWT", e.toString());
         }
 

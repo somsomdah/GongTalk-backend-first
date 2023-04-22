@@ -22,19 +22,19 @@ public class AlarmService {
     private final SubscribeRepository subscribeRepository;
     private final KeywordRepository keywordRepository;
 
-    public Alarm getFromId(Integer id){
+    public Alarm getFromId(Integer id) {
         Optional<Alarm> alarm = alarmRepository.findById(id);
-        try{
+        try {
             return alarm.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException("alarm", "id", id, e.toString());
         }
     }
 
-    public void save(Post post){
+    public void save(Post post) {
 
         // TODO : FCM NOTIFICATION
-        try{
+        try {
             List<Keyword> keywords = keywordRepository.findAllByPost(post);
             Board board = post.getBoard();
 
@@ -53,7 +53,7 @@ public class AlarmService {
                 }
             }
 
-            if(!subscribeTypeBk.isEmpty()){
+            if (!subscribeTypeBk.isEmpty()) {
                 for (Subscribe s : subscribeTypeBk) {
                     if (s.getBoard().getId().equals(board.getId()) && keywords.contains(s.getKeyword())) {
                         Alarm alarm = new Alarm(s.getUser(), post);
@@ -63,38 +63,39 @@ public class AlarmService {
             }
 
 
-            if(!subscribeTypeCk.isEmpty()){
+            if (!subscribeTypeCk.isEmpty()) {
                 for (Subscribe s : subscribeTypeCk) {
                     if (keywords.contains(s.getKeyword())) {
                         Alarm alarm = new Alarm(s.getUser(), post);
                         alarms.add(alarm);
                     }
                 }
-            };
+            }
+            ;
 
             alarmRepository.saveAll(alarms);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new SqlException("Alarm create error", ex.toString());
         }
 
     }
 
-    public Alarm update(Integer alarmId, Alarm newAlarm){
+    public Alarm update(Integer alarmId, Alarm newAlarm) {
         boolean isRead = newAlarm.isRead();
         Alarm alarm = getFromId(alarmId);
         alarm.setRead(isRead);
-        return  alarmRepository.save(alarm);
+        return alarmRepository.save(alarm);
     }
 
-    public void checkAuthority(User user, Alarm alarm){
-        if (!user.equals(alarm.getUser())){
-            throw new UserForbiddenException(String.format("The user has no authority to alarm id %d",alarm.getId()));
+    public void checkAuthority(User user, Alarm alarm) {
+        if (!user.equals(alarm.getUser())) {
+            throw new UserForbiddenException(String.format("The user has no authority to alarm id %d", alarm.getId()));
         }
     }
 
-    public void checkAllAuthorities(User user, List<Alarm> alarms){
-        for(Alarm alarm : alarms){
+    public void checkAllAuthorities(User user, List<Alarm> alarms) {
+        for (Alarm alarm : alarms) {
             checkAuthority(user, alarm);
         }
     }

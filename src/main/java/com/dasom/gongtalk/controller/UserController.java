@@ -138,15 +138,15 @@ public class UserController {
 
     @GetMapping(value = "scraps")
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                             @RequestParam(required = false, defaultValue = "0") int page,
-                                             @RequestParam(required = false, defaultValue = "100") int size,
-                                             @RequestParam(required = false) Integer postId) {
+                                                       @RequestParam(required = false, defaultValue = "0") int page,
+                                                       @RequestParam(required = false, defaultValue = "100") int size,
+                                                       @RequestParam(required = false) Integer postId) {
         User user = userService.getFromPrincipal(userPrincipal);
         List<Scrap> scraps;
         if (postId != null) {
             scraps = scrapRepository.findAllByUserAndPostId(user, postId);
         } else {
-            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"id"));
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
             scraps = scrapRepository.findAllByUser(user, pageable);
         }
         return ResponseEntity.status(HttpStatus.OK).body(scraps);

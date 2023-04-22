@@ -16,19 +16,19 @@ public class BoardInfoResponse {
     private String name;
     private School school;
 
-    public static List<BoardInfoResponse> fromBoards(List<Board> boards){
+    public static List<BoardInfoResponse> fromBoards(List<Board> boards) {
         List<BoardInfoResponse> response = new ArrayList<>();
 
-        for (Board board : boards){
+        for (Board board : boards) {
 
 
             response.add(new BoardInfoResponse(
-                    board.getId(), 
-                    board.getName(), 
+                    board.getId(),
+                    board.getName(),
                     board.getSchool()
             ));
         }
-        
+
         return response;
     }
 

@@ -1,8 +1,6 @@
 package com.dasom.gongtalk.security;
 
 import com.dasom.gongtalk.config.AppProperties;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component

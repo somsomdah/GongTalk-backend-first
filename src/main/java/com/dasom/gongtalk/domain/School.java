@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="school", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "campus"})})
+@Table(name = "school", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "campus"})})
 public class School extends BaseTimeEntity {
 
     @Id

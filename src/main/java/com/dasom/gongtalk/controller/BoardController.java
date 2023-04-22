@@ -4,7 +4,6 @@ import com.dasom.gongtalk.domain.Board;
 import com.dasom.gongtalk.domain.Post;
 import com.dasom.gongtalk.domain.School;
 import com.dasom.gongtalk.dto.PostListResponse;
-import com.dasom.gongtalk.repository.BoardRepository;
 import com.dasom.gongtalk.repository.PostRepository;
 import com.dasom.gongtalk.repository.SchoolRepository;
 import com.dasom.gongtalk.service.BoardService;
@@ -28,32 +27,32 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) int schoolId,
-                                                 @RequestParam(required = false, defaultValue ="0") int page,
+                                                 @RequestParam(required = false, defaultValue = "0") int page,
                                                  @RequestParam(required = false, defaultValue = "100") int size
-                                                 ){
+    ) {
         List<Board> boards = boardService.getAllFromSchoolId(schoolId, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(boards);
     }
 
-    @GetMapping(value="{id}/posts")
+    @GetMapping(value = "{id}/posts")
     public ResponseEntity<List<PostListResponse>> getPosts(@PathVariable Integer id,
-                                                           @RequestParam(required = false, defaultValue ="0") int page,
-                                                           @RequestParam(required = false, defaultValue = "3") int size){
-        List<Post> posts = postService.getPostsFromBoard(boardService.getFromId(id),page, size );
+                                                           @RequestParam(required = false, defaultValue = "0") int page,
+                                                           @RequestParam(required = false, defaultValue = "3") int size) {
+        List<Post> posts = postService.getPostsFromBoard(boardService.getFromId(id), page, size);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping(value = "{id}/post/search", params = {"keywordContent"})
     public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@PathVariable Integer id,
-                                                                          @RequestParam(value = "keywordContent") List<String> searchKeywords){
-        List<Post> posts = postRepository.findAllByBoardIdAndKeywordsContentIn(id,searchKeywords);
+                                                                          @RequestParam(value = "keywordContent") List<String> searchKeywords) {
+        List<Post> posts = postRepository.findAllByBoardIdAndKeywordsContentIn(id, searchKeywords);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping(value = "schools")
-    public ResponseEntity<List<School>> getAllSchools(){
+    public ResponseEntity<List<School>> getAllSchools() {
         List<School> schools = schoolRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(schools);
     }

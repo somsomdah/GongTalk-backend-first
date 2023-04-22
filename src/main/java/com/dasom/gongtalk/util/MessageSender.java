@@ -20,23 +20,10 @@ public class MessageSender {
         this.pushClient = new PushClient();
     }
 
-    public ExpoPushMessage createAndAddMessage(List<String> recipients, String title, String body, HashMap<String, Object> data){
-        ExpoPushMessage expoPushMessage = createMessage(recipients, title, body, data);
-        this.addMessage(expoPushMessage);
-        return expoPushMessage;
-    }
-
-    public void sendMessages() {
-        List<List<ExpoPushMessage>> chunks = this.pushClient.chunkPushNotifications(this.expoPushMessages);
-        for (List<ExpoPushMessage> chunk : chunks) {
-            this.pushClient.sendPushNotificationsAsync(chunk);
-        }
-    }
-
-    public static ExpoPushMessage createMessage(List<String> recipients, String title, String body, HashMap<String, Object> data){
+    public static ExpoPushMessage createMessage(List<String> recipients, String title, String body, HashMap<String, Object> data) {
         ExpoPushMessage expoPushMessage = new ExpoPushMessage();
 
-        for (String recipient: recipients){
+        for (String recipient : recipients) {
 
             if (!PushClient.isExponentPushToken(recipient)) {
                 System.out.printf("[Exception] expo token [%s] - invalid expo push token", recipient);
@@ -53,7 +40,20 @@ public class MessageSender {
         return expoPushMessage;
     }
 
-    public void addMessage(ExpoPushMessage expoPushMessage){
+    public ExpoPushMessage createAndAddMessage(List<String> recipients, String title, String body, HashMap<String, Object> data) {
+        ExpoPushMessage expoPushMessage = createMessage(recipients, title, body, data);
+        this.addMessage(expoPushMessage);
+        return expoPushMessage;
+    }
+
+    public void sendMessages() {
+        List<List<ExpoPushMessage>> chunks = this.pushClient.chunkPushNotifications(this.expoPushMessages);
+        for (List<ExpoPushMessage> chunk : chunks) {
+            this.pushClient.sendPushNotificationsAsync(chunk);
+        }
+    }
+
+    public void addMessage(ExpoPushMessage expoPushMessage) {
         this.expoPushMessages.add(expoPushMessage);
     }
 

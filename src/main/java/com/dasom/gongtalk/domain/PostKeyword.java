@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Data
-@Table(name="post_keyword", uniqueConstraints = @UniqueConstraint(columnNames = {"post_id","keyword_id"}))
+@Table(name = "post_keyword", uniqueConstraints = @UniqueConstraint(columnNames = {"post_id", "keyword_id"}))
 public class PostKeyword extends BaseTimeEntity {
 
     @Id
@@ -21,7 +21,7 @@ public class PostKeyword extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Keyword keyword;
 
-    public PostKeyword(Post post, Keyword keyword){
+    public PostKeyword(Post post, Keyword keyword) {
         this.post = post;
         this.keyword = keyword;
     }

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"user"})
-@Table(name="alarm", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
+@Table(name = "alarm", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "post_id"}))
 public class Alarm extends BaseTimeEntity {
 
     @Id
@@ -30,7 +30,7 @@ public class Alarm extends BaseTimeEntity {
 
     private boolean isRead;
 
-    public Alarm(User user, Post post){
+    public Alarm(User user, Post post) {
         this.user = user;
         this.post = post;
         this.isRead = false;

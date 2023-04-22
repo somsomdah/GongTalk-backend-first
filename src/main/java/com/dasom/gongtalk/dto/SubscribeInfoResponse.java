@@ -19,36 +19,36 @@ public class SubscribeInfoResponse {
     private boolean notifyAll = false;
 
 
-    public static List<SubscribeInfoResponse> fromSubscribes(List<Subscribe> subscribes){
+    public static List<SubscribeInfoResponse> fromSubscribes(List<Subscribe> subscribes) {
         List<SubscribeInfoResponse> response = new ArrayList<>();
         SubscribeInfoResponse typeCK = new SubscribeInfoResponse(Subscribe.Type.KEYWORD_COMMON, null, new ArrayList<>(), false);
 
-        for (Subscribe subscribe : subscribes){
+        for (Subscribe subscribe : subscribes) {
 
-            if (subscribe.getType().equals(Subscribe.Type.KEYWORD_COMMON)){
+            if (subscribe.getType().equals(Subscribe.Type.KEYWORD_COMMON)) {
                 typeCK.getKeywords().add(subscribe.getKeyword());
-            }else{
+            } else {
 
                 if (response
                         .stream()
-                        .filter(r->r.getBoard().equals(subscribe.getBoard()))
+                        .filter(r -> r.getBoard().equals(subscribe.getBoard()))
                         .findAny()
-                        .isEmpty()){
-                    SubscribeInfoResponse subscribeInfoResponseNew = new SubscribeInfoResponse(subscribe.getType(), subscribe.getBoard(), new ArrayList<>(),false);
+                        .isEmpty()) {
+                    SubscribeInfoResponse subscribeInfoResponseNew = new SubscribeInfoResponse(subscribe.getType(), subscribe.getBoard(), new ArrayList<>(), false);
                     response.add(subscribeInfoResponseNew);
                 }
 
                 SubscribeInfoResponse subscribeInfoResponse = response
                         .stream()
-                        .filter(r->r.getBoard().equals(subscribe.getBoard()))
+                        .filter(r -> r.getBoard().equals(subscribe.getBoard()))
                         .findFirst().get();
 
-                if (subscribe.getType().equals(Subscribe.Type.BOARD)){
+                if (subscribe.getType().equals(Subscribe.Type.BOARD)) {
                     subscribeInfoResponse.setNotifyAll(true);
                     continue;
                 }
 
-                if(subscribe.getType().equals(Subscribe.Type.KEYWORD_BOARD)){
+                if (subscribe.getType().equals(Subscribe.Type.KEYWORD_BOARD)) {
                     subscribeInfoResponse.getKeywords().add(subscribe.getKeyword());
                 }
             }

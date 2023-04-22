@@ -10,8 +10,6 @@ import com.dasom.gongtalk.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class SubscribeService {
@@ -21,14 +19,14 @@ public class SubscribeService {
     private final KeywordService keywordService;
 
 
-    public Subscribe save(User user, SubscribeRequest subscribeRequest){
+    public Subscribe save(User user, SubscribeRequest subscribeRequest) {
         Board board = null;
-        if (subscribeRequest.getBoardId() != null){
+        if (subscribeRequest.getBoardId() != null) {
             board = boardService.getFromId(subscribeRequest.getBoardId());
         }
 
         Keyword keyword = null;
-        if (subscribeRequest.getKeywordContent() != null){
+        if (subscribeRequest.getKeywordContent() != null) {
             keyword = keywordService.getOrCreateFromContent(subscribeRequest.getKeywordContent());
         }
 
@@ -37,7 +35,7 @@ public class SubscribeService {
         return subscribeRepository.save(newSubscribe);
     }
 
-    public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest){
+    public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest) {
         Integer boardId = subscribeDeleteRequest.getBoardId();
         Integer keywordId = subscribeDeleteRequest.getKeywordId();
         Subscribe.Type type = Subscribe.Type.valueOf(subscribeDeleteRequest.getType());

@@ -14,25 +14,25 @@ public class ExceptionResponse {
     private String message;
     private String details;
 
-    public ExceptionResponse(String message, String details){
+    public ExceptionResponse(String message, String details) {
         this.timestamp = new Date().toString();
         this.message = message;
         this.details = details;
     }
 
-    public ExceptionResponse(BaseException exception){
+    public ExceptionResponse(BaseException exception) {
         this.timestamp = new Date().toString();
         this.message = exception.getMessage();
         this.details = exception.getDetails();
     }
 
-    public ExceptionResponse(Exception exception){
+    public ExceptionResponse(Exception exception) {
         this.timestamp = new Date().toString();
         this.message = exception.getMessage();
         this.details = exception.toString();
     }
 
-    public JSONObject toJson(){
+    public JSONObject toJson() {
         HashMap<String, String> hashMap = new HashMap<>();
 
         hashMap.put("details", this.details);

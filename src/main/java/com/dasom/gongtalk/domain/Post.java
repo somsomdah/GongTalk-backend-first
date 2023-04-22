@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({"content", "keywords", "alarms", "scraps"})
-@Table(name="post")
+@Table(name = "post")
 public class Post extends BaseTimeEntity {
 
     @Id
@@ -21,7 +21,7 @@ public class Post extends BaseTimeEntity {
     private Integer id;
 
     @JoinColumn(name = "board_id")
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Board board;
 
     @NotNull
@@ -53,13 +53,13 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Scrap> scraps;
 
-    public static Post createPost(Board board, String url) {
-        return new Post(board, url);
-    }
-
     Post(Board board, String url) {
         this.setBoard(board);
         this.setUrl(url);
+    }
+
+    public static Post createPost(Board board, String url) {
+        return new Post(board, url);
     }
 
 }

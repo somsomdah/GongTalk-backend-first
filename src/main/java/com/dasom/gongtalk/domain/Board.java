@@ -1,9 +1,7 @@
 package com.dasom.gongtalk.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="board", uniqueConstraints = {@UniqueConstraint(columnNames = {"gubun", "name", "school_id"})})
+@Table(name = "board", uniqueConstraints = {@UniqueConstraint(columnNames = {"gubun", "name", "school_id"})})
 public class Board extends BaseTimeEntity {
 
     @Id
@@ -27,7 +25,7 @@ public class Board extends BaseTimeEntity {
     private String gubun;
 
     @JoinColumn(name = "school_id")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private School school;
 
     @NotNull
