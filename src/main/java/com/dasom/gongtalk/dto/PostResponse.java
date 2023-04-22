@@ -19,14 +19,10 @@ public class PostResponse {
     private String category;
     private String content;
     private LocalDate date;
-    private boolean isDeleted;
-    private boolean isModified;
 
     public static PostResponse fromPost(Post post) {
         return new PostResponse(post.getId(), post.getBoard(),
                 post.getUrl(), post.getTitle(), post.getWriter(),
-                post.getCategory(), post.getContent(), post.getDate(),
-                post.isDeleted(), post.isModified());
+                post.getCategory(), post.getContent(), post.getDate());
     }
-
 }

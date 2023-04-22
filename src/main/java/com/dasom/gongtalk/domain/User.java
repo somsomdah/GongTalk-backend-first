@@ -61,8 +61,7 @@ public class User extends BaseTimeEntity {
 
     public void setPassword() {
         RandomStringGenerator rsg = new RandomStringGenerator();
-        String pswd = rsg.generate(8, 8);
-        this.password = (pswd);
+        this.password = rsg.generate(8, 8);
     }
 
 }

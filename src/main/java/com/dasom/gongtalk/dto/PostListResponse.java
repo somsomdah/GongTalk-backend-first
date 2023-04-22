@@ -20,8 +20,6 @@ public class PostListResponse {
     private String writer;
     private String category;
     private LocalDate date;
-    private boolean isDeleted;
-    private boolean isModified;
 
     public static List<PostListResponse> fromPosts(List<Post> posts) {
 
@@ -37,9 +35,8 @@ public class PostListResponse {
                     post.getTitle(),
                     post.getWriter(),
                     post.getCategory(),
-                    post.getDate(),
-                    post.isDeleted(),
-                    post.isModified());
+                    post.getDate()
+                    );
 
             response.add(resp);
         }
