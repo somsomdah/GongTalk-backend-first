@@ -31,25 +31,25 @@ public abstract class TokenProvider {
 
     abstract void setTokenSecret();
 
-    public String createTokenWithUserId(Integer userId) {
+    public String createTokenWithUserId(Long userId) {
         Date now = new Date();
         Date expirationTime = new Date(now.getTime() + Duration.ofMinutes(tokenDurationMin).toMillis());
 
         return Jwts.builder()
-                .setSubject(Integer.toString(userId))
+                .setSubject(Long.toString(userId))
                 .setIssuedAt(now)
                 .setExpiration(expirationTime)
                 .signWith(SignatureAlgorithm.HS256, tokenSecret)
                 .compact();
     }
 
-    public Integer getUserIdFromToken(String token) {
+    public Long getUserIdFromToken(String token) {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(tokenSecret)
                     .parseClaimsJws(token)
                     .getBody();
-            return Integer.parseInt(claims.getSubject());
+            return Long.parseLong(claims.getSubject());
         } catch (Exception e) {
             throw new UserNotAuthorizedException("Invalid JWT", e.toString());
         }

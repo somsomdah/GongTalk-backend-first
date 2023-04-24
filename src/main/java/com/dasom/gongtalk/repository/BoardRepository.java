@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BoardRepository extends JpaRepository<Board, Integer> {
+public interface BoardRepository extends JpaRepository<Board, Long> {
 
 
     @Query("select ub.board from UserBoard ub where ub.user=:user order by ub.orderValue")
@@ -20,5 +20,5 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Query("select s.board from Subscribe s where s in :subscribes")
     List<Board> findAllBySubscribe(List<Subscribe> subscribes);
 
-    List<Board> findAllBySchoolId(Integer id, Pageable pageable);
+    List<Board> findAllBySchoolId(Long id, Pageable pageable);
 }

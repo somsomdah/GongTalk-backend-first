@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserInfoResponse {
 
-    private Integer id;
+    private Long id;
     private String username;
     private String password;
     private String deviceNum;

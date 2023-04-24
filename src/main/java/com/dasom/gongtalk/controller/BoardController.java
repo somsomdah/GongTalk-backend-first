@@ -26,7 +26,7 @@ public class BoardController {
     private final SchoolRepository schoolRepository;
 
     @GetMapping
-    public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) int schoolId,
+    public ResponseEntity<List<Board>> getBoards(@RequestParam(required = false) Long schoolId,
                                                  @RequestParam(required = false, defaultValue = "0") int page,
                                                  @RequestParam(required = false, defaultValue = "100") int size
     ) {
@@ -35,7 +35,7 @@ public class BoardController {
     }
 
     @GetMapping(value = "{id}/posts")
-    public ResponseEntity<List<PostListResponse>> getPosts(@PathVariable Integer id,
+    public ResponseEntity<List<PostListResponse>> getPosts(@PathVariable Long id,
                                                            @RequestParam(required = false, defaultValue = "0") int page,
                                                            @RequestParam(required = false, defaultValue = "3") int size) {
         List<Post> posts = postService.getPostsFromBoard(boardService.getFromId(id), page, size);
@@ -44,7 +44,7 @@ public class BoardController {
     }
 
     @GetMapping(value = "{id}/post/search", params = {"keywordContent"})
-    public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@PathVariable Integer id,
+    public ResponseEntity<List<PostListResponse>> getAllPostsFromKeywords(@PathVariable Long id,
                                                                           @RequestParam(value = "keywordContent") List<String> searchKeywords) {
         List<Post> posts = postRepository.findAllByBoardIdAndKeywordsContentIn(id, searchKeywords);
         List<PostListResponse> response = PostListResponse.fromPosts(posts);

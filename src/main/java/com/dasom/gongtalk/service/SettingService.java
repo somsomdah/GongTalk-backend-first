@@ -14,7 +14,7 @@ public class SettingService {
 
     private final SettingRepository settingRepository;
 
-    public Setting getFromId(Integer id) {
+    public Setting getFromId(Long id) {
         Optional<Setting> setting = settingRepository.findById(id);
         try {
             return setting.get();
@@ -23,7 +23,7 @@ public class SettingService {
         }
     }
 
-    public Setting updateSetting(Integer settingId, Setting newSetting) {
+    public Setting updateSetting(Long settingId, Setting newSetting) {
         Setting setting = this.getFromId(settingId);
 
         try {

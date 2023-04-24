@@ -33,7 +33,7 @@ public class UserService {
         return getFromId(userPrincipal.getId());
     }
 
-    public User getFromId(Integer id) {
+    public User getFromId(Long id) {
 
         Optional<User> user = userRepository.findById(id);
         try {
@@ -89,7 +89,7 @@ public class UserService {
     }
 
     public String getAccessToken(String refreshToken) {
-        Integer userId = refreshTokenProvider.getUserIdFromToken(refreshToken);
+        Long userId = refreshTokenProvider.getUserIdFromToken(refreshToken);
         return accessTokenProvider.createTokenWithUserId(userId);
     }
 

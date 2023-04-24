@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class PostIdRequest {
-    private Integer postId;
+    private Long postId;
 }

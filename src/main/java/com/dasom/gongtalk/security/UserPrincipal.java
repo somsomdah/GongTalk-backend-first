@@ -10,22 +10,22 @@ import java.util.Collection;
 @Data
 public class UserPrincipal implements UserDetails {
 
-    private Integer id;
+    private Long id;
     private String deviceNum;
     private String username;
     private String password;
 
-    UserPrincipal(Integer id) {
+    UserPrincipal(Long id) {
         this.id = id;
     }
 
-    UserPrincipal(Integer id, String username) {
+    UserPrincipal(Long id, String username) {
         this(id);
         this.username = username;
     }
 
 
-    UserPrincipal(Integer id, String deviceNum, String username, String password) {
+    UserPrincipal(Long id, String deviceNum, String username, String password) {
         this(id, username);
         this.deviceNum = deviceNum;
         this.password = password;

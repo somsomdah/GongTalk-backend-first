@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 public class SubscribeRequest {
     private Subscribe.Type type;
-    private Integer boardId;
+    private Long boardId;
     private String keywordContent;
 }

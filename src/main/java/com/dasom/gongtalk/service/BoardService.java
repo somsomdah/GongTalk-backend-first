@@ -20,7 +20,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Board getFromId(Integer id) {
+    public Board getFromId(Long id) {
         Optional<Board> board = boardRepository.findById(id);
         try {
             return board.get();
@@ -29,7 +29,7 @@ public class BoardService {
         }
     }
 
-    public List<Board> getAllFromSchoolId(Integer schoolId, int page, int size) {
+    public List<Board> getAllFromSchoolId(Long schoolId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("name"));
         return boardRepository.findAllBySchoolId(schoolId, pageable);
     }

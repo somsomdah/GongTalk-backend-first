@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class SubscribeDeleteRequest {
     private String type;
-    private Integer boardId;
-    private Integer keywordId;
+    private Long boardId;
+    private Long keywordId;
 }

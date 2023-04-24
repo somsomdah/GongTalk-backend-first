@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AlarmRepository extends JpaRepository<Alarm, Integer> {
+public interface AlarmRepository extends JpaRepository<Alarm, Long> {
 
     List<Alarm> findAllByUser(User user, Pageable pageable);
 

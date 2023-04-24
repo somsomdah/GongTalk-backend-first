@@ -14,7 +14,7 @@ public class Subscribe extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.EAGER)

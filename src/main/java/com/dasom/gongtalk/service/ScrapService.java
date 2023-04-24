@@ -18,7 +18,7 @@ public class ScrapService {
 
     private final ScrapRepository scrapRepository;
 
-    public Scrap getFromId(Integer id) {
+    public Scrap getFromId(Long id) {
         Optional<Scrap> scrap = scrapRepository.findById(id);
         try {
             return scrap.get();

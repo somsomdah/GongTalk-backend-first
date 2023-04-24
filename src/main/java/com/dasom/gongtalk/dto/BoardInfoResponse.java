@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BoardInfoResponse {
 
-    private Integer id;
+    private Long id;
     private String name;
     private School school;
 

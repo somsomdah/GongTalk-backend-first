@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserBoardRepository extends JpaRepository<UserBoard, Integer> {
+public interface UserBoardRepository extends JpaRepository<UserBoard, Long> {
 
     List<UserBoard> findAllByUserAndBoard(User user, Board board);
 
-    UserBoard findByUserAndBoardId(User user, Integer boardId);
+    UserBoard findByUserAndBoardId(User user, Long boardId);
 }

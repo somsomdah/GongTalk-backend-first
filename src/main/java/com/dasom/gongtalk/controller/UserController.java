@@ -65,7 +65,7 @@ public class UserController {
 
     @PostMapping("boards/{boardId}")
     public ResponseEntity<UserBoard> addBoard(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                              @PathVariable Integer boardId) {
+                                              @PathVariable Long boardId) {
         User user = userService.getFromPrincipal(userPrincipal);
         Board board = boardService.getFromId(boardId);
         UserBoard response = userBoardRepository.save(new UserBoard(user, board));
@@ -74,7 +74,7 @@ public class UserController {
 
     @PatchMapping("boards/{boardId}")
     public ResponseEntity<?> updateBoardOrder(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                              @PathVariable Integer boardId,
+                                              @PathVariable Long boardId,
                                               @RequestBody UserBoardPatchRequest userBoardPatchRequest
     ) {
         User user = userService.getFromPrincipal(userPrincipal);
@@ -86,7 +86,7 @@ public class UserController {
 
     @DeleteMapping("boards/{boardId}")
     public ResponseEntity<?> deleteBoard(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                         @PathVariable Integer boardId) {
+                                         @PathVariable Long boardId) {
         User user = userService.getFromPrincipal(userPrincipal);
         Board board = boardService.getFromId(boardId);
         userService.deleteUserBoard(user, board);
@@ -112,7 +112,7 @@ public class UserController {
 
     @GetMapping("subscribes")
     public ResponseEntity<List<Subscribe>> getSubscribeInfo(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                            @RequestParam(required = false) Integer boardId,
+                                                            @RequestParam(required = false) Long boardId,
                                                             @RequestParam(required = false) Subscribe.Type type
     ) {
         User user = userService.getFromPrincipal(userPrincipal);
@@ -140,7 +140,7 @@ public class UserController {
     public ResponseEntity<List<Scrap>> getScrapedPosts(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                        @RequestParam(required = false, defaultValue = "0") int page,
                                                        @RequestParam(required = false, defaultValue = "100") int size,
-                                                       @RequestParam(required = false) Integer postId) {
+                                                       @RequestParam(required = false) Long postId) {
         User user = userService.getFromPrincipal(userPrincipal);
         List<Scrap> scraps;
         if (postId != null) {
@@ -164,7 +164,7 @@ public class UserController {
 
     @DeleteMapping("scraps/{scrapId}")
     public ResponseEntity<?> deleteScrap(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                         @PathVariable Integer scrapId) {
+                                         @PathVariable Long scrapId) {
         User user = userService.getFromPrincipal(userPrincipal);
         Scrap scrap = scrapService.getFromId(scrapId);
         scrapService.checkAuthority(user, scrap);
@@ -184,7 +184,7 @@ public class UserController {
 
     @PatchMapping("alarms/{alarmId}")
     public ResponseEntity<Alarm> updateAlarm(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                             @PathVariable Integer alarmId, @RequestBody Alarm request) {
+                                             @PathVariable Long alarmId, @RequestBody Alarm request) {
         User user = userService.getFromPrincipal(userPrincipal);
         Alarm oldAlarm = alarmService.getFromId(alarmId);
         alarmService.checkAuthority(user, oldAlarm);
@@ -202,7 +202,7 @@ public class UserController {
     public ResponseEntity<Setting> updateSetting(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                  @RequestBody Setting request) {
         User user = userService.getFromPrincipal(userPrincipal);
-        Integer settingId = user.getSetting().getId();
+        Long settingId = user.getSetting().getId();
         Setting setting = settingService.updateSetting(settingId, request);
         return ResponseEntity.status(HttpStatus.OK).body(setting);
 

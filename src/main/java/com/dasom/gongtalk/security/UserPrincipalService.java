@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserPrincipalService {
 
-    public UserPrincipal loadUserPrincipalById(Integer id) {
+    public UserPrincipal loadUserPrincipalById(Long id) {
         return new UserPrincipal(id);
     }
 

@@ -23,7 +23,7 @@ public class PostController {
     private final BoardService boardService;
 
     @GetMapping("{id}")
-    public ResponseEntity<PostResponse> getOnePost(@PathVariable Integer id) {
+    public ResponseEntity<PostResponse> getOnePost(@PathVariable Long id) {
         Post post = postService.getFromId(id);
         PostResponse response = PostResponse.fromPost(post);
         return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -32,7 +32,7 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostListResponse>> getPosts(@RequestParam(required = false, defaultValue = "0") Integer page,
                                                            @RequestParam(required = false, defaultValue = "100") Integer size,
-                                                           @RequestParam(required = false) Integer boardId,
+                                                           @RequestParam(required = false) Long boardId,
                                                            @RequestParam(required = false) List<String> keywordContent
     ) {
         List<Post> posts;

@@ -28,10 +28,10 @@ public class Post extends BaseTimeEntity {
     private String title;
 
     @NotNull
-    @Column(columnDefinition = "varchar(50) default '관리자'")
+    @Column(columnDefinition = "varchar(50)")
     private String writer;
 
-    @Column(columnDefinition = "varchar(50) default '일반'")
+    @Column(columnDefinition = "varchar(50)")
     private String category;
 
     @NotNull

@@ -22,7 +22,7 @@ public class AlarmService {
     private final SubscribeRepository subscribeRepository;
     private final KeywordRepository keywordRepository;
 
-    public Alarm getFromId(Integer id) {
+    public Alarm getFromId(Long id) {
         Optional<Alarm> alarm = alarmRepository.findById(id);
         try {
             return alarm.get();
@@ -81,7 +81,7 @@ public class AlarmService {
 
     }
 
-    public Alarm update(Integer alarmId, Alarm newAlarm) {
+    public Alarm update(Long alarmId, Alarm newAlarm) {
         boolean isRead = newAlarm.isRead();
         Alarm alarm = getFromId(alarmId);
         alarm.setRead(isRead);

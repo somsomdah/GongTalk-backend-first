@@ -27,7 +27,7 @@ public class PostService {
     private final KeywordService keywordService;
     private final PostKeywordRepository postKeywordRepository;
 
-    public Post getFromId(Integer id) {
+    public Post getFromId(Long id) {
         Optional<Post> post = postRepository.findById(id);
         try {
             return post.get();

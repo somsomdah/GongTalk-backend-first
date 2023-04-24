@@ -17,9 +17,9 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
 
     List<Subscribe> findAllByUserAndType(User user, String type);
 
-    List<Subscribe> findAllByUserAndTypeAndBoardId(User user, Subscribe.Type type, Integer boardId);
+    List<Subscribe> findAllByUserAndTypeAndBoardId(User user, Subscribe.Type type, Long boardId);
 
-    List<Subscribe> findAllByUserAndTypeAndBoardIdAndKeywordId(User user, Subscribe.Type type, Integer boardId, Integer keywordId);
+    List<Subscribe> findAllByUserAndTypeAndBoardIdAndKeywordId(User user, Subscribe.Type type, Long boardId, Long keywordId);
 
     List<Subscribe> findAllByTypeAndBoardAndKeywordIn(Subscribe.Type type, Board board, List<Keyword> keywords);
 

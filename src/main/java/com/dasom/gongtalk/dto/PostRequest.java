@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class PostRequest {
 
-    private Integer boardId;
+    private Long boardId;
     private Integer postNum;
     private String source;
     private String title;

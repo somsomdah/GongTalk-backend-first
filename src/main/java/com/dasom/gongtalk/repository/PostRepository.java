@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select p from Post p where p.board in :boards and p.isDeleted=false order by p.date desc")
+    @Query("select p from Post p where p.board in :boards and p.deletedDate=null order by p.date desc")
     List<Post> findAllByBoardIn(List<Board> boards, Pageable pageable);
 
     List<Post> findAllByBoard(Board board, Pageable pageable);
@@ -21,9 +21,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findAllByKeywordsContentIn(List<String> keywordsContent);
 
     @Query("select pk.post from PostKeyword pk where pk.keyword.content in (:keywordsContent) and pk.post.board.id =:boardId order by pk.post.date desc")
-    List<Post> findAllByBoardIdAndKeywordsContentIn(Integer boardId, List<String> keywordsContent);
+    List<Post> findAllByBoardIdAndKeywordsContentIn(Long boardId, List<String> keywordsContent);
 
-    List<Post> findAllByIdIn(List<Integer> Ids);
+    List<Post> findAllByIdIn(List<Long> Ids);
 
 
 }

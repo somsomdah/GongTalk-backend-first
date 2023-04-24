@@ -14,8 +14,8 @@ public class KeywordService {
 
     private final KeywordRepository keywordRepository;
 
-    public Keyword getFromId(Integer id) {
-        Optional<Keyword> keyword = keywordRepository.findById(id);
+    public Keyword getFromId(Long id) {
+        Optional<Keyword> keyword = keywordRepository.findById(Math.toIntExact(id));
         try {
             return keyword.get();
         } catch (Exception e) {

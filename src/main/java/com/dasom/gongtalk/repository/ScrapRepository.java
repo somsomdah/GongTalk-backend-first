@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ScrapRepository extends JpaRepository<Scrap, Integer> {
+public interface ScrapRepository extends JpaRepository<Scrap, Long> {
 
     List<Scrap> findAllByUser(User user, Pageable pageable);
 
-    List<Scrap> findAllByUserAndPostId(User user, Integer postId);
+    List<Scrap> findAllByUserAndPostId(User user, Long postId);
 }

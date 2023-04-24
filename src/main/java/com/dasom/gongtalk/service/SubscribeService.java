@@ -36,8 +36,8 @@ public class SubscribeService {
     }
 
     public void deleteSubscribe(User user, SubscribeDeleteRequest subscribeDeleteRequest) {
-        Integer boardId = subscribeDeleteRequest.getBoardId();
-        Integer keywordId = subscribeDeleteRequest.getKeywordId();
+        Long boardId = subscribeDeleteRequest.getBoardId();
+        Long keywordId = subscribeDeleteRequest.getKeywordId();
         Subscribe.Type type = Subscribe.Type.valueOf(subscribeDeleteRequest.getType());
 
         subscribeRepository.deleteAll(subscribeRepository.findAllByUserAndTypeAndBoardIdAndKeywordId(user, type, boardId, keywordId));
