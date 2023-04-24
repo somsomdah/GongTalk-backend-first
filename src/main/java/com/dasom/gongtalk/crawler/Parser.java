@@ -94,7 +94,7 @@ public class Parser {
         return Jsoup.parse(writerElement.toString()).text();
     }
 
-    public LocalDate extractDate(String datePattern) {
+    public String extractDate(String datePattern) {
         String dateSelector = board.getPostDateSelector();
         Element dateElement = this.doc.select(dateSelector).first();
 
@@ -102,7 +102,7 @@ public class Parser {
 
         String dateString = Jsoup.parse(dateElement.toString()).text();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-        return LocalDate.parse(dateString, formatter);
+        return LocalDate.parse(dateString, formatter).toString();
     }
 
 

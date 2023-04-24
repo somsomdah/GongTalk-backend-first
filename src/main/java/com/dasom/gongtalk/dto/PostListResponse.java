@@ -5,7 +5,6 @@ import com.dasom.gongtalk.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,13 @@ import java.util.List;
 @Getter
 public class PostListResponse {
 
-    private Integer id;
+    private Long id;
     private Board board;
     private String url;
     private String title;
     private String writer;
     private String category;
-    private LocalDate date;
+    private String date;
 
     public static List<PostListResponse> fromPosts(List<Post> posts) {
 
@@ -36,7 +35,7 @@ public class PostListResponse {
                     post.getWriter(),
                     post.getCategory(),
                     post.getDate()
-                    );
+            );
 
             response.add(resp);
         }

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,7 +17,7 @@ public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @JoinColumn(name = "board_id")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -39,7 +38,7 @@ public class Post extends BaseTimeEntity {
     private String content;
 
     @NotNull
-    private LocalDate date;
+    private String date;
 
     @NotNull
     @Column(columnDefinition = "varchar(1000) CHARACTER SET ascii", unique = true)
